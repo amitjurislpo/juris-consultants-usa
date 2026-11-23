@@ -1,0 +1,31 @@
+{
+  "name": "juris-consultants-usa",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.15.0",
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,mjs,json,yml,yaml,css}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,mjs,json,yml,yaml,css}\"",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "db:generate": "corepack pnpm --filter @juris/db db:generate",
+    "db:push": "corepack pnpm --filter @juris/db db:push",
+    "db:validate": "corepack pnpm --filter @juris/db db:validate",
+    "db:seed": "corepack pnpm --filter @juris/db db:seed"
+  },
+  "devDependencies": {
+    "@next/eslint-plugin-next": "^16.4.6",
+    "@typescript-eslint/parser": "^8.29.1",
+    "@playwright/test": "^1.52.0",
+    "eslint": "^10.15.0",
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.2",
+    "typescript": "^5.8.3",
+    "vitest": "^4.0.13"
+  }
+}
