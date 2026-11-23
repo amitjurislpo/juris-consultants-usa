@@ -13,6 +13,7 @@ include login, dashboard, admin, email, or payment features.
 
 - Branch: `fix/web-marketing-final-design`
 - Existing PR: [#5](https://github.com/amitjurislpo/juris-consultants-usa/pull/5)
+- Color follow-up committed and pushed as `97a8238`; PR #5 summary is updated.
 - Preserve unrelated existing worktree items; do not stage them.
 
 ## Reference findings
@@ -43,8 +44,6 @@ include login, dashboard, admin, email, or payment features.
 
 ## Pending
 
-- Commit only the focused marketing/docs changes, push the branch, and update
-  PR #5 with this follow-up.
 - Amit still needs to review the final visuals and content; open business and
   launch items remain tracked in `docs/PENDING.md`.
 
