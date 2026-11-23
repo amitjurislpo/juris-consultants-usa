@@ -89,27 +89,27 @@ export default function HomePage() {
           <div className="hero-inner page-container">
             <div className="hero-copy">
               <span className="hero-badge">
-                <span className="status-dot" /> FORMING US COMPANIES FOR
-                FOUNDERS WORLDWIDE
+                <span aria-hidden="true" className="status-dot" />
+                <span className="hero-live">LIVE</span> Forming US companies for
+                founders worldwide
               </span>
               <Reveal className="hero-title-wrap">
-                <h1>Your US company, from anywhere in the world.</h1>
+                <h1>
+                  Go global from anywhere.{" "}
+                  <span className="hero-gradient-text">Launch in the US.</span>
+                </h1>
               </Reveal>
               <p className="hero-lead">
                 Formation, EIN, bank account and compliance, handled end to end
                 by our CA/CS-led expert team. Talk to us on WhatsApp or email,
                 wherever you are.
               </p>
-              <p className="hero-disclaimer">
-                Preview copy · Service details and availability will be
-                confirmed before launch.
-              </p>
               <div className="hero-actions">
                 <Link className="button" href="/coming-soon">
-                  Start your business <span aria-hidden="true">↗</span>
+                  Launch Your Company <span aria-hidden="true">↗</span>
                 </Link>
                 <Link className="button button-outline" href="/coming-soon">
-                  Talk to an expert <span aria-hidden="true">↗</span>
+                  Talk to an Expert <span aria-hidden="true">↗</span>
                 </Link>
               </div>
               <div className="hero-proof">
@@ -351,16 +351,28 @@ export default function HomePage() {
           <div className="page-container documents-layout">
             <div className="section-heading">
               <Reveal>
-                <p className="eyebrow">EVERYTHING IN ITS PLACE</p>
-                <h2>Important documents. Clear next steps.</h2>
+                <p className="eyebrow">WHAT YOU RECEIVE</p>
+                <h2>Every document, stacked and ready.</h2>
                 <p>
-                  Keep formation documents and helpful checklists together as
-                  your business takes shape.
+                  Scroll to watch your company’s paperwork arrive — formed,
+                  filed and stored in your dashboard.
                 </p>
               </Reveal>
-              <Link className="button button-outline" href="/coming-soon">
-                See how it works <span aria-hidden="true">↗</span>
+              <div aria-live="polite" className="folder-progress">
+                <span className="folder-progress-count" data-folder-count>
+                  0
+                </span>
+                <span className="folder-progress-label">
+                  / 5 documents ready
+                </span>
+              </div>
+              <Link className="button" href="/coming-soon">
+                Get my documents <span aria-hidden="true">↗</span>
               </Link>
+              <p className="documents-disclaimer">
+                Illustrative preview · Document labels and statuses are
+                examples.
+              </p>
             </div>
             <DocumentsFolder />
           </div>

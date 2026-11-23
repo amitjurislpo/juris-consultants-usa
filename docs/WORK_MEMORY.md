@@ -5,9 +5,9 @@ Updated: 2026-11-24
 ## Current scope
 
 Match the public marketing site to the final visual reference at
-`docs/design/final/Juris_USA_Website_Final_Design.html`, focusing on Theme 11
-colors, text contrast, and the selected animation scenes. This work does not
-include login, dashboard, admin, email, or payment features.
+`docs/design/final/Juris_USA_Website_Final_Design.html`, including Theme 11
+colors, text contrast, hero copy, and selected animation scenes. This work does
+not include login, dashboard, admin, email, or payment features.
 
 ## Current branch and PR
 
@@ -28,6 +28,9 @@ include login, dashboard, admin, email, or payment features.
   intentionally retained for the board's flight/status details.
 - Remaining gold warning/illustrative treatments should only be changed when
   the reference confirms they are not intentional status colors.
+- The documents animation selection is d6: five document cards descend behind
+  the cyan folder front according to scroll progress; the count advances from
+  0 to 5.
 
 ## Implemented and checked
 
@@ -36,11 +39,24 @@ include login, dashboard, admin, email, or payment features.
 - Matched the story background/route/milestones, take-off scene, departures
   board, and documents-scene background; globe routes now use Theme 11 cyan.
 - Preserved intentional gold flight-board header/status colors.
+- Updated the hero headline to "Go global from anywhere. Launch in the US.",
+  applied the reference blue-to-cyan gradient and CTA labels, and reduced the
+  mobile menu-to-hero gap to 20px.
+- Rebuilt the documents scene as the selected d6 folder animation, including
+  five sequential cards, the 0–5 counter, mobile scaling, and a static final
+  arrangement for reduced-motion users. Offset its sticky stage below the
+  persistent header.
+- Completed the departures board with a live IST clock, five desktop columns,
+  six illustrative rows, status colors, and an explanatory footer. The company
+  column is hidden on mobile as in the reference.
 - Added no service integrations, environment requirements, or database access.
-- Browser-computed desktop styles for the selected scenes match the reference.
-- Web lint, typecheck, Prettier, and `git diff --check` pass. Localhost is
-  responsive. Build was not rerun to avoid disrupting the active Next dev
-  server; the existing PR's build passed before this color follow-up.
+- Browser-checked the hero spacing and documents scene on mobile, the folder
+  count at each scroll milestone, and the five-column board on desktop. On
+  mobile, verified all six rows fit without horizontal overflow.
+- Web lint, typecheck, Prettier, and `git diff --check` pass. The web package
+  has no test files. Localhost remains responsive. Build was not rerun to avoid
+  disrupting the active Next dev server; the existing PR's build passed before
+  this visual follow-up.
 
 ## Pending
 

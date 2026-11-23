@@ -1832,15 +1832,52 @@ export function TakeoffScene() {
 }
 
 const departures = [
-  { from: "LONDON", to: "DELAWARE", code: "JC 041" },
-  { from: "SINGAPORE", to: "TEXAS", code: "JC 118" },
-  { from: "NAIROBI", to: "NEW YORK", code: "JC 223" },
-  { from: "SYDNEY", to: "WYOMING", code: "JC 305" },
-  { from: "TORONTO", to: "FLORIDA", code: "JC 412" },
-  { from: "DUBAI", to: "CALIFORNIA", code: "JC 506" },
+  {
+    flight: "JC-041",
+    from: "LONDON",
+    to: "DELAWARE",
+    company: "Nova Labs LLC",
+  },
+  {
+    flight: "JC-118",
+    from: "SINGAPORE",
+    to: "TEXAS",
+    company: "Atlas Trading",
+  },
+  {
+    flight: "JC-223",
+    from: "NAIROBI",
+    to: "NEW YORK",
+    company: "Pixel Forge",
+  },
+  {
+    flight: "JC-305",
+    from: "SYDNEY",
+    to: "WYOMING",
+    company: "Cedar Organics",
+  },
+  {
+    flight: "JC-412",
+    from: "TORONTO",
+    to: "FLORIDA",
+    company: "Summit SaaS",
+  },
+  {
+    flight: "JC-506",
+    from: "DUBAI",
+    to: "CALIFORNIA",
+    company: "Coral Logistics",
+  },
 ];
 
-const boardStatuses = ["PLANNING", "PREPARING", "IN REVIEW", "NEXT STEPS"];
+const boardStatuses = ["CHECK-IN", "BOARDING", "IN FLIGHT", "LANDED ✓"];
+const boardClockFormatter = new Intl.DateTimeFormat("en-GB", {
+  timeZone: "Asia/Kolkata",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+});
 
 function BoardFlapText({
   value,
@@ -1867,7 +1904,17 @@ function BoardFlapText({
 
 export function DeparturesBoard() {
   const [revision, setRevision] = useState(0);
+  const [clock, setClock] = useState("--:--:-- IST");
   const board = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const updateClock = () => {
+      setClock(`${boardClockFormatter.format(new Date())} IST`);
+    };
+    updateClock();
+    const timer = window.setInterval(updateClock, 1000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -1910,7 +1957,7 @@ export function DeparturesBoard() {
         <div>
           <p className="eyebrow">A WORLD OF POSSIBILITIES</p>
           <Reveal>
-            <h2>Where will you take your business?</h2>
+            <h2>Founders everywhere are landing in the USA.</h2>
           </Reveal>
         </div>
         <span className="illustrative-tag">
@@ -1919,43 +1966,56 @@ export function DeparturesBoard() {
       </div>
       <div className="departure-board">
         <div className="board-topline">
-          <span>JURIS · WORLD → USA</span>
-          <span className="board-live">
-            <i /> ILLUSTRATIVE PREVIEW
+          <span>
+            <span aria-hidden="true">✈</span> DEPARTURES · WORLD → USA
           </span>
+          <span className="board-clock">{clock}</span>
         </div>
         <div className="board-columns" aria-hidden="true">
-          <span>ROUTE</span>
-          <span>REFERENCE</span>
+          <span>FLIGHT</span>
+          <span>FROM</span>
+          <span>TO</span>
+          <span>COMPANY</span>
           <span>STATUS</span>
         </div>
         <div aria-live="polite" className="board-rows">
           {rows.map((row, index) => (
-            <div className="board-row" key={index}>
-              <div>
-                <strong>
-                  <BoardFlapText value={row.from} revision={revision} />
-                </strong>
-                <span className="board-arrow" aria-hidden="true">
-                  →
-                </span>
-                <strong>
-                  <BoardFlapText value={row.to} revision={revision} />
-                </strong>
-              </div>
-              <span className="board-code">
-                <BoardFlapText value={row.code} revision={revision} />
+            <div className="board-row" key={row.flight}>
+              <span className="board-flight">
+                <BoardFlapText value={row.flight} revision={revision} />
               </span>
-              <span className="board-status">
-                <i />
+              <span className="board-code">
+                <BoardFlapText value={row.from} revision={revision} />
+              </span>
+              <span className="board-code">
+                <BoardFlapText value={row.to} revision={revision} />
+              </span>
+              <span className="board-company">
+                <BoardFlapText value={row.company} revision={revision} />
+              </span>
+              <span
+                className={`board-status ${
+                  row.status === "LANDED ✓"
+                    ? "is-landed"
+                    : row.status === "IN FLIGHT"
+                      ? "is-flight"
+                      : row.status === "BOARDING"
+                        ? "is-boarding"
+                        : ""
+                }`}
+              >
+                <i aria-hidden="true" />
                 <BoardFlapText value={row.status} revision={revision} />
               </span>
             </div>
           ))}
         </div>
         <p className="board-disclaimer">
-          Sample routes and status labels are illustrative, not customer or
-          order data.
+          <span>
+            LANDED ✓ = company formed · Routes, flight IDs, company names and
+            statuses are illustrative examples, not customer data.
+          </span>
+          <span>Clock shown in IST</span>
         </p>
       </div>
     </section>
@@ -1963,11 +2023,23 @@ export function DeparturesBoard() {
 }
 
 const folderDocs = [
-  { label: "Articles of Organization", type: "STATE FILING" },
-  { label: "Operating Agreement", type: "COMPANY DOCUMENT" },
-  { label: "EIN Letter", type: "IRS NOTICE" },
-  { label: "Registered Agent", type: "STATE REQUIREMENT" },
-  { label: "Getting Started Checklist", type: "NEXT STEPS" },
+  {
+    icon: "AO",
+    label: "Articles of Organization",
+    description: "Filed with the state",
+  },
+  {
+    icon: "OA",
+    label: "Operating Agreement",
+    description: "Signed & stored",
+  },
+  { icon: "EIN", label: "EIN Letter", description: "From the IRS" },
+  {
+    icon: "RA",
+    label: "Registered Agent",
+    description: "Address active",
+  },
+  { icon: "$", label: "Bank account", description: "Approved" },
 ];
 
 export function DocumentsFolder() {
@@ -1985,31 +2057,23 @@ export function DocumentsFolder() {
       const progress = reducedMotion.matches
         ? 1
         : Math.min(1, Math.max(0, -bounds.top / distance));
+      const count = reducedMotion.matches
+        ? folderDocs.length
+        : Math.min(
+            folderDocs.length,
+            Math.floor(progress * (folderDocs.length + 1.2)),
+          );
       const docs = element.querySelectorAll<HTMLElement>(".folder-doc");
       docs.forEach((doc, index) => {
-        const documentProgress = Math.min(
-          1,
-          Math.max(0, progress * 1.4 - index * 0.18),
-        );
-        doc.style.setProperty("--document-progress", String(documentProgress));
         doc.style.setProperty(
-          "--document-y",
-          `${-150 + documentProgress * 150}px`,
-        );
-        doc.style.setProperty(
-          "--document-scale",
-          String(1 - documentProgress * 0.24),
-        );
-        doc.style.setProperty(
-          "--document-opacity",
-          String(0.55 + documentProgress * 0.45),
+          "--k",
+          reducedMotion.matches ? "0" : index < count ? "1" : "0",
         );
       });
-      element.style.setProperty("--folder-progress", String(progress));
-      element.classList.toggle("is-open", progress > 0.1);
-      const count = element.querySelector<HTMLElement>("[data-folder-count]");
-      if (count)
-        count.textContent = String(Math.round(progress * folderDocs.length));
+      const countElement = section.querySelector<HTMLElement>(
+        "[data-folder-count]",
+      );
+      if (countElement) countElement.textContent = String(count);
     };
     let frame = 0;
     const onScroll = () => {
@@ -2035,29 +2099,23 @@ export function DocumentsFolder() {
       ref={folder}
       role="img"
     >
-      <div className="folder-back">
-        <span className="folder-tab" />
-        {folderDocs.map((doc, index) => (
-          <div className={`folder-doc doc-${index + 1}`} key={doc.label}>
-            <span>{doc.type}</span>
+      <div aria-hidden="true" className="folder-back" />
+      {folderDocs.map((doc, index) => (
+        <div className={`folder-doc doc-${index + 1}`} key={doc.label}>
+          <i aria-hidden="true" className="folder-doc-icon">
+            {doc.icon}
+          </i>
+          <div className="folder-doc-copy">
             <strong>{doc.label}</strong>
-            <i aria-hidden="true" />
-            <i aria-hidden="true" />
-            <i aria-hidden="true" />
-            <small>ILLUSTRATIVE</small>
+            <span>{doc.description}</span>
           </div>
-        ))}
-        <div className="folder-front">
-          <span className="folder-symbol">J</span>
-          <strong>Your company, organized.</strong>
-          <span>Illustrative document journey</span>
-          <span className="folder-count">
-            <b data-folder-count>0</b> / {folderDocs.length} ready
-          </span>
+          <em>✓ Ready</em>
         </div>
+      ))}
+      <div className="folder-front">
+        <strong>Your US Company</strong>
+        <span>Formation documents</span>
       </div>
-      <span className="folder-orbit orbit-left" />
-      <span className="folder-orbit orbit-right" />
     </div>
   );
 }

@@ -41,7 +41,7 @@ export function SiteHeader() {
             ))}
             <Link href="/coming-soon">Login</Link>
             <Link className="button button-small" href="/coming-soon">
-              Launch your company <span aria-hidden="true">↗</span>
+              Launch Your Company <span aria-hidden="true">↗</span>
             </Link>
           </nav>
 
