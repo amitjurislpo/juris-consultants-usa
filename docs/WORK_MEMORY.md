@@ -14,6 +14,7 @@ not include login, dashboard, admin, email, or payment features.
 - Branch: `fix/web-marketing-final-design`
 - Existing PR: [#5](https://github.com/amitjurislpo/juris-consultants-usa/pull/5)
 - Color follow-up committed and pushed as `97a8238`; PR #5 summary is updated.
+- Hero, folder, and departures-board follow-up committed and pushed as `9b8c931`.
 - Preserve unrelated existing worktree items; do not stage them.
 
 ## Reference findings
