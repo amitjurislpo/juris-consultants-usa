@@ -33,4 +33,4 @@ Every agent: update this file when you finish or stop. Move items to "Done" with
 
 ## Done
 (date · what · PR)
-- 2026-11-23 · Phase 0 Foundation scaffold and tests; build/lint/typecheck pass. Database seed awaits the required local connection/bootstrap values. · https://github.com/amitjurislpo/juris-consultants-usa/pull/1
+- 2026-11-23 · Phase 0 Foundation scaffold; build, test, lint, typecheck, format, Playwright smoke, Prisma validation, and client generation pass. Database seed awaits the required local connection/bootstrap values. · https://github.com/amitjurislpo/juris-consultants-usa/pull/1
