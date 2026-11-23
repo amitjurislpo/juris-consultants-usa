@@ -5,21 +5,24 @@
   --surface: #0a0e1a;
   --surface-raised: #0d1324;
   --card-solid: #0d1324;
-  --surface-glass: rgba(15, 23, 42, 0.72);
+  --surface-glass: rgba(255, 255, 255, 0.06);
   --text: #f1f5f9;
   --body: #cbd5e1;
   --muted: #94a3b8;
   --line: rgba(255, 255, 255, 0.1);
   --line-strong: rgba(255, 255, 255, 0.16);
   --navy: #05070d;
-  --navy-2: #0a0e1a;
+  --navy-2: #0d1324;
   --blue: #3b82f6;
+  --blue-d: #93c5fd;
   --cyan: #22d3ee;
   --amber: #22d3ee;
+  --amber-d: #67e8f9;
   --on-dark-accent: #7dd3fc;
+  --on-primary-muted: #e2e8f0;
   --blue-soft: rgba(59, 130, 246, 0.14);
   --cyan-soft: rgba(34, 211, 238, 0.12);
-  --green: #34d399;
+  --green: #15803d;
   --heading: "Sora", Inter, ui-sans-serif, system-ui, sans-serif;
   --body-font: "Inter", ui-sans-serif, system-ui, sans-serif;
   --container: 1180px;
@@ -38,13 +41,7 @@ body {
   position: relative;
   isolation: isolate;
   margin: 0;
-  background:
-    radial-gradient(
-      ellipse at 78% 6%,
-      rgba(35, 83, 160, 0.11),
-      transparent 34rem
-    ),
-    var(--page);
+  background: var(--page);
   color: var(--text);
   font-family: var(--body-font);
   font-size: 15px;
@@ -56,10 +53,31 @@ body::before {
   position: fixed;
   z-index: -1;
   inset: 0;
+  background:
+    radial-gradient(
+      900px 600px at 15% -10%,
+      color-mix(in srgb, var(--blue) 24%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      700px 500px at 110% 25%,
+      color-mix(in srgb, var(--amber) 14%, transparent),
+      transparent 60%
+    );
+  content: "";
+  pointer-events: none;
+}
+
+body::after {
+  position: fixed;
+  z-index: -1;
+  inset: 0;
   background-image:
-    linear-gradient(rgba(125, 211, 252, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(125, 211, 252, 0.025) 1px, transparent 1px);
-  background-size: 56px 56px;
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: linear-gradient(180deg, #000, transparent 75%);
+  mask-image: linear-gradient(180deg, #000, transparent 75%);
   content: "";
   pointer-events: none;
 }
@@ -124,8 +142,8 @@ button {
   gap: 8px;
   padding: 5px 16px;
   border-bottom: 1px solid rgba(34, 211, 238, 0.14);
-  background: #080e1b;
-  color: #a9bad0;
+  background: var(--surface-raised);
+  color: var(--on-primary-muted);
   font-size: 10px;
   letter-spacing: 0.04em;
   text-align: center;
@@ -320,8 +338,10 @@ button {
   padding: 12px 20px;
   border: 1px solid transparent;
   border-radius: 12px;
-  background: linear-gradient(120deg, #2563eb, #087faa 92%);
-  box-shadow: 0 8px 26px rgba(37, 99, 235, 0.22);
+  background: linear-gradient(135deg, #2563eb, #0891b2);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.14),
+    0 10px 30px rgba(59, 130, 246, 0.45);
   color: #fff;
   font-size: 12px;
   font-weight: 700;
@@ -377,13 +397,15 @@ button {
   overflow: hidden;
   min-height: 690px;
   padding: 76px 0 26px;
-  background:
+  background-color: var(--page);
+  background-image:
     radial-gradient(
-      ellipse at 72% 45%,
-      rgba(20, 84, 166, 0.13),
-      transparent 32rem
+      800px 520px at 75% 45%,
+      color-mix(in srgb, var(--blue) 32%, transparent),
+      transparent 70%
     ),
-    linear-gradient(180deg, #05070d, #070b15 84%, #05070d);
+    none;
+  color: #fff;
 }
 
 .hero-glow {
@@ -395,7 +417,7 @@ button {
   border-radius: 50%;
   background: radial-gradient(
     circle,
-    rgba(34, 211, 238, 0.08),
+    rgba(59, 130, 246, 0.16),
     transparent 68%
   );
   filter: blur(15px);
@@ -460,14 +482,14 @@ button {
 .hero-lead {
   max-width: 570px;
   margin: 22px 0 0;
-  color: #b7c4d6;
+  color: var(--body);
   font-size: 16px;
   line-height: 1.8;
 }
 
 .hero-disclaimer {
   margin: 13px 0 0;
-  color: #8291a7;
+  color: var(--muted);
   font-size: 10px;
 }
 
@@ -735,7 +757,7 @@ button {
   position: relative;
   height: 360vh;
   min-height: 2100px;
-  background: #060a14;
+  background: transparent;
 }
 
 .story-stage {
@@ -897,8 +919,8 @@ button {
 }
 
 .story-milestones > div.is-active {
-  border-color: rgba(34, 211, 238, 0.4);
-  box-shadow: 0 0 24px rgba(34, 211, 238, 0.09);
+  border-color: color-mix(in srgb, var(--amber) 40%, transparent);
+  box-shadow: 0 0 24px color-mix(in srgb, var(--amber) 9%, transparent);
   opacity: 1;
   transform: translateY(0);
 }
@@ -1487,7 +1509,13 @@ button {
 
 .board-section {
   padding: 104px max(28px, calc((100vw - var(--container)) / 2)) 112px;
-  background: #080c16;
+  background:
+    radial-gradient(
+      900px 400px at 50% 0,
+      color-mix(in srgb, var(--blue) 16%, transparent),
+      transparent 70%
+    ),
+    transparent;
 }
 
 .board-heading {
@@ -1528,14 +1556,10 @@ button {
 .departure-board {
   overflow: hidden;
   padding: 25px 27px 19px;
-  border: 1px solid rgba(148, 163, 184, 0.19);
+  border: 1px solid #1f2937;
   border-radius: 17px;
-  background:
-    linear-gradient(180deg, rgba(18, 27, 44, 0.97), rgba(8, 13, 24, 0.98)),
-    #0d1324;
-  box-shadow:
-    0 22px 70px rgba(0, 0, 0, 0.32),
-    inset 0 1px rgba(255, 255, 255, 0.03);
+  background: #0b0f17;
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.6);
 }
 
 .board-topline {
@@ -1731,7 +1755,7 @@ button {
 
 .documents-section {
   overflow: hidden;
-  background: linear-gradient(180deg, #080c16, #070b14);
+  background: transparent;
 }
 
 .documents-layout {
@@ -2101,7 +2125,7 @@ button {
 }
 
 .price-placeholder small {
-  color: #f2c56a;
+  color: var(--amber);
   font-size: 8px;
   letter-spacing: 0.02em;
 }
@@ -4638,7 +4662,7 @@ button {
 }
 
 .pricing-plan-price small {
-  color: #f2c56a;
+  color: var(--amber);
   font-size: 8px;
 }
 
@@ -4970,13 +4994,7 @@ button {
   min-height: 1700px;
   overflow: clip;
   padding: 0;
-  background:
-    radial-gradient(
-      ellipse at 50% 48%,
-      rgba(59, 130, 246, 0.12),
-      transparent 52%
-    ),
-    #070b14;
+  background: transparent;
 }
 
 .documents-layout {
@@ -5399,13 +5417,8 @@ button {
   display: block;
   min-height: 0;
   padding: 0;
-  background:
-    radial-gradient(
-      ellipse at 51% 47%,
-      rgba(12, 31, 64, 0.75),
-      transparent 65%
-    ),
-    #060a14;
+  background: transparent;
+  color: #fff;
 }
 
 .story-map-canvas {
@@ -5474,7 +5487,7 @@ button {
 }
 
 .story-milestones small {
-  color: #fbbf24;
+  color: var(--amber);
 }
 
 .story-milestones strong {
@@ -5489,7 +5502,7 @@ button {
 
 .story-traveler {
   fill: #fff;
-  filter: drop-shadow(0 0 10px #fbbf24) drop-shadow(0 0 22px #3b82f6);
+  filter: drop-shadow(0 0 10px var(--amber)) drop-shadow(0 0 22px var(--blue));
 }
 
 .story-city {
@@ -5593,7 +5606,7 @@ button {
   inset: 4px 0;
   background: repeating-linear-gradient(
     90deg,
-    #fbbf24 0 6px,
+    var(--amber) 0 6px,
     transparent 6px 60px
   );
   content: "";
@@ -5647,7 +5660,7 @@ button {
 
 .price-card-placeholder {
   margin-top: 4px;
-  color: #f2c56a;
+  color: var(--amber);
   font-size: 7px;
   letter-spacing: 0.08em;
   text-transform: uppercase;

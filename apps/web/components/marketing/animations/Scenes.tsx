@@ -723,7 +723,7 @@ export function GlobeScene() {
         .getPropertyValue("--on-dark-accent")
         .trim() || "#7dd3fc";
     const accentRgb = [125, 211, 252];
-    const amberRgb = [251, 191, 36];
+    const amberRgb = [34, 211, 238];
     const blueRgb = [59, 130, 246];
     const rgba = (color: number[], alpha: number) =>
       `rgba(${color[0]},${color[1]},${color[2]},${alpha})`;
@@ -1410,8 +1410,8 @@ export function StoryScene() {
           <svg preserveAspectRatio="xMidYMid slice" viewBox="0 0 1440 800">
             <defs>
               <linearGradient id="story-route" x1="0" x2="1">
-                <stop stopColor="#7dd3fc" />
-                <stop offset="1" stopColor="#3b82f6" />
+                <stop stopColor="var(--amber)" />
+                <stop offset="1" stopColor="var(--blue)" />
               </linearGradient>
             </defs>
             <path

@@ -2,6 +2,7 @@
 
 Read this file first in every session. It is the source of truth for decisions.
 Also read `docs/DECISIONS.md`, `docs/PENDING.md` and `docs/SPEC.md` before starting any task.
+When resuming public website work, also read `docs/WORK_MEMORY.md`.
 
 ## What we are building
 

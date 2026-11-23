@@ -1,6 +1,7 @@
 # Pending work and discussions (project memory — keep this updated)
 
 Every agent: update this file when you finish or stop. Move items to "Done" with the date and PR link.
+For active public website progress and handoff details, see [WORK_MEMORY.md](./WORK_MEMORY.md).
 
 ## Done in planning
 
@@ -24,6 +25,7 @@ Every agent: update this file when you finish or stop. Move items to "Done" with
 - [ ] **Language** — English only? (assume yes)
 - [ ] **WhatsApp** — +91 99996 30777 only, or a US number too?
 - [ ] **Custom domains** — staging/admin subdomains later; Vercel preview URLs for now.
+- [ ] **Marketing visual sign-off** — review the Theme 11 color corrections and selected animation scenes against the final HTML; record any remaining visual/content feedback.
 
 ## Open questions raised by agents
 
@@ -44,3 +46,4 @@ Every agent: update this file when you finish or stop. Move items to "Done" with
 - 2026-11-24 · Agent A public marketing site updated to the user-provided final design selections (Theme 11, Hero 12, Layout 20; globe, story route, take-off, document folder, blur-in headings, comet cursor, and lift-and-glow cards). Fixed mobile take-off positioning and removed an overlapping documents disclaimer. Responsive and reduced-motion scenes checked; build, lint, typecheck, and four route probes pass. Core's 15 Vitest tests pass; the aggregate test parser reports `parse-failed` for mixed package output, including packages with no tests. Final copy, prices, and legal text remain pending. · https://github.com/amitjurislpo/juris-consultants-usa/pull/5
 - 2026-11-24 · Hero globe now follows the supplied HTML's detailed land/water mask, 18,000 desktop / 9,000 mobile dots, ten illustrative routes with animated aircraft, origin labels and markers, and split orbit ring with satellite; mobile uses fewer routes and reduced-motion remains static. Desktop and mobile visuals checked. Build, lint, typecheck, and route probes pass; aggregate test task exits 0 but its parser reports `parse-failed` with zero tests counted. · https://github.com/amitjurislpo/juris-consultants-usa/pull/5
 - 2026-11-24 · Final design comparison reviewed for hero, story, plane, departures board, documents, and pricing on desktop and mobile. Fixed mobile story milestone state and header alignment; comparison runs without browser console errors. Web build, lint, typecheck, and formatting pass; the web package has no test files. · https://github.com/amitjurislpo/juris-consultants-usa/pull/5
+- 2026-11-24 · Follow-up Theme 11 color pass: browser-computed styles match the final HTML for global glows/grid, hero background/title/body/CTA, story route and milestones, take-off scene, departures board, and documents background. Globe route markers and story accents now resolve to Theme 11 cyan; intentional gold flight-board details remain gold. Lint, typecheck, Prettier, and `git diff --check` pass. Localhost is responsive. Build was not rerun to avoid disturbing the active dev server's Next output; the PR's prior build passed. · https://github.com/amitjurislpo/juris-consultants-usa/pull/5
