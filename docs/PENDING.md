@@ -25,6 +25,8 @@ Every agent: update this file when you finish or stop. Move items to "Done" with
 
 ## Open questions raised by agents
 (add here: date · agent · question)
+- [ ] 2026-11-23 · Foundation agent · What labels should replace the placeholder business types in the seed? Confirm the admin-facing business-type list; seed currently contains only an inactive `PLACEHOLDER business type`.
+- [ ] 2026-11-23 · Foundation agent · `.env.local` and a database connection are not present in this workspace. Before running the real seed, supply `DATABASE_URL`, `SEED_SUPER_ADMIN_EMAIL`, `SEED_SUPER_ADMIN_PASSWORD` (12+ characters), and `SEED_SUPER_ADMIN_TOTP_SECRET` (base32); configure `RESEND_API_KEY` and `AUTH_EMAIL_FROM` for live OTP delivery.
 
 ## Requests to Foundation (schema / shared types)
 (add here: date · agent · request)
