@@ -27,145 +27,510 @@ type GlobeDot = { x: number; y: number; z: number; seed: number };
 
 const landRegions: number[][][] = [
   [
-    [72, -168],
-    [60, -165],
-    [52, -130],
-    [48, -124],
-    [40, -124],
-    [32, -117],
-    [28, -105],
-    [18, -96],
-    [8, -82],
-    [15, -80],
-    [25, -81],
-    [30, -85],
-    [35, -75],
-    [45, -66],
+    [66, -168],
+    [71, -156],
+    [70, -141],
+    [69, -133],
+    [70, -128],
+    [68, -115],
+    [68, -100],
+    [69, -94],
+    [67, -87],
+    [69, -81],
+    [64, -87],
+    [62, -78],
+    [60, -77],
+    [60, -70],
+    [58, -64],
+    [55, -60],
     [52, -56],
-    [60, -64],
-    [68, -82],
-    [72, -100],
-    [74, -125],
+    [47, -53],
+    [45, -61],
+    [44, -66],
+    [41, -70],
+    [35, -76],
+    [31, -81],
+    [25, -80],
+    [27, -82],
+    [30, -84],
+    [29, -89],
+    [29, -94],
+    [26, -97],
+    [21, -97],
+    [18, -95],
+    [21, -87],
+    [18, -88],
+    [15, -83],
+    [11, -83],
+    [9, -79],
+    [8, -77],
+    [8, -82],
+    [13, -88],
+    [16, -95],
+    [20, -105],
+    [23, -110],
+    [31, -114],
+    [32, -117],
+    [34, -120],
+    [38, -123],
+    [42, -124],
+    [48, -125],
+    [54, -130],
+    [58, -137],
+    [60, -146],
+    [59, -153],
+    [57, -158],
+    [55, -163],
+    [60, -165],
+    [64, -166],
   ],
   [
-    [59, -50],
-    [64, -43],
-    [71, -22],
-    [78, -20],
-    [83, -35],
-    [81, -57],
-    [74, -66],
-    [67, -57],
+    [60, -44],
+    [65, -40],
+    [70, -22],
+    [76, -19],
+    [82, -25],
+    [83, -40],
+    [82, -60],
+    [78, -72],
+    [76, -68],
+    [70, -54],
+    [65, -52],
+  ],
+  [
+    [70, -120],
+    [74, -125],
+    [77, -118],
+    [80, -100],
+    [83, -75],
+    [80, -65],
+    [76, -78],
+    [73, -80],
+    [70, -85],
+    [72, -95],
   ],
   [
     [12, -72],
+    [11, -64],
+    [10, -62],
     [8, -60],
-    [3, -51],
+    [5, -52],
+    [2, -50],
+    [-1, -48],
+    [-3, -40],
     [-5, -35],
-    [-14, -38],
-    [-24, -45],
-    [-32, -52],
-    [-40, -64],
-    [-53, -70],
-    [-55, -75],
-    [-43, -75],
-    [-30, -72],
+    [-8, -35],
+    [-13, -38],
+    [-18, -39],
+    [-23, -42],
+    [-25, -48],
+    [-29, -49],
+    [-33, -52],
+    [-35, -55],
+    [-37, -57],
+    [-39, -62],
+    [-42, -63],
+    [-46, -67],
+    [-50, -68],
+    [-53, -69],
+    [-55, -67],
+    [-55, -71],
+    [-52, -75],
+    [-46, -75],
+    [-40, -74],
+    [-33, -72],
+    [-27, -71],
     [-18, -70],
-    [-8, -78],
-    [2, -80],
+    [-14, -76],
+    [-6, -81],
+    [-2, -80],
+    [1, -79],
+    [4, -77],
+    [8, -77],
+    [9, -76],
+    [11, -75],
   ],
   [
-    [70, -10],
-    [72, 20],
-    [68, 42],
-    [72, 65],
-    [76, 94],
-    [75, 120],
-    [68, 145],
-    [61, 165],
-    [54, 150],
-    [48, 140],
-    [41, 130],
-    [35, 121],
-    [26, 120],
-    [20, 109],
-    [10, 106],
-    [1, 104],
-    [8, 92],
-    [19, 84],
-    [22, 72],
-    [28, 58],
-    [30, 45],
-    [38, 35],
-    [42, 28],
-    [47, 18],
-    [55, 12],
-    [60, 5],
-  ],
-  [
-    [37, -17],
-    [36, 10],
-    [32, 32],
-    [22, 38],
-    [12, 51],
-    [2, 44],
-    [-8, 42],
-    [-18, 35],
-    [-28, 33],
-    [-35, 21],
-    [-32, 17],
-    [-22, 13],
-    [-10, 12],
-    [-2, 8],
-    [5, -5],
-    [12, -16],
-    [25, -17],
-  ],
-  [
-    [-11, 112],
-    [-18, 116],
-    [-27, 114],
-    [-35, 118],
-    [-39, 146],
-    [-31, 154],
-    [-20, 150],
-    [-12, 142],
-    [-10, 130],
-  ],
-  [
-    [6, 96],
+    [37, -9],
+    [43, -9],
+    [43, -2],
+    [47, -2],
+    [48, -5],
+    [50, 1],
+    [53, 5],
+    [54, 9],
+    [57, 8],
+    [58, 6],
+    [62, 5],
+    [66, 13],
+    [70, 19],
+    [71, 26],
+    [70, 30],
+    [69, 40],
+    [67, 44],
+    [68, 55],
+    [69, 67],
+    [73, 70],
+    [72, 80],
+    [76, 95],
+    [77, 105],
+    [74, 112],
+    [73, 128],
+    [72, 140],
+    [71, 150],
+    [70, 160],
+    [69, 170],
+    [69, 180],
+    [65, 180],
+    [62, 177],
+    [60, 170],
+    [60, 163],
+    [57, 162],
+    [51, 157],
+    [57, 156],
+    [59, 155],
+    [59, 143],
+    [54, 137],
+    [50, 140],
+    [46, 138],
+    [42, 132],
+    [40, 129],
+    [35, 129],
+    [37, 126],
+    [39, 125],
+    [40, 122],
+    [38, 118],
+    [35, 120],
+    [31, 122],
+    [27, 120],
+    [23, 117],
+    [22, 113],
+    [21, 109],
+    [18, 106],
+    [16, 108],
+    [11, 109],
+    [9, 105],
+    [10, 104],
+    [13, 100],
+    [7, 100],
     [2, 103],
-    [-5, 110],
-    [1, 119],
-    [7, 116],
-    [10, 108],
+    [1, 104],
+    [4, 100],
+    [8, 98],
+    [16, 97],
+    [16, 94],
+    [22, 91],
+    [22, 88],
+    [20, 86],
+    [16, 81],
+    [13, 80],
+    [8, 77],
+    [10, 76],
+    [15, 74],
+    [21, 72],
+    [23, 68],
+    [25, 62],
+    [25, 57],
+    [27, 56],
+    [30, 49],
+    [29, 48],
+    [24, 54],
+    [22, 60],
+    [17, 55],
+    [13, 45],
+    [15, 43],
+    [20, 40],
+    [28, 34],
+    [30, 33],
+    [31, 32],
+    [33, 35],
+    [36, 36],
+    [37, 30],
+    [36, 28],
+    [39, 26],
+    [41, 29],
+    [41, 28],
+    [40, 26],
+    [38, 24],
+    [36, 22],
+    [39, 20],
+    [42, 19],
+    [45, 13],
+    [40, 18],
+    [38, 16],
+    [41, 13],
+    [44, 9],
+    [43, 6],
+    [43, 3],
+    [41, 1],
+    [38, 0],
+    [36, -5],
   ],
   [
-    [35, 130],
-    [32, 132],
-    [34, 138],
-    [40, 142],
-    [44, 145],
-    [46, 141],
-    [42, 136],
+    [50, -5],
+    [51, 1],
+    [53, 0],
+    [55, -2],
+    [58, -3],
+    [58, -5],
+    [55, -6],
+    [52, -5],
+  ],
+  [
+    [52, -10],
+    [54, -10],
+    [55, -7],
+    [54, -6],
+    [52, -6],
+  ],
+  [
+    [64, -22],
+    [66, -23],
+    [66, -15],
+    [64, -14],
+  ],
+  [
+    [31, -10],
+    [35, -6],
+    [37, 10],
+    [33, 11],
+    [32, 20],
+    [31, 25],
+    [31, 32],
+    [30, 33],
+    [22, 37],
+    [15, 39],
+    [12, 43],
+    [11, 51],
+    [2, 46],
+    [-4, 40],
+    [-10, 40],
+    [-15, 41],
+    [-20, 35],
+    [-25, 35],
+    [-30, 31],
+    [-34, 26],
+    [-35, 20],
+    [-32, 18],
+    [-28, 16],
+    [-22, 14],
+    [-17, 12],
+    [-12, 14],
+    [-6, 12],
+    [-1, 9],
+    [4, 9],
+    [4, 6],
+    [6, 2],
+    [5, -5],
+    [4, -8],
+    [7, -13],
+    [11, -15],
+    [15, -17],
+    [21, -17],
+    [26, -14],
+    [28, -12],
+  ],
+  [
+    [-12, 49],
+    [-16, 50],
+    [-25, 47],
+    [-25, 44],
+    [-16, 44],
+  ],
+  [
+    [6, 80],
+    [9, 80],
+    [8, 82],
+    [6, 81.5],
+  ],
+  [
+    [5, 95],
+    [0, 99],
+    [-6, 105],
+    [-3, 106],
+    [2, 101],
+    [5, 98],
+  ],
+  [
+    [7, 117],
+    [1, 119],
+    [-4, 116],
+    [-3, 110],
+    [1, 109],
+    [4, 114],
+  ],
+  [
+    [-6, 105],
+    [-8, 114],
+    [-8, 111],
+    [-6, 106],
+  ],
+  [
+    [1, 125],
+    [-5, 123],
+    [-5, 119],
+    [0, 120],
+  ],
+  [
+    [-1, 131],
+    [-3, 141],
+    [-8, 148],
+    [-10, 150],
+    [-8, 143],
+    [-9, 140],
+    [-5, 135],
+    [-4, 132],
+  ],
+  [
+    [18, 121],
+    [14, 124],
+    [7, 126],
+    [6, 122],
+    [10, 119],
+    [14, 120],
+  ],
+  [
+    [31, 130],
+    [34, 131],
+    [35, 136],
+    [36, 140],
+    [41, 140],
+    [41, 142],
+    [38, 141],
+    [35, 140],
+    [34, 136],
+    [33, 132],
+  ],
+  [
+    [42, 140],
+    [45, 142],
+    [43, 145],
+    [42, 143],
+  ],
+  [
+    [25, 121],
+    [22, 120.5],
+    [23, 120],
+  ],
+  [
+    [-11, 142],
+    [-17, 141],
+    [-12, 136],
+    [-12, 131],
+    [-15, 129],
+    [-14, 126],
+    [-18, 122],
+    [-21, 116],
+    [-22, 114],
+    [-26, 113],
+    [-32, 115],
+    [-35, 117],
+    [-34, 123],
+    [-32, 127],
+    [-32, 133],
+    [-35, 136],
+    [-35, 139],
+    [-38, 140],
+    [-39, 146],
+    [-37, 150],
+    [-33, 152],
+    [-28, 153],
+    [-24, 152],
+    [-19, 147],
+    [-15, 145],
+  ],
+  [
+    [-41, 145],
+    [-41, 148],
+    [-43, 147],
+    [-43, 146],
+  ],
+  [
+    [-35, 173],
+    [-37, 176],
+    [-41, 176],
+    [-41, 174],
+    [-46, 170],
+    [-46, 167],
+    [-43, 170],
+    [-40, 172],
+  ],
+  [
+    [23, -84],
+    [23, -80],
+    [20, -74],
+    [20, -77],
+    [22, -80],
+  ],
+  [
+    [20, -74],
+    [20, -69],
+    [18, -68],
+    [18, -74],
   ],
 ];
 
-function isLand(latitude: number, longitude: number) {
-  return landRegions.some((region) => {
-    let inside = false;
-    for (let i = 0, j = region.length - 1; i < region.length; j = i++) {
-      const [latI, lonI] = region[i]!;
-      const [latJ, lonJ] = region[j]!;
-      if (
-        latI > latitude !== latJ > latitude &&
-        longitude < ((lonJ - lonI) * (latitude - latI)) / (latJ - latI) + lonI
-      ) {
-        inside = !inside;
-      }
+const waterRegions: number[][][] = [
+  [
+    [60, -94],
+    [55, -88],
+    [52, -80],
+    [56, -77],
+    [62, -78],
+    [64, -87],
+  ],
+  [
+    [54, 14],
+    [55, 21],
+    [59, 23],
+    [60, 30],
+    [61, 22],
+    [65, 25],
+    [66, 22],
+    [63, 18],
+    [59, 18],
+    [56, 16],
+  ],
+  [
+    [41, 29],
+    [42, 35],
+    [41, 41],
+    [44, 39],
+    [46, 37],
+    [46, 31],
+    [44, 29],
+  ],
+  [
+    [37, 53],
+    [41, 50],
+    [45, 47],
+    [47, 51],
+    [45, 53],
+    [41, 53],
+    [37, 54],
+  ],
+];
+
+function isInRegion(latitude: number, longitude: number, region: number[][]) {
+  let inside = false;
+  for (let i = 0, j = region.length - 1; i < region.length; j = i++) {
+    const [latI, lonI] = region[i]!;
+    const [latJ, lonJ] = region[j]!;
+    if (
+      latI > latitude !== latJ > latitude &&
+      longitude < ((lonJ - lonI) * (latitude - latI)) / (latJ - latI) + lonI
+    ) {
+      inside = !inside;
     }
-    return inside;
-  });
+  }
+  return inside;
+}
+
+function isLand(latitude: number, longitude: number) {
+  if (latitude < -68) return true;
+  if (waterRegions.some((region) => isInRegion(latitude, longitude, region)))
+    return false;
+  return landRegions.some((region) => isInRegion(latitude, longitude, region));
 }
 
 function globeVector(latitude: number, longitude: number): GlobeVector {
@@ -199,30 +564,53 @@ function slerp(
   ];
 }
 
+const globeCities = {
+  sydney: globeVector(-33.9, 151.2),
+  lagos: globeVector(6.5, 3.4),
+  saoPaulo: globeVector(-23.5, -46.6),
+  tokyo: globeVector(35.7, 139.7),
+  frankfurt: globeVector(50.1, 8.7),
+  delhi: globeVector(28.6, 77.2),
+  mumbai: globeVector(19.1, 72.9),
+  bengaluru: globeVector(12.97, 77.6),
+  newYork: globeVector(40.7, -74),
+  sanFrancisco: globeVector(37.8, -122.4),
+  wyoming: globeVector(41.1, -104.8),
+  delaware: globeVector(39.2, -75.5),
+  texas: globeVector(30.3, -97.7),
+  london: globeVector(51.5, -0.1),
+  dubai: globeVector(25.2, 55.3),
+  singapore: globeVector(1.35, 103.8),
+};
+
 const globeRoutes = [
-  { from: globeVector(51.5, -0.1), to: globeVector(40.7, -74), weight: 1 },
-  { from: globeVector(1.35, 103.8), to: globeVector(30.3, -97.7), weight: 0.9 },
-  { from: globeVector(-1.3, 36.8), to: globeVector(39.2, -75.5), weight: 0.8 },
-  {
-    from: globeVector(-33.9, 151.2),
-    to: globeVector(37.8, -122.4),
-    weight: 0.8,
-  },
-  { from: globeVector(50.1, 8.7), to: globeVector(41.1, -104.8), weight: 0.7 },
-  { from: globeVector(25.2, 55.3), to: globeVector(30.3, -97.7), weight: 0.8 },
-  {
-    from: globeVector(-23.5, -46.6),
-    to: globeVector(30.3, -97.7),
-    weight: 0.6,
-  },
-  { from: globeVector(19.1, 72.9), to: globeVector(37.8, -122.4), weight: 0.9 },
-  { from: globeVector(35.7, 139.7), to: globeVector(39.2, -75.5), weight: 0.8 },
+  { from: globeCities.delhi, to: globeCities.newYork, weight: 1 },
+  { from: globeCities.london, to: globeCities.newYork, weight: 0.55 },
+  { from: globeCities.dubai, to: globeCities.texas, weight: 0.8 },
+  { from: globeCities.singapore, to: globeCities.sanFrancisco, weight: 0.9 },
+  { from: globeCities.sydney, to: globeCities.sanFrancisco, weight: 0.8 },
+  { from: globeCities.lagos, to: globeCities.delaware, weight: 0.6 },
+  { from: globeCities.saoPaulo, to: globeCities.texas, weight: 0.5 },
+  { from: globeCities.tokyo, to: globeCities.wyoming, weight: 0.75 },
+  { from: globeCities.frankfurt, to: globeCities.delaware, weight: 0.6 },
+  { from: globeCities.mumbai, to: globeCities.sanFrancisco, weight: 0.85 },
 ];
 
-const globeDots = (() => {
+const globeOriginLabels = [
+  { point: globeCities.delhi, label: "INDIA" },
+  { point: globeCities.london, label: "UK" },
+  { point: globeCities.dubai, label: "UAE" },
+  { point: globeCities.singapore, label: "SINGAPORE" },
+  { point: globeCities.sydney, label: "AUSTRALIA" },
+  { point: globeCities.lagos, label: "NIGERIA" },
+  { point: globeCities.saoPaulo, label: "BRAZIL" },
+  { point: globeCities.tokyo, label: "JAPAN" },
+  { point: globeCities.frankfurt, label: "GERMANY" },
+];
+
+function getGlobeDots(count: number) {
   const land: GlobeDot[] = [];
   const sea: GlobeVector[] = [];
-  const count = 9000;
   const goldenAngle = Math.PI * (3 - Math.sqrt(5));
   for (let index = 0; index < count; index += 1) {
     const y = 1 - (index / (count - 1)) * 2;
@@ -244,7 +632,19 @@ const globeDots = (() => {
     }
   }
   return { land, sea };
-})();
+}
+
+const globeDotsCache = new Map<number, ReturnType<typeof getGlobeDots>>();
+
+function globeDotsForViewport() {
+  const count = window.matchMedia("(max-width: 680px)").matches ? 9000 : 18000;
+  let dots = globeDotsCache.get(count);
+  if (!dots) {
+    dots = getGlobeDots(count);
+    globeDotsCache.set(count, dots);
+  }
+  return dots;
+}
 
 export function GlobeScene() {
   const canvas = useRef<HTMLCanvasElement>(null);
@@ -254,25 +654,43 @@ export function GlobeScene() {
     const context = element?.getContext("2d");
     if (!element || !context) return;
 
+    const globeDots = globeDotsForViewport();
+    const isMobile = window.matchMedia("(max-width: 680px)").matches;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const routes = globeRoutes.map(({ from, to, weight }) =>
-      Array.from({ length: 91 }, (_, index) => {
-        const progress = index / 90;
-        const point = slerp(from, to, progress);
-        const height = 1 + 0.26 * weight * Math.sin(Math.PI * progress);
-        return [
-          point[0] * height,
-          point[1] * height,
-          point[2] * height,
-        ] as GlobeVector;
-      }),
+    const routes = (isMobile ? globeRoutes.slice(0, 6) : globeRoutes).map(
+      ({ from, to, weight }) =>
+        Array.from({ length: 91 }, (_, index) => {
+          const progress = index / 90;
+          const point = slerp(from, to, progress);
+          const height = 1 + 0.26 * weight * Math.sin(Math.PI * progress);
+          return [
+            point[0] * height,
+            point[1] * height,
+            point[2] * height,
+          ] as GlobeVector;
+        }),
     );
-    const stars = Array.from({ length: 90 }, (_, index) => [
+    const stars = Array.from({ length: isMobile ? 45 : 90 }, (_, index) => [
       (index * 0.754877666) % 1,
       (index * 0.569840291) % 1,
       0.3 + ((index * 0.438579) % 1) * 1.1,
       index * 0.83,
     ]);
+    const orbitRing = Array.from({ length: 121 }, (_, index) => {
+      const theta = (index / 120) * Math.PI * 2;
+      const x = Math.cos(theta) * 1.24;
+      const y = 0;
+      const z = Math.sin(theta) * 1.24;
+      const inclination = 1.22;
+      const rotation = -0.32;
+      const tiltedY = y * Math.cos(inclination) - z * Math.sin(inclination);
+      const tiltedZ = y * Math.sin(inclination) + z * Math.cos(inclination);
+      return [
+        x * Math.cos(rotation) - tiltedY * Math.sin(rotation),
+        x * Math.sin(rotation) + tiltedY * Math.cos(rotation),
+        tiltedZ,
+      ] as GlobeVector;
+    });
     let frame = 0;
     let rotation = 0;
     let velocity = 0;
@@ -285,6 +703,7 @@ export function GlobeScene() {
         .getPropertyValue("--on-dark-accent")
         .trim() || "#7dd3fc";
     const accentRgb = [125, 211, 252];
+    const amberRgb = [251, 191, 36];
     const blueRgb = [59, 130, 246];
     const rgba = (color: number[], alpha: number) =>
       `rgba(${color[0]},${color[1]},${color[2]},${alpha})`;
@@ -364,6 +783,27 @@ export function GlobeScene() {
         centerX + point[0] * radius,
         centerY - point[1] * radius,
       ];
+      const drawOrbitRing = (front: boolean) => {
+        context.strokeStyle = rgba(accentRgb, front ? 0.35 : 0.12);
+        context.lineWidth = 1;
+        context.setLineDash([3, 6]);
+        context.beginPath();
+        let drawing = false;
+        for (const point of orbitRing) {
+          if (point[2] >= 0 !== front) {
+            drawing = false;
+            continue;
+          }
+          const [x, y] = project(point);
+          if (drawing) context.lineTo(x, y);
+          else {
+            context.moveTo(x, y);
+            drawing = true;
+          }
+        }
+        context.stroke();
+        context.setLineDash([]);
+      };
 
       for (const star of stars) {
         const x = star[0]! * width;
@@ -392,6 +832,8 @@ export function GlobeScene() {
       context.beginPath();
       context.arc(centerX, centerY, radius * 1.38, 0, Math.PI * 2);
       context.fill();
+
+      drawOrbitRing(false);
 
       const earth = context.createRadialGradient(
         centerX - radius * 0.42,
@@ -524,10 +966,8 @@ export function GlobeScene() {
 
       routes.forEach((route, routeIndex) => {
         const rotated = route.map((point) => rotate(point));
-        context.strokeStyle = rgba(
-          routeIndex % 2 === 0 ? accentRgb : blueRgb,
-          0.22,
-        );
+        const routeColor = routeIndex % 2 === 0 ? amberRgb : accentRgb;
+        context.strokeStyle = rgba(routeColor, 0.22);
         context.lineWidth = routeIndex === 0 ? 1.5 : 1;
         context.beginPath();
         let drawing = false;
@@ -555,10 +995,7 @@ export function GlobeScene() {
           const fade = 1 - (headIndex - index) / 24;
           const [x1, y1] = project(first);
           const [x2, y2] = project(second);
-          context.strokeStyle = rgba(
-            routeIndex % 2 === 0 ? accentRgb : blueRgb,
-            fade * 0.95,
-          );
+          context.strokeStyle = rgba(routeColor, fade * 0.95);
           context.lineWidth = 2.2 * fade + 0.3;
           context.beginPath();
           context.moveTo(x1, y1);
@@ -579,22 +1016,87 @@ export function GlobeScene() {
         }
       });
 
+      const drawMarker = (
+        point: GlobeVector,
+        color: number[],
+        label = "",
+        labelDirection = 0,
+      ) => {
+        const rotated = rotate(point);
+        if (rotated[2] < 0.05) return;
+        const [x, y] = project(rotated);
+        const pulse = animate ? (now * 0.9) % 1 : 0.4;
+        context.fillStyle = rgba(color, 1);
+        context.beginPath();
+        context.arc(x, y, 3.4, 0, Math.PI * 2);
+        context.fill();
+        context.strokeStyle = rgba(color, 0.8 * (1 - pulse));
+        context.lineWidth = 1.4;
+        context.beginPath();
+        context.arc(x, y, 4 + pulse * 16, 0, Math.PI * 2);
+        context.stroke();
+
+        if (!label) return;
+        context.font = "700 12px Inter, system-ui, sans-serif";
+        const textWidth = context.measureText(label).width;
+        const direction = labelDirection || (x < centerX ? -1 : 1);
+        const labelX = x + direction * (textWidth / 2 + 22);
+        const labelY = y - 22;
+        context.globalAlpha = Math.min(1, rotated[2] * 4);
+        context.fillStyle = "rgba(8,12,28,.75)";
+        context.strokeStyle = rgba(color, 0.6);
+        context.lineWidth = 1;
+        context.beginPath();
+        if (typeof context.roundRect === "function") {
+          context.roundRect(
+            labelX - textWidth / 2 - 10,
+            labelY - 12,
+            textWidth + 20,
+            24,
+            12,
+          );
+        } else {
+          context.rect(
+            labelX - textWidth / 2 - 10,
+            labelY - 12,
+            textWidth + 20,
+            24,
+          );
+        }
+        context.fill();
+        context.stroke();
+        context.fillStyle = "#fff";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        context.fillText(label, labelX, labelY + 1);
+        context.globalAlpha = 1;
+      };
+
+      drawMarker(globeCities.mumbai, amberRgb);
+      drawMarker(globeCities.bengaluru, amberRgb);
+      drawMarker(globeCities.sanFrancisco, accentRgb);
+      drawMarker(globeCities.wyoming, accentRgb);
+      drawMarker(globeCities.texas, accentRgb);
+      drawMarker(globeCities.delaware, accentRgb);
+      for (const { point, label } of globeOriginLabels) {
+        const rotated = rotate(point);
+        drawMarker(point, amberRgb, rotated[2] > 0.3 ? label : "");
+      }
+      drawMarker(globeCities.newYork, accentRgb, "USA");
+
       context.globalAlpha = 1;
-      context.strokeStyle = rgba(accentRgb, 0.32);
-      context.lineWidth = 1;
-      context.setLineDash([3, 6]);
-      context.beginPath();
-      context.ellipse(
-        centerX,
-        centerY,
-        radius * 1.24,
-        radius * 0.47,
-        -0.45,
-        0,
-        Math.PI,
-      );
-      context.stroke();
-      context.setLineDash([]);
+      drawOrbitRing(true);
+      const satellite = orbitRing[Math.floor((now * 6) % 120)]!;
+      if (satellite[2] >= 0 || Math.hypot(satellite[0], satellite[1]) > 1) {
+        const [x, y] = project(satellite);
+        context.fillStyle = "#fff";
+        context.shadowColor = accent;
+        context.shadowBlur = 12;
+        context.beginPath();
+        context.arc(x, y, 2.6, 0, Math.PI * 2);
+        context.fill();
+        context.shadowBlur = 0;
+      }
     };
 
     const animate = (time: number) => {
@@ -652,23 +1154,12 @@ export function GlobeScene() {
 
   return (
     <div className="globe-wrap">
-      <div aria-hidden="true" className="globe-orbit orbit-one" />
-      <div aria-hidden="true" className="globe-orbit orbit-two" />
       <canvas
         aria-label="Animated dotted globe with illustrative routes from founders worldwide to the United States. Drag to rotate."
         className="globe"
         ref={canvas}
         role="img"
       />
-      <div className="globe-label label-one">
-        <i /> London <span>→</span> Delaware
-      </div>
-      <div className="globe-label label-two">
-        <i /> Singapore <span>→</span> Texas
-      </div>
-      <div className="globe-label label-three">
-        <i /> Nairobi <span>→</span> New York
-      </div>
       <span className="globe-hint">Drag to explore</span>
       <div aria-hidden="true" className="globe-status">
         <span className="status-dot" /> ILLUSTRATIVE WORLDWIDE ROUTES
