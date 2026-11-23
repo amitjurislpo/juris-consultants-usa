@@ -135,6 +135,26 @@ export default function HomePage() {
           </div>
         </section>
 
+        <section className="section pricing-section" id="pricing">
+          <div className="page-container">
+            <div className="section-heading centered">
+              <Reveal>
+                <p className="eyebrow">PICK A CARD · SEE THE PRICE</p>
+                <h2>Start with the service that fits.</h2>
+                <p>
+                  Select a card to preview the experience. Final prices are not
+                  set yet.
+                </p>
+              </Reveal>
+            </div>
+            <PricingCards />
+            <p className="small-note centered-note">
+              All pricing is a placeholder pending confirmation. Nothing on this
+              page is an offer or quote.
+            </p>
+          </div>
+        </section>
+
         <section
           aria-label="Service approach"
           className="trust-strip"
@@ -160,6 +180,51 @@ export default function HomePage() {
               <span className="trust-icon">⌘</span>
               <strong>One place</strong>
               <small>Keep important details organized</small>
+            </div>
+          </div>
+        </section>
+
+        <section className="section quiz-section" id="quiz">
+          <div className="page-container quiz-layout">
+            <div className="section-heading">
+              <Reveal>
+                <p className="eyebrow">A FIRST QUESTION</p>
+                <h2>LLC or C-Corp?</h2>
+                <p>
+                  The right choice depends on your plans. These short
+                  descriptions are a starting point for a conversation, not
+                  legal or tax advice.
+                </p>
+              </Reveal>
+              <Link className="text-link" href="/coming-soon">
+                Get help choosing <span aria-hidden="true">↗</span>
+              </Link>
+            </div>
+            <div className="quiz-options">
+              <article className="quiz-card hover-card">
+                <span className="quiz-symbol">LLC</span>
+                <p className="eyebrow">LIMITED LIABILITY COMPANY</p>
+                <h3>Looking for a flexible starting point?</h3>
+                <p>
+                  Explore how an LLC might fit your ownership and operating
+                  plans.
+                </p>
+                <Link href="/services/llc-formation">
+                  Explore LLC formation <span aria-hidden="true">↗</span>
+                </Link>
+              </article>
+              <article className="quiz-card quiz-card-featured hover-card">
+                <span className="quiz-symbol">C</span>
+                <p className="eyebrow">C-CORPORATION</p>
+                <h3>Planning for a venture-backed startup?</h3>
+                <p>
+                  Explore a corporate structure often considered by fundraising
+                  teams.
+                </p>
+                <Link href="/services/c-corp-formation">
+                  Explore C-Corp formation <span aria-hidden="true">↗</span>
+                </Link>
+              </article>
             </div>
           </div>
         </section>
@@ -282,51 +347,6 @@ export default function HomePage() {
         <TakeoffScene />
         <DeparturesBoard />
 
-        <section className="section quiz-section" id="quiz">
-          <div className="page-container quiz-layout">
-            <div className="section-heading">
-              <Reveal>
-                <p className="eyebrow">A FIRST QUESTION</p>
-                <h2>LLC or C-Corp?</h2>
-                <p>
-                  The right choice depends on your plans. These short
-                  descriptions are a starting point for a conversation, not
-                  legal or tax advice.
-                </p>
-              </Reveal>
-              <Link className="text-link" href="/coming-soon">
-                Get help choosing <span aria-hidden="true">↗</span>
-              </Link>
-            </div>
-            <div className="quiz-options">
-              <article className="quiz-card hover-card">
-                <span className="quiz-symbol">LLC</span>
-                <p className="eyebrow">LIMITED LIABILITY COMPANY</p>
-                <h3>Looking for a flexible starting point?</h3>
-                <p>
-                  Explore how an LLC might fit your ownership and operating
-                  plans.
-                </p>
-                <Link href="/services/llc-formation">
-                  Explore LLC formation <span aria-hidden="true">↗</span>
-                </Link>
-              </article>
-              <article className="quiz-card quiz-card-featured hover-card">
-                <span className="quiz-symbol">C</span>
-                <p className="eyebrow">C-CORPORATION</p>
-                <h3>Planning for a venture-backed startup?</h3>
-                <p>
-                  Explore a corporate structure often considered by fundraising
-                  teams.
-                </p>
-                <Link href="/services/c-corp-formation">
-                  Explore C-Corp formation <span aria-hidden="true">↗</span>
-                </Link>
-              </article>
-            </div>
-          </div>
-        </section>
-
         <section className="section documents-section" id="stack">
           <div className="page-container documents-layout">
             <div className="section-heading">
@@ -343,26 +363,6 @@ export default function HomePage() {
               </Link>
             </div>
             <DocumentsFolder />
-          </div>
-        </section>
-
-        <section className="section pricing-section" id="pricing">
-          <div className="page-container">
-            <div className="section-heading centered">
-              <Reveal>
-                <p className="eyebrow">PICK A CARD · SEE THE PRICE</p>
-                <h2>Start with the service that fits.</h2>
-                <p>
-                  Select a card to preview the experience. Final prices are not
-                  set yet.
-                </p>
-              </Reveal>
-            </div>
-            <PricingCards />
-            <p className="small-note centered-note">
-              All pricing is a placeholder pending confirmation. Nothing on this
-              page is an offer or quote.
-            </p>
           </div>
         </section>
 

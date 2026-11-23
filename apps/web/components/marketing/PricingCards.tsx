@@ -5,65 +5,62 @@ import { useState } from "react";
 
 const plans = [
   {
-    name: "US LLC formation",
-    category: "LIMITED LIABILITY COMPANY",
+    name: "Starter",
+    category: "LLC formation",
     description:
-      "A guided starting point for founders exploring a US limited liability company.",
-    label: "EXPLORE LLC",
+      "An illustrative starting point for founders exploring an LLC.",
+    label: "PREVIEW STARTER",
     icon: "LLC",
   },
   {
-    name: "US C-Corp formation",
-    category: "CORPORATION",
-    description: "Formation support for teams considering a US C-Corporation.",
-    label: "EXPLORE C-CORP",
-    icon: "C",
+    name: "Premium",
+    category: "C-Corp formation",
+    description:
+      "An illustrative option for teams considering a US C-Corporation.",
+    label: "PREVIEW PREMIUM",
+    icon: "C-Corp",
   },
   {
-    name: "Talk to an expert",
-    category: "PERSONAL GUIDANCE",
+    name: "Global",
+    category: "Founder support",
     description:
-      "Discuss your goals and questions with the team before choosing a service.",
-    label: "GET GUIDANCE",
+      "A placeholder for guidance across company formation and next steps.",
+    label: "PREVIEW GLOBAL",
     icon: "↗",
   },
 ];
 
 export function PricingCards() {
-  const [selected, setSelected] = useState(0);
+  const [selected, setSelected] = useState(1);
   const current = plans[selected]!;
 
   return (
     <div className="pricing-picker">
       <div
         aria-label="Choose a service to preview"
-        className="pricing-plan-grid"
+        className="pricing-fan"
+        role="group"
       >
         {plans.map((plan, index) => (
           <button
             aria-pressed={selected === index}
-            className={`pricing-plan-card${selected === index ? " is-selected" : ""}`}
+            className={`price-card price-card-${index + 1}${selected === index ? " is-selected" : ""}`}
             key={plan.name}
             onClick={() => setSelected(index)}
             type="button"
           >
-            <span className="pricing-plan-card-top">
-              <span className="pricing-plan-icon" aria-hidden="true">
-                {plan.icon}
-              </span>
-              <span className="pricing-plan-arrow" aria-hidden="true">
-                ↗
-              </span>
+            <span className="price-card-kicker">{plan.category}</span>
+            <span className="price-card-icon" aria-hidden="true">
+              {plan.icon}
             </span>
-            <span className="pricing-plan-category">{plan.category}</span>
-            <span className="pricing-plan-name">{plan.name}</span>
-            <span className="pricing-plan-description">{plan.description}</span>
-            <span className="pricing-plan-price">
-              <strong>To be confirmed</strong>
-              <small>Illustrative placeholder</small>
+            <span className="price-card-name">{plan.name}</span>
+            <span className="price-card-description">{plan.description}</span>
+            <span className="price-card-value">To be confirmed</span>
+            <span className="price-card-placeholder">
+              Illustrative placeholder
             </span>
-            <span className="pricing-plan-select">
-              {selected === index ? "Selected for preview" : plan.label}
+            <span className="price-card-choose">
+              {selected === index ? "Selected preview" : plan.label}
             </span>
           </button>
         ))}
@@ -72,7 +69,7 @@ export function PricingCards() {
       <div className="pricing-calculator" aria-live="polite">
         <div className="pricing-calculator-heading">
           <div>
-            <p className="eyebrow">LIVE PRICE PREVIEW</p>
+            <p className="eyebrow">ILLUSTRATIVE PRICE PREVIEW</p>
             <h3>Build your estimate</h3>
             <p>
               Final service fees, state fees, and add-ons will be confirmed

@@ -45,6 +45,7 @@ export function SiteFooter() {
         <div className="footer-column">
           <h2>More</h2>
           <Link href="/blog">Blog</Link>
+          <Link href="/track-order">Track an order</Link>
           <Link href="/faq">FAQ</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/coming-soon">Login</Link>

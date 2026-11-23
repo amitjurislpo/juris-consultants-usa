@@ -35,7 +35,13 @@ export default function BlogPage() {
                 <h2>{post.title}</h2>
                 <p>{post.excerpt}</p>
                 <span className="blog-status">ILLUSTRATIVE DRAFT</span>
-                <Link href="/coming-soon">
+                <Link
+                  href={
+                    post.slug === "choosing-a-state"
+                      ? "/blog/choosing-a-state"
+                      : "/coming-soon"
+                  }
+                >
                   Read more <span aria-hidden="true">↗</span>
                 </Link>
               </div>
