@@ -25,8 +25,8 @@ export function StickyLaunch() {
   return (
     <div className="sticky-launch">
       <span>
-        <strong>Build your US business</strong>
-        <small>Preview only · pricing to be confirmed</small>
+        <strong>Formation fees to be confirmed</strong>
+        <small>Illustrative preview · state fees vary</small>
       </span>
       <Link className="button button-small" href="/coming-soon">
         Start now <span aria-hidden="true">↗</span>

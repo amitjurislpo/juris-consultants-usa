@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { services } from "../components/marketing/content";
+import { blogPosts, services } from "../components/marketing/content";
 
 const deploymentHost =
   process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
@@ -17,6 +17,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/contact",
     "/faq",
     "/blog",
+    "/track-order",
     "/legal/privacy",
     "/legal/terms",
     "/legal/refund",
@@ -33,5 +34,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
+    ...blogPosts
+      .filter((post) => post.slug === "choosing-a-state")
+      .map((post) => ({
+        url: `${siteUrl}/blog/${post.slug}`,
+        changeFrequency: "monthly" as const,
+        priority: 0.6,
+      })),
   ];
 }

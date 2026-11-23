@@ -13,9 +13,9 @@ export default function PricingPage() {
     <main className="subpage pricing-page">
       <div className="page-container">
         <PageIntro
-          description="Pick a card to preview the experience. Final prices, service scope, and availability are still being confirmed."
+          description="Compare illustrative service options. Final prices, service scope, and availability are still being confirmed."
           eyebrow="PICK A CARD · SEE THE PRICE"
-          title="Straightforward choices. Clear next steps."
+          title="Simple, transparent pricing."
         />
         <PricingCards />
         <div className="pricing-notes">
