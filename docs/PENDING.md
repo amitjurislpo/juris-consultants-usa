@@ -17,7 +17,7 @@ Every agent: update this file when you finish or stop. Move items to "Done" with
 - [ ] **Legal pages** content: Privacy Policy, Terms, Refund Policy (payment gateways require them).
 - [ ] **Invoice entity** — which company issues receipts (India or US entity) and GST treatment.
 - [ ] **Tracking** — Google Analytics / Search Console / Meta Pixel: which, and who has access.
-- [ ] **Content** — text for the 12 service pages; which old blogs to migrate (keep old URLs or 301).
+- [ ] **Content** — final review/approval of the 12 service-page drafts and blog content; which old blog URLs to migrate (keep old URLs or 301).
 - [ ] **Real testimonials / client logos** with permission (section hidden until provided).
 - [ ] **Language** — English only? (assume yes)
 - [ ] **WhatsApp** — +91 99996 30777 only, or a US number too?
@@ -34,3 +34,4 @@ Every agent: update this file when you finish or stop. Move items to "Done" with
 ## Done
 (date · what · PR)
 - 2026-11-23 · Phase 0 Foundation scaffold; build, test, lint, typecheck, format, Playwright smoke, Prisma validation, and client generation pass. Database seed awaits the required local connection/bootstrap values. · https://github.com/amitjurislpo/juris-consultants-usa/pull/1
+- 2026-11-24 · Agent A public marketing website, responsive visual treatment, requested animations, Coming soon destinations, placeholder content/prices, and SEO routes. Build, lint, formatting, and pricing viewport checks pass; final copy, prices, and legal text remain pending. · https://github.com/amitjurislpo/juris-consultants-usa/pull/3
