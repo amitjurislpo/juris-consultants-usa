@@ -4,7 +4,8 @@ import "@juris/ui/styles.css";
 
 export const metadata: Metadata = {
   title: "Juris Consultants USA",
-  description: "Project foundation environment.",
+  description:
+    "US company formation and business support for founders worldwide.",
 };
 
 export default function RootLayout({
