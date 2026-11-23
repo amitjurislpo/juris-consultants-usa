@@ -12,11 +12,11 @@ export function SiteFooter() {
             href="/"
           >
             <span aria-hidden="true" className="brand-mark">
-              J
+              JC
             </span>
             <span className="brand-name">
-              JURIS
-              <small>CONSULTANTS USA</small>
+              Juris Consultants
+              <small>USA</small>
             </span>
           </Link>
           <p>

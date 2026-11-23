@@ -4,8 +4,8 @@ import { DesktopServicesMenu, MobileNavigation } from "./NavigationMenus";
 const primaryLinks = [
   { label: "Pricing", href: "/pricing" },
   { label: "How it works", href: "/how-it-works" },
-  { label: "About", href: "/about" },
-  { label: "Blog", href: "/blog" },
+  { label: "Blogs", href: "/blog" },
+  { label: "About Us", href: "/about" },
   { label: "Contact", href: "/contact" },
 ];
 
@@ -24,11 +24,11 @@ export function SiteHeader() {
             href="/"
           >
             <span aria-hidden="true" className="brand-mark">
-              J
+              JC
             </span>
             <span className="brand-name">
-              JURIS
-              <small>CONSULTANTS USA</small>
+              Juris Consultants
+              <small>USA</small>
             </span>
           </Link>
 
@@ -41,7 +41,7 @@ export function SiteHeader() {
             ))}
             <Link href="/coming-soon">Login</Link>
             <Link className="button button-small" href="/coming-soon">
-              Start now <span aria-hidden="true">↗</span>
+              Launch your company <span aria-hidden="true">↗</span>
             </Link>
           </nav>
 
