@@ -112,6 +112,37 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  events: {
+    // A login is a possible lead: the team can contact people who start but do not pay.
+    async signIn({ user, account }) {
+      if (!user.id || !user.email) return;
+      try {
+        const recent = await prisma.lead.findFirst({
+          where: {
+            userId: user.id,
+            createdAt: { gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+          },
+          select: { id: true },
+        });
+        if (recent) return;
+        await prisma.lead.create({
+          data: {
+            userId: user.id,
+            flow: "START",
+            stepReached: 0,
+            source: "login",
+            contactInfo: {
+              email: user.email,
+              name: user.name ?? null,
+              provider: account?.provider ?? null,
+            },
+          },
+        });
+      } catch {
+        // A failed lead record must never block a login.
+      }
+    },
+  },
   callbacks: {
     async signIn({ account, user }) {
       if (account?.provider !== "google" || !user.email) return true;

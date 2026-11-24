@@ -1185,9 +1185,10 @@ function renderOB(){const ob=$('#ob');if(!ob)return;let body='';
   <span id="agreeMsg" style="color:var(--red);font-size:13px"></span>
   <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-pay>Pay ${money(obTotals().total)} (demo)</button></div></div>`;
  if(!consult&&state.step===5)body=`<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding:40px"><div style="width:70px;height:70px;border-radius:50%;background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:34px">✓</div><h2>Payment received — welcome aboard!</h2><p class="muted">A receipt is on its way to your email. Next: fill in your business details and upload your passport and address proof in the dashboard. Our team reviews them and files with the state.</p><a class="btn btn-primary" href="/track-order">Go to my dashboard</a></div>`;
- ob.innerHTML=stepperHTML()+`<div class="ob">${body}${state.step<last?summaryHTML():'<div></div>'}</div>`;bindOB();markReq();}
+ ob.innerHTML=stepperHTML()+`<div class="ob">${body}${state.step<last?summaryHTML():'<div></div>'}</div>`;bindOB();markReq();leadPing();}
 let obAcctChecked=false;
 let acctP=null;
+function leadPing(){if(!state.loggedIn)return;const f=({start:'START',manage:'MANAGE',expert:'EXPERT',global:'GLOBAL'})[state.flow]||'START';const ph=state.phone?state.cc+state.phone:'';try{fetch('/api/leads',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({flow:f,stepReached:state.step,plan:isConsult()?undefined:state.plan,state:state.st,add:Object.keys(state.add).filter(k=>state.add[k]),name:state.name||undefined,phone:ph||undefined,company:state.company||undefined,need:state.need||undefined}),keepalive:true}).catch(()=>{});}catch(e){}}
 function needLogin(step){try{sessionStorage.setItem('jc_draft',JSON.stringify({flow:state.flow,plan:state.plan,st:state.st,add:state.add,name:state.name,email:state.email,cc:state.cc,phone:state.phone,company:state.company,need:state.need,resume:step}));}catch(e){}location.href='/login?next='+encodeURIComponent(location.pathname+location.search);}
 function restoreDraft(){try{const d=JSON.parse(sessionStorage.getItem('jc_draft')||'null');if(d&&d.flow===state.flow){const r=d.resume;delete d.resume;Object.assign(state,d);state.resumeStep=r;}}catch(e){}}
 function checkAcct(){if(obAcctChecked)return acctP;obAcctChecked=true;acctP=fetch('/api/auth/session').then(r=>r.ok?r.json():null).then(s=>{if(!s||!s.user)return;if(!state.email)state.email=s.user.email||'';if(!state.name)state.name=s.user.name||'';state.loggedIn=true;if(state.step===1&&state.resumeStep){state.step=state.resumeStep;state.resumeStep=0;try{sessionStorage.removeItem('jc_draft');}catch(e){}}renderOB();}).catch(()=>{});return acctP;}
@@ -1298,7 +1299,7 @@ function bindPage(page,arg){
  $$('[data-layout]').forEach(c=>{const f=()=>{applyLayout(+c.dataset.layout);location.hash='#/home';};c.onclick=f;c.onkeydown=e=>{if(e.key==='Enter')f();};});
  $$('[data-gcombo]').forEach(b=>b.onclick=()=>{const c=COMBOS[+b.dataset.gcombo];applyTheme(c.t);applyLayout(c.l);cur.hero=c.h;store.set('hero3',c.h);updRanks();location.hash='#/home';});
  $$('[data-usehero]').forEach(b=>b.onclick=()=>{cur.hero=+b.dataset.usehero;store.set('hero',cur.hero);updRanks();location.hash='#/home';});
- if(page==='start'){applyStartParams();renderOB();}}
+ if(page==='start'){applyStartParams();renderOB();(checkAcct()||Promise.resolve()).then(()=>{if(!state.loggedIn)needLogin(1);});}}
 
 /* ================= REVEAL ================= */
 let io;
