@@ -5,6 +5,7 @@ import { timingSafeEqual } from "node:crypto";
 import { Buffer } from "node:buffer";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import { z } from "zod";
 import { hashEmailOtp } from "./src/lib/otp";
 
@@ -20,6 +21,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   providers: [
+    // Google sign-in is switched on by setting AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET.
+    ...(process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET
+      ? [
+          Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
+            // Google verifies the email, so it may join an existing email-code account.
+            allowDangerousEmailAccountLinking: true,
+          }),
+        ]
+      : []),
     Credentials({
       id: "email-otp",
       name: "Email OTP",
@@ -101,6 +113,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     }),
   ],
   callbacks: {
+    async signIn({ account, user }) {
+      if (account?.provider !== "google" || !user.email) return true;
+      // Staff and admin accounts never sign in through the customer site.
+      const existing = await prisma.user.findUnique({
+        where: { email: user.email.toLowerCase() },
+        select: { role: true, status: true },
+      });
+      return (
+        !existing ||
+        (existing.role === "CUSTOMER" && existing.status === "ACTIVE")
+      );
+    },
     jwt({ token, user }) {
       if (user) token.role = user.role;
       return token;

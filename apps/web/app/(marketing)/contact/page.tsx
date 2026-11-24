@@ -5,7 +5,7 @@ import { FINAL_PAGES } from "../../../components/marketing/final/generated";
 export const metadata: Metadata = {
   title: "Contact | Juris Consultants USA",
   description:
-    "Talk to a US formation expert on WhatsApp, phone or email.",
+    "Talk to a US formation expert by phone or email.",
 };
 
 export default function Page() {

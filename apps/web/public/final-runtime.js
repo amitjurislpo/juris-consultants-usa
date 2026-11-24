@@ -41,7 +41,7 @@ const SERVICES = {
   tax:{name:'US Tax Filing',group:'Grow',price:'[Price]',unit:'per year',time:'Yearly',desc:'Federal and state tax returns for your US company.',who:'Every US company with an EIN.',incl:['Federal return','State return where needed'],good:['Prepared with your bookkeeping data']},
   expert:{name:'Talk to an Expert',group:'Help',price:'$49',unit:'30 minutes',time:'30 min call',desc:'A paid 30-minute call to plan your structure, state and next steps.',who:'Anyone unsure which company type or state to choose.',incl:['30-minute video call','Structure & state recommendation','Written next steps'],good:['Booked after payment']}
 };
-const STATES = [{n:'Wyoming',fee:103.75},{n:'Texas',fee:310},{n:'Delaware',fee:null},{n:'Florida',fee:null},{n:'Nevada',fee:null},{n:'New York',fee:null},{n:'California',fee:null},{n:'New Mexico',fee:null},{n:'Washington',fee:null}];
+const STATES = [{n:'Wyoming',fee:103.75},{n:'Texas',fee:310},{n:'Delaware',fee:90},{n:'Florida',fee:125},{n:'Nevada',fee:425},{n:'New York',fee:200},{n:'California',fee:70},{n:'New Mexico',fee:50},{n:'Washington',fee:200}];
 const PLANS = {
   starter:{name:'Starter',sub:'LLC',price:249,who:'Freelancers, IT services and e-commerce sellers.',incl:['Name availability check (LLC)','Articles of organization','Basic operating agreement','State filing','Email support'],not:['EIN ($80 extra)','Registered agent'],form:true},
   premium:{name:'Premium',sub:'C-Corp',price:849,rec:true,who:'Startups planning to raise money from investors.',incl:['Name availability check for C-Corp','C-Corp formation','Bylaws & certificates','Articles of incorporation','Registered agent (1 year)','EIN included'],not:[],form:true},
@@ -91,7 +91,7 @@ const ICON={
   clock:'<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>'
 };
 let cur={theme:+store.get('theme3',19),hero:+store.get('hero3',11),layout:+store.get('layout3',19)};
-const state={step:1,name:'',email:'',cc:'+91',phone:'',company:'',plan:'starter',st:'Wyoming',add:{},agree:false};
+const state={flow:'start',need:'',loggedIn:false,step:1,name:'',email:'',cc:'+91',phone:'',company:'',plan:'starter',st:'Wyoming',add:{},agree:false};
 
 /* ================= HEROES (10) ================= */
 const stateOpts=(sel)=>STATES.map(s=>`<option ${s.n===sel?'selected':''}>${s.n}</option>`).join('');
@@ -103,7 +103,7 @@ const HEROES=[
     <h1>Everything you need to start and run your U.S. business</h1>
     <p class="lead">We don’t just handle the paperwork. Our experts guide you on the right structure, state and compliance — from India, in your time zone.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary btn-lg" href="#/start">Launch Your Company ${ICON.arrow}</a><a class="btn btn-outline btn-lg" href="#/contact">Talk to an Expert</a></div>
-    <div class="ticks"><span>Plans from $249 + state fee</span><span>~7 business days to form</span><span><span class="ph">[Money-back guarantee]</span></span></div>
+    <div class="ticks"><span>Plans from $249 + state fee</span><span>~7 business days to form</span><span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span></span></div>
   </div>
   <div class="mini-track"><div style="font-family:var(--head);font-weight:700;font-size:19px">Your company in 4 steps</div>
     <div class="mt-row"><div class="mt-dot" style="background:var(--green);color:#fff">✓</div><div style="flex:1"><b>Company formed (LLC / C-Corp)</b><div class="muted" style="font-size:13px">~7 business days</div></div><span class="st done">Done</span></div>
@@ -136,7 +136,7 @@ const HEROES=[
   <div style="display:flex;flex-direction:column;gap:16px">
     <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px"><div><h3 style="font-size:19px">Starter · LLC</h3><p class="muted" style="font-size:14px">Name check, articles, operating agreement, state filing</p></div><div style="text-align:right"><div style="font-family:var(--head);font-size:30px;font-weight:var(--hw)">$249</div><div class="muted" style="font-size:13px">+ state fee</div></div></div>
     <div class="card" style="display:flex;justify-content:space-between;align-items:center;gap:12px;border:2px solid var(--blue);position:relative"><span class="badge-rec">Recommended</span><div><h3 style="font-size:19px">Premium · C-Corp</h3><p class="muted" style="font-size:14px">Formation, bylaws, EIN, registered agent (1 year)</p></div><div style="text-align:right"><div style="font-family:var(--head);font-size:30px;font-weight:var(--hw)">$849</div><div class="muted" style="font-size:13px">+ state fee</div></div></div>
-    <div style="display:flex;gap:12px;align-items:center;background:var(--amber-50);border-radius:14px;padding:16px;color:var(--amber-d);font-size:14px">${ICON.shield}<span><b class="ph">[Money-back guarantee]</b> If your company isn’t formed because of our mistake, we refund our fee.</span></div>
+    <div style="display:flex;gap:12px;align-items:center;background:var(--amber-50);border-radius:14px;padding:16px;color:var(--amber-d);font-size:14px">${ICON.shield}<span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span> If your company isn’t formed because of our mistake, we refund our fee.</span></div>
     <a href="#/pricing" style="font-weight:600">Compare all plans →</a>
   </div></div></section>`],
  ['Spotlight + instant quote','Big centred promise with a live “state → total” quote bar',(id)=>`
@@ -150,7 +150,7 @@ const HEROES=[
     <div class="tot"><span class="muted" style="font-size:12px">All-in today</span><b class="q4-tot">$352.75</b></div>
     <a class="btn btn-primary q4-go" href="#/start?plan=starter&state=Wyoming">Launch now ${ICON.arrow}</a>
   </div>
-  <div class="ticks" style="justify-content:center;margin-top:6px"><span>No US visit needed</span><span>Owners can live in India</span><span>WhatsApp support in IST</span><span><span class="ph">[Money-back guarantee]</span></span></div>
+  <div class="ticks" style="justify-content:center;margin-top:6px"><span>No US visit needed</span><span>Owners can live in India</span><span>Support in IST</span><span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span></span></div>
  </div></section>`],
  ['India → USA route','Animated route map from India to the US with key promises',(id)=>`
  <section class="hero" ${id} data-chg="2"><div class="container hero-grid">
@@ -177,8 +177,8 @@ const HEROES=[
   <div class="big"><div><span class="pill" style="background:rgba(255,255,255,.12);color:#fff">For Indian founders</span><h1 style="margin-top:18px;font-size:clamp(34px,4vw,52px)">Start and run your US business — from India.</h1></div>
    <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-white btn-lg" href="#/start">Launch Your Company</a><a class="btn btn-ghost-w btn-lg" href="#/contact">Talk to an Expert</a></div></div>
   <div class="accent"><span style="font-size:14px;opacity:.9">LLC from</span><span class="num">$249</span><span style="font-size:14px;opacity:.9">+ state fee · ~7 business days</span></div>
-  <div><span style="color:var(--amber-d)">${ICON.shield}</span><b>Money-back guarantee</b><span class="muted" style="font-size:14px"><span class="ph">[Wording pending approval]</span></span></div>
-  <div><span style="color:var(--blue)">${ICON.chat}</span><b>WhatsApp in IST hours</b><span class="muted" style="font-size:14px">Indian CA / CS experts answer you.</span></div>
+  <div><span style="color:var(--amber-d)">${ICON.shield}</span><b>Money-back guarantee</b><span class="muted" style="font-size:14px"></span></div>
+  <div><span style="color:var(--blue)">${ICON.chat}</span><b>Support in IST hours</b><span class="muted" style="font-size:14px">Indian CA / CS experts answer you.</span></div>
   <div><b>9 states</b><div style="display:flex;gap:6px;flex-wrap:wrap">${['WY','DE','TX','FL','NV','NY','CA','NM','WA'].map(s=>`<span class="pill" style="padding:4px 8px">${s}</span>`).join('')}</div></div>
  </div></div></section>`],
  ['Dark + floating updates','Dark grid backdrop with live “order update” cards floating',(id)=>`
@@ -298,7 +298,7 @@ HEROES.push(
   <div style="display:flex;flex-direction:column;gap:22px"><span class="pill" style="background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.15)"><span class="live" style="color:#4ADE80">LIVE</span> Forming US companies for founders worldwide</span>
   <h1>Go global from anywhere. <span class="grad-text">Launch in the US.</span></h1>
   <p class="lead">LLC or C-Corp, EIN, bank account and compliance — handled end-to-end by Indian CA / CS experts in your time zone.</p>
-  ${CTA2(1)}<div class="ticks"><span>From $249 + state fee</span><span>~7 business days</span><span>WhatsApp in IST</span></div></div>
+  ${CTA2(1)}<div class="ticks"><span>From $249 + state fee</span><span>~7 business days</span><span>Support in IST</span></div></div>
   <div class="globe-wrap"><canvas class="cv cv-globe" aria-label="Rotating globe showing a route from India to the USA" role="img"></canvas>
    <span class="tag" style="left:0;bottom:10%;animation-delay:2s">✓ Formed in ~7 business days</span><span class="tag" style="right:0;top:6%;animation-delay:1s"><span class="live" style="color:#4ADE80">LIVE</span> World → USA</span><span class="drag-hint">⟲ drag to rotate</span></div>
  </div></section>`],
@@ -565,7 +565,7 @@ function startGlobe2(cv){if(cv.dataset.on)return;cv.dataset.on=1;const M=ANIM.g;
   ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);
   const now=performance.now()/1000;if(!drag){vel*=.95;rot+=vel;rot*=.995;}
   const center=172-now*6,a=-center*Math.PI/180+rot,T=.55,ca=Math.cos(a),sa=Math.sin(a),ct=Math.cos(T),st=Math.sin(T);
-  const R=Math.min(W,H)*.38,cx=W/2,cy=H/2+R*.04;
+  const R=Math.min(W,H)*.33,cx=W/2,cy=H/2+R*.04;
   const rotv=v=>{const x=v[0]*ca+v[2]*sa,z=-v[0]*sa+v[2]*ca;return [x,v[1]*ct-z*st,v[1]*st+z*ct];};
   const scr=q=>[cx+q[0]*R,cy-q[1]*R];
   /* stars */
@@ -621,7 +621,7 @@ function startGlobe2(cv){if(cv.dataset.on)return;cv.dataset.on=1;const M=ANIM.g;
    const qh=P[hi];if(M===8){const qa=P[Math.max(0,hi-1)],qb2=P[Math.min(90,hi+1)];if(vis(qh)){const s=scr(qh),sa2=scr(qa),sb=scr(qb2);drawPlaneGlyph(ctx,s[0],s[1],Math.atan2(sb[1]-sa2[1],sb[0]-sa2[0]),1.5,'#fff');}return;}if(vis(qh)){const s=scr(qh);ctx.fillStyle='#fff';ctx.shadowColor=rgba(cc,1);ctx.shadowBlur=16;ctx.beginPath();ctx.arc(s[0],s[1],k===0?3.6:2.6,0,7);ctx.fill();ctx.shadowBlur=0;}});
   /* city markers + labels */
   const mk=(v,cc,label,dx)=>{const q=rotv(v);if(q[2]<.05)return;const s=scr(q),ph=(now*.9)%1;if(dx===0)dx=s[0]<cx?-1:1;ctx.fillStyle=rgba(cc,1);ctx.beginPath();ctx.arc(s[0],s[1],3.4,0,7);ctx.fill();ctx.strokeStyle=rgba(cc,.8*(1-ph));ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(s[0],s[1],4+ph*16,0,7);ctx.stroke();
-   if(label){ctx.font='700 12px Inter,system-ui,sans-serif';const tw=ctx.measureText(label).width,x=s[0]+dx*(tw/2+22),y=s[1]-22;ctx.globalAlpha=Math.min(1,q[2]*4);ctx.fillStyle='rgba(8,12,28,.75)';ctx.strokeStyle=rgba(cc,.6);ctx.lineWidth=1;ctx.beginPath();ctx.roundRect?ctx.roundRect(x-tw/2-10,y-12,tw+20,24,12):ctx.rect(x-tw/2-10,y-12,tw+20,24);ctx.fill();ctx.stroke();ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(label,x,y+1);ctx.globalAlpha=1;}};
+   if(label){ctx.font='700 12px Inter,system-ui,sans-serif';const tw=ctx.measureText(label).width,x=clamp(s[0]+dx*(tw/2+22),tw/2+14,W-tw/2-14),y=s[1]-22;ctx.globalAlpha=Math.min(1,q[2]*4);ctx.fillStyle='rgba(8,12,28,.75)';ctx.strokeStyle=rgba(cc,.6);ctx.lineWidth=1;ctx.beginPath();ctx.roundRect?ctx.roundRect(x-tw/2-10,y-12,tw+20,24,12):ctx.rect(x-tw/2-10,y-12,tw+20,24);ctx.fill();ctx.stroke();ctx.fillStyle='#fff';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(label,x,y+1);ctx.globalAlpha=1;}};
   mk(C.bom,c2);mk(C.sfo,c1);mk(C.wy,c1);mk(C.tx,c1);mk(C.de,c1);ORIG.forEach(([v,l])=>{const q=rotv(v);mk(v,c2,q[2]>.3?l:'',0);});mk(C.nyc,c1,'USA',0);
   /* ring front + satellite */
   if(M!==9){drawRing(true);}const si=Math.floor((now*6)%120),sq=ring[si];if(M!==9&&sq[2]>=0||Math.hypot(sq[0],sq[1])>1){const s=scr(sq);ctx.fillStyle='#fff';ctx.shadowColor=rgba(c1,1);ctx.shadowBlur=12;ctx.beginPath();ctx.arc(s[0],s[1],2.6,0,7);ctx.fill();ctx.shadowBlur=0;}
@@ -684,14 +684,6 @@ function fx2(root){
   h.innerHTML=h.textContent.trim().split(/\s+/).map((w,i)=>`<span class="w"><span style="transition-delay:${i*55}ms">${esc(w)}</span></span>`).join(' ');fx2io.observe(h);});
  $$('.plan .amt',root).forEach(a=>{if(!a.dataset.cu){a.dataset.cu=1;fx2io.observe(a);}});
 }
-/* magnetic buttons + 3D tilt cards */
-(function(){if(matchMedia('(pointer:coarse)').matches)return;let mag=null,tilt=null;
- addEventListener('pointermove',e=>{if(document.body.classList.contains('no-fx'))return;const t=e.target.closest?e.target:null;if(!t)return;
-  const b=t.closest('.btn-lg, .btn-primary');if(mag&&mag!==b){mag.style.transform='';mag=null;}
-  if(b&&!b.closest('.demo-bar')){const r=b.getBoundingClientRect();b.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.3}px)`;mag=b;}
-  const c=ANIM.k===0?t.closest('.svc, .plan, .glass'):null;if(tilt&&tilt!==c){tilt.style.transform='';tilt=null;}
-  if(c){const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform=`perspective(900px) rotateY(${x*7}deg) rotateX(${-y*7}deg) translateY(-4px)`;tilt=c;}},{passive:true});
- document.addEventListener('pointerleave',()=>{if(mag)mag.style.transform='';if(tilt)tilt.style.transform='';});})();
 
 
 /* ================= v3.3: ANIMATION OPTIONS (7 groups × 10) ================= */
@@ -941,42 +933,13 @@ function servicesBlock(id){return `<section class="sec" id="${id}" data-chg="7" 
  <div class="sec-head"><span class="eyebrow">Our services</span><h2>See what’s included before you pay</h2><p>Every service has its own page with details, timelines and FAQs.</p></div>
  <div class="tabs">${['All','Start','Run','Grow','Help'].map((t,i)=>`<button type="button" class="tab ${i?'':'on'}" data-filter="${t}">${t}</button>`).join('')}</div>
  <div class="grid g3 svc-grid">${svcCards('All')}</div></div></section>`;}
-function plansHTML(){return `<div class="plans">${Object.entries(PLANS).map(([id,p])=>`
- <div class="card plan ${p.rec?'rec':''} reveal">${p.rec?'<span class="badge-rec">Recommended</span><i class="spin-b" aria-hidden="true"></i>':''}
-  <div><h3 style="font-size:22px">${p.name} <span class="muted" style="font-weight:600;font-size:16px">· ${p.sub}</span></h3><p class="muted" style="font-size:14px;margin-top:6px;min-height:42px">${p.who}</p></div>
-  <div><span class="amt">${money(p.price)}</span> <span class="muted">${id==='warehouse'?'one-time':'+ state fee'}</span></div>
-  <div class="muted" style="font-size:13px">Timeline: ~7 business days</div>
-  <a class="btn ${p.rec?'btn-primary':'btn-outline'}" href="#/start?plan=${id}">Choose ${p.name}</a>
-  <ul>${p.incl.map(x=>`<li>${x}</li>`).join('')}${p.not.map(x=>`<li class="no">${x}</li>`).join('')}</ul></div>`).join('')}</div>
- <p style="text-align:center;margin-top:22px;font-size:14px" class="muted">🛡 <span class="ph">[Money-back guarantee]</span> · Pay securely by card <span class="ph">[or UPI in INR]</span> · <a href="#/home" data-jump="quiz">Not sure? Take the quiz</a></p>`;}
-function calcHTML(){return `<div class="calc"><div style="display:flex;flex-direction:column;gap:22px">
- <div><h4 style="margin-bottom:10px">1. Company type</h4><div class="opt-grid" id="cEnt"></div></div>
- <div><h4 style="margin-bottom:10px">2. State</h4><div class="field"><select id="cState" aria-label="State">${stateOpts('Wyoming')}</select><span class="hint">State fees for Wyoming and Texas are from our current site; others shown once confirmed.</span></div></div>
- <div><h4 style="margin-bottom:10px">3. Add-ons (optional)</h4><div class="opt-grid" id="cAdd"></div></div></div>
- <div class="total-box"><div style="color:#CBD5E1;font-size:14px">Your all-in total today</div><div class="big" id="cTotal">$0</div>
- <div style="display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--dark-line2);padding-top:14px" id="cRows"></div>
- <a class="btn btn-white" id="cGo" href="#/start">Start now</a><div style="font-size:13px;color:#CBD5E1">🛡 <span class="ph">[Money-back guarantee]</span> · <span class="ph">[Tax treatment to confirm]</span></div></div></div>`;}
-const calc={ent:'starter',st:'Wyoming',add:{ein:true}};
-function renderCalc(){const ce=$('#cEnt');if(!ce)return;
- ce.innerHTML=['starter','premium'].map(id=>`<button type="button" class="opt ${calc.ent===id?'on':''}" data-ent="${id}"><b>${PLANS[id].name} · ${PLANS[id].sub}</b><span>${money(PLANS[id].price)} + state fee</span></button>`).join('');
- const einInc=calc.ent==='premium';
- $('#cAdd').innerHTML=ADDONS.map(a=>{const inc=a.id==='ein'&&einInc,on=inc||calc.add[a.id];return `<button type="button" class="opt ${on?'on':''}" data-add="${a.id}"><b>${on?'✓':'+'} ${a.n}</b><span>${inc?'Included in Premium':a.one?money(a.one)+' one-time':money(a.mo)+'/month'}</span></button>`}).join('');
- $('#cState').value=calc.st;const st=STATES.find(s=>s.n===calc.st);let one=0,mo=0;
- ADDONS.forEach(a=>{if(calc.add[a.id]&&!(a.id==='ein'&&einInc)){one+=a.one||0;mo+=a.mo||0;}});
- const p=PLANS[calc.ent].price,fee=st.fee;$('#cTotal').textContent=money(p+(fee||0)+one)+(fee==null?' +':'');
- $('#cRows').innerHTML=`<div class="trow"><span>${PLANS[calc.ent].name} plan</span><span>${money(p)}</span></div><div class="trow"><span>${calc.st} state fee</span><span>${fee==null?'<span class="ph">[to confirm]</span>':money(fee)}</span></div><div class="trow"><span>Add-ons (one-time)</span><span>${money(one)}</span></div><div class="trow" style="color:#CBD5E1"><span>Monthly after</span><span>${mo?money(mo)+'/mo':'$0'}</span></div>`;
- $('#cGo').href=`#/start?plan=${calc.ent}&state=${encodeURIComponent(calc.st)}`;}
-function pricingBlock(id){return `<section class="sec soft" id="${id}" data-chg="9" data-ghost="PRICING"><div class="container">
- <div class="sec-head"><span class="eyebrow">Pricing</span><h2>Simple, transparent pricing</h2><p>No hidden fees. See your full total — including the state fee — before you pay.</p></div>
- <div style="text-align:center"><div class="switch"><button type="button" class="on" data-pv="plans">Compare plans</button><button type="button" data-pv="calc">Build my total</button></div></div>
- <div class="pv" data-pv-panel="plans">${plansHTML()}</div><div class="pv hide" data-pv-panel="calc">${calcHTML()}</div></div></section>`;}
 function faqBlock(id,plain){const f=[
  ['Do I need to be a U.S. citizen to start a business?','No. Founders living in India can own a US LLC or C-Corp. You don’t need to visit the US.'],
  ['Which state should I choose from India?','Most founders pick Wyoming or Delaware. Our quiz and experts help you choose based on your business and plans to raise money.'],
  ['How long does it take?','Company formation takes about 7 business days. The EIN usually takes longer for founders without an SSN — <span class="ph">[timeline to confirm]</span>.'],
  ['Do you help with EIN and bank account setup?','Yes. EIN is included in Premium and available as an $80 add-on with Starter. Bank account assistance is $100.'],
- ['What is your money-back guarantee?','<span class="ph">[Wording pending approval — e.g. if your company isn’t formed because of our mistake, we refund our service fee. State fees are paid to the government.]</span>'],
- ['Can I talk to someone before paying?','Yes — WhatsApp us or book a paid 30-minute expert call ($49).']];
+ ['What is your money-back guarantee?','If your company isn’t formed because of our mistake, we refund our service fee in full. State fees are paid to the government and are not refundable. See our <a href="/legal/refund">refund policy</a>.'],
+ ['Can I talk to someone before paying?','Yes — message us or book a paid 30-minute expert call ($49).']];
  const inner=`<div class="faq">${f.map((q,i)=>`<details ${i?'':'open'}><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join('')}</div>`;
  if(plain) return `<div><h3 style="margin-bottom:10px">FAQs</h3>${inner}</div>`;
  return `<section class="sec" id="${id}" data-chg="12" data-ghost="FAQ"><div class="container"><div class="sec-head"><span class="eyebrow">FAQ</span><h2>Questions founders ask us</h2></div>${inner}</div></section>`;}
@@ -991,7 +954,7 @@ ${HEROES[cur.hero][2]('id="hero"')}
   <div class="stat reveal"><b class="ph">[Y] years</b><span class="muted">of Juris Consultants India in corporate &amp; secretarial work</span></div>
   <div class="stat reveal"><b class="ph">[4.x] ★</b><span class="muted">average from <span class="ph">[N]</span> Google reviews</span></div>
   <div class="stat reveal"><b>9</b><span class="muted">US states we form in, incl. Delaware, Wyoming &amp; Texas</span></div></div>
- <div class="guarantee reveal"><div class="g-icon">${ICON.shield}</div><div style="flex:1"><h3 style="font-size:21px"><span class="ph">[Flawless Filing or Your Money Back]</span></h3><p style="color:#CBD5E1;margin-top:6px">If your company isn’t formed because of our mistake, we refund our service fee. State fees go to the government. <span class="ph">[Wording pending approval]</span></p></div><a class="btn btn-white btn-sm" href="#/home" data-jump="faq">Read the terms</a></div>
+ <div class="guarantee reveal"><div class="g-icon">${ICON.shield}</div><div style="flex:1"><h3 style="font-size:21px">Flawless Filing or Your Money Back</h3><p style="color:#CBD5E1;margin-top:6px">If your company isn’t formed because of our mistake, we refund our service fee. State fees go to the government.</p></div><a class="btn btn-white btn-sm" href="#/home" data-jump="faq">Read the terms</a></div>
 </div></section>
 ${storyHTML()}
 <section class="sec soft" id="journey" data-chg="5" data-ghost="JOURNEY"><div class="container">
@@ -1015,11 +978,10 @@ ${liveBoardHTML()}
   <div class="card entity reveal"><span class="pill" style="align-self:flex-start;background:#FEF2F2;color:var(--red)">US owners only</span><h3>S-Corp</h3><ul><li>A tax status, not a separate company type</li><li><b>Only US citizens / residents</b> can be shareholders</li><li>Usually not available to founders in India</li></ul><a href="#/contact">Ask an expert →</a></div></div>
 </div></section>
 ${stackHTML()}
-${pricingBlock('pricing')}
 <section class="sec dark" id="why" data-chg="10" data-ghost="WHY US"><div class="container"><div class="hero-grid" style="gap:44px">
  <div style="display:flex;flex-direction:column;gap:16px"><span class="eyebrow">Why Juris Consultants USA</span><h2 style="font-size:clamp(30px,3.6vw,44px)">The US formation team that works in your time zone</h2>
- <p style="color:#CBD5E1;font-size:17px">Other platforms give you a form. We give you Indian CA / CS experts who answer on WhatsApp, explain in plain words, and stay with you after formation.</p>
- <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-white" href="#/contact">Talk to an Expert</a><a class="btn btn-ghost-w" href="https://wa.me/919999630777" target="_blank" rel="noopener">WhatsApp us</a></div></div>
+ <p style="color:#CBD5E1;font-size:17px">Other platforms give you a form. We give you Indian CA / CS experts who answer your questions, explain in plain words, and stay with you after formation.</p>
+ <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-white" href="#/contact">Talk to an Expert</a></div></div>
  <div class="grid g2"><div class="why-card reveal"><h4>IST working hours</h4><p>Calls and replies during your day, not at 2 AM.</p></div><div class="why-card reveal"><h4>CA / CS experts</h4><p>Backed by Juris Consultants India’s corporate team.</p></div><div class="why-card reveal"><h4>Hindi &amp; English</h4><p>Ask in the language you’re comfortable with.</p></div><div class="why-card reveal"><h4>India + US numbers</h4><p>+91 99996 30777 · +1 (646) 233-8454</p></div></div>
 </div></div></section>
 <section class="sec" id="clients" data-chg="4" data-ghost="CLIENTS"><div class="container">
@@ -1059,9 +1021,9 @@ PAGES.service=(id)=>{const s=SERVICES[id]||SERVICES.llc,plan=s.plan;return `<sec
  <aside class="card buy"><div class="muted" style="font-size:14px">${s.group} · ${s.time}</div><div><span style="font-family:var(--head);font-size:40px;font-weight:var(--hw)">${s.price}</span> <span class="muted">${s.unit}</span></div>
   ${plan&&plan!=='warehouse'?`<div class="field"><label for="dState">State</label><select id="dState">${stateOpts('Wyoming')}</select></div><div class="trow" style="border-top:1px solid var(--line);padding-top:12px"><span>Total today</span><b id="dTotal"></b></div>`:''}
   <a class="btn btn-primary" id="dGo" href="${plan?'#/start?plan='+plan:'#/start'}">Get started</a><a class="btn btn-outline" href="#/contact">Talk to an Expert</a>
-  <div style="display:flex;gap:10px;background:var(--amber-50);border-radius:12px;padding:12px;font-size:13px;color:var(--amber-d)">${ICON.shield}<span><span class="ph">[Money-back guarantee]</span> if filing fails due to our error.</span></div></aside>
+  <div style="display:flex;gap:10px;background:var(--amber-50);border-radius:12px;padding:12px;font-size:13px;color:var(--amber-d)">${ICON.shield}<span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span> if filing fails due to our error.</span></div></aside>
 </div></div></section>`;};
-PAGES.pricing=()=>`${pricingBlock('pricing')}<section class="sec"><div class="container"><div class="sec-head"><h2>Compare plans in detail</h2></div><div style="overflow-x:auto"><table class="cmp">
+PAGES.pricing=()=>`<section class="sec"><div class="container"><div class="sec-head"><h2>Compare plans in detail</h2></div><div style="overflow-x:auto"><table class="cmp">
  <tr><th>What you get</th><th>Starter · LLC</th><th>Premium · C-Corp</th><th>Warehousing</th></tr><tr><td>Price</td><td>$249 + state fee</td><td>$849 + state fee</td><td>$49</td></tr>
  <tr><td>Name availability check</td><td class="check">✓</td><td class="check">✓</td><td>–</td></tr><tr><td>Company formation &amp; state filing</td><td class="check">✓ LLC</td><td class="check">✓ C-Corp</td><td>–</td></tr>
  <tr><td>Operating agreement / bylaws</td><td class="check">✓ Basic</td><td class="check">✓ Bylaws</td><td>–</td></tr><tr><td>EIN (US tax ID)</td><td>$80 add-on</td><td class="check">✓ Included</td><td>–</td></tr>
@@ -1070,7 +1032,7 @@ PAGES.pricing=()=>`${pricingBlock('pricing')}<section class="sec"><div class="co
  <div class="sec-head" style="margin-top:56px"><h2>Add-ons</h2></div><div class="grid g3">${ADDONS.map(a=>`<div class="card"><h4>${a.n}</h4><p class="muted" style="margin-top:6px">${a.one?money(a.one)+' one-time':money(a.mo)+' per month'}</p></div>`).join('')}</div></div></section>${faqBlock('faq')}`;
 PAGES.how=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">How it works</span><h1 style="font-size:clamp(32px,4vw,48px)">From India to a US company — step by step</h1><p>Honest timelines for founders outside the US.</p></div></div></section>
 <section class="sec" data-chg="5"><div class="container"><div class="journey in"><div class="line"><i></i></div>${[['5 min','Tell us about you'],['2 min','Choose plan &amp; pay'],['1 business day','Expert review'],['~7 business days','Company formed'],['<span class="ph">[to confirm]</span>','EIN (US tax ID)'],['After EIN','Bank account']].map((s,i)=>`<div class="j-step"><div class="j-dot">${i+1}</div><span class="j-time">${s[0]}</span><h4>${s[1]}</h4></div>`).join('')}</div>
- <div class="grid g2" style="margin-top:56px"><div class="card"><h3 style="margin-bottom:12px">What we need from you</h3><div>• Passport copy <span class="ph">[confirm list]</span></div><div>• Address proof</div><div>• 2–3 company name options</div><div>• Business activity in one line</div></div><div class="card"><h3 style="margin-bottom:12px">What you get</h3><div><span class="check">✓</span> Formation documents &amp; certificate</div><div><span class="check">✓</span> EIN letter (if chosen)</div><div><span class="check">✓</span> Live status in your dashboard</div><div><span class="check">✓</span> WhatsApp updates at every step</div></div></div>
+ <div class="grid g2" style="margin-top:56px"><div class="card"><h3 style="margin-bottom:12px">What we need from you</h3><div>• Passport copy <span class="ph">[confirm list]</span></div><div>• Address proof</div><div>• 2–3 company name options</div><div>• Business activity in one line</div></div><div class="card"><h3 style="margin-bottom:12px">What you get</h3><div><span class="check">✓</span> Formation documents &amp; certificate</div><div><span class="check">✓</span> EIN letter (if chosen)</div><div><span class="check">✓</span> Live status in your dashboard</div><div><span class="check">✓</span> Email updates at every step</div></div></div>
  <div style="text-align:center;margin-top:36px"><a class="btn btn-primary btn-lg" href="#/start">Launch Your Company</a> &nbsp; <a class="btn btn-outline btn-lg" href="#/track">See a sample tracker</a></div></div></section>`;
 const BLOGS=[{id:'states',t:'Which US State Should You Choose to Start a Business from India? Texas vs Delaware vs Wyoming vs Florida',tag:'US Company Formation',real:true},{id:'ein',t:'EIN without SSN: how Indian founders get a US tax ID',tag:'EIN & Tax'},{id:'cost',t:'US LLC cost from India: the full breakdown',tag:'Pricing'},{id:'bank',t:'Opening a US business bank account from India',tag:'Banking'}];
 PAGES.blogs=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">Blogs</span><h1 style="font-size:clamp(32px,4vw,48px)">Guides for Indian founders</h1><p>Each guide links to the service you need next.</p></div></div></section>
@@ -1084,27 +1046,26 @@ PAGES.blog=(id)=>{const b=BLOGS.find(x=>x.id===id)||BLOGS[0];return `<section cl
   <div class="cta-box"><div><h3 style="font-size:20px">Still not sure which state fits you?</h3><p style="color:#CBD5E1;margin-top:6px">Our experts pick the right state and structure with you in a 30-minute call.</p></div><a class="btn btn-white" href="#/service/expert">Talk to an Expert · $49</a></div>
   <h2 id="b2">State fees compared</h2><div style="overflow-x:auto"><table class="cmp"><tr><th>State</th><th>State filing fee</th><th>Start here</th></tr><tr><td>Wyoming</td><td>$103.75</td><td><a href="#/start?plan=starter&state=Wyoming">Form in Wyoming →</a></td></tr><tr><td>Texas</td><td>$310</td><td><a href="#/start?plan=starter&state=Texas">Form in Texas →</a></td></tr><tr><td>Delaware</td><td><span class="ph">[fee]</span></td><td><a href="#/start?plan=premium&state=Delaware">Form in Delaware →</a></td></tr><tr><td>Florida</td><td><span class="ph">[fee]</span></td><td><a href="#/start?plan=starter&state=Florida">Form in Florida →</a></td></tr></table></div>
   <h2 id="b3">Which state suits you</h2><p><span class="ph">[Existing content]</span></p><h2 id="b4">FAQs</h2><p><span class="ph">[3–5 FAQs with schema markup for Google]</span></p></article>
- <aside style="display:flex;flex-direction:column;gap:14px;position:sticky;top:96px"><div class="card buy" style="position:static"><h3 style="font-size:19px">Ready to start your US company?</h3><p class="muted" style="font-size:14px">LLC from $249 + state fee. ~7 business days.</p><a class="btn btn-primary" href="#/start">Launch Your Company</a><span class="muted" style="font-size:13px">🛡 <span class="ph">[Money-back guarantee]</span></span></div>
+ <aside style="display:flex;flex-direction:column;gap:14px;position:sticky;top:96px"><div class="card buy" style="position:static"><h3 style="font-size:19px">Ready to start your US company?</h3><p class="muted" style="font-size:14px">LLC from $249 + state fee. ~7 business days.</p><a class="btn btn-primary" href="#/start">Launch Your Company</a><span class="muted" style="font-size:13px"><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span></span></div>
   <b class="muted" style="font-size:12px;letter-spacing:1px">RELATED SERVICES</b><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/llc">US LLC Formation →</a><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/ein">EIN &amp; Tax Registration →</a><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/agent">Registered Agent →</a></aside>
 </div></div></section>`;};
 PAGES.about=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">About us</span><h1 style="font-size:clamp(32px,4vw,48px)">The team behind Juris Consultants India — now helping you go global</h1><p>Indian CA / CS experts helping founders start and run US companies.</p></div></div></section>
 <section class="sec"><div class="container"><div class="grid g3">${['Years in corporate &amp; secretarial work','Companies formed in the US','Founders served across India'].map((t,i)=>`<div class="stat"><b class="ph">[${['Y','X','N'][i]}]</b><span class="muted">${t}</span></div>`).join('')}</div>
 <div class="sec-head" style="margin-top:60px"><h2>Meet the team</h2><p>Real photos and qualifications build trust.</p></div><div class="grid g4">${[1,2,3,4].map(()=>`<div class="card" style="text-align:center"><div class="avatar" style="width:84px;height:84px;margin:0 auto 12px"></div><b class="ph">[Name]</b><div class="muted" style="font-size:14px"><span class="ph">[Role · CA / CS]</span></div></div>`).join('')}</div></div></section>`;
 PAGES.contact=()=>`<section class="sec" style="padding-top:48px"><div class="container"><div class="hero-grid" style="align-items:start">
- <div style="display:flex;flex-direction:column;gap:18px"><span class="eyebrow">Contact</span><h1 style="font-size:clamp(32px,4vw,48px)">Talk to an expert</h1><p class="lead" style="color:var(--muted)">WhatsApp is fastest. We reply in Indian working hours.</p>
- <a class="btn" style="align-self:flex-start;background:#25D366;color:#fff" href="https://wa.me/919999630777" target="_blank" rel="noopener">Chat on WhatsApp</a>
- <div class="card"><div><b>India:</b> +91 99996 30777</div><div><b>USA:</b> +1 (646) 233-8454</div><div><b>Email:</b> <span class="ph">[email address]</span></div><div><b>Office:</b> <span class="ph">[office address]</span></div></div>
+ <div style="display:flex;flex-direction:column;gap:18px"><span class="eyebrow">Contact</span><h1 style="font-size:clamp(32px,4vw,48px)">Talk to an expert</h1><p class="lead" style="color:var(--muted)">Call or email us. We reply in Indian working hours.</p>
+ <div class="card"><div><b>India:</b> +91 99996 30777</div><div><b>USA:</b> +1 (646) 233-8454</div><div><b>Email:</b> <a href="mailto:contact@jurisconsultantsusa.com">contact@jurisconsultantsusa.com</a></div><div><b>Office:</b> <span class="ph">[office address]</span></div></div>
  <div class="card" style="background:var(--soft)"><b>Prefer a full planning call?</b><p class="muted" style="margin-top:6px">Book a 30-minute expert call for $49 — booked after payment.</p><a href="#/service/expert" style="font-weight:600">Book an expert call →</a></div></div>
  <form class="card form" id="contactForm" novalidate data-chg="15"><h3>Send us a message</h3>
   <div class="field"><label for="cfName">Full name</label><input id="cfName" placeholder="e.g. Priya Sharma"><span class="msg"></span></div>
   <div class="field"><label for="cfEmail">Email</label><input id="cfEmail" type="email" placeholder="you@company.com"><span class="msg"></span></div>
-  <div class="field"><label for="cfPhone">Phone / WhatsApp</label><div class="phone-row"><select id="cfCc" aria-label="Country code"><option>+91</option><option>+1</option><option>+44</option><option>+971</option></select><input id="cfPhone" type="tel" placeholder="98765 43210"></div><span class="msg"></span></div>
+  <div class="field"><label for="cfPhone">Phone</label><div class="phone-row"><select id="cfCc" aria-label="Country code"><option>+91</option><option>+1</option><option>+44</option><option>+971</option></select><input id="cfPhone" type="tel" placeholder="98765 43210"></div><span class="msg"></span></div>
   <div class="field"><label for="cfMsg">How can we help?</label><textarea id="cfMsg" rows="4" placeholder="e.g. I sell on Amazon US and need an LLC"></textarea><span class="msg"></span></div>
-  <button class="btn btn-primary" type="submit">Send message</button><div class="ok-msg hide" id="cfOk">✓ Thanks! Our team will reply on WhatsApp/email. (demo)</div></form>
+  <button class="btn btn-primary" type="submit">Send message</button><div class="ok-msg hide" id="cfOk">✓ Thanks! Our team will reply by email. (demo)</div></form>
 </div></div></section>`;
 PAGES.start=()=>`<section class="sec soft" style="padding-top:40px;min-height:70vh" id="obtop" data-chg="15"><div class="container" id="ob"></div></section>`;
 PAGES.track=()=>`<section class="sec soft" style="padding-top:40px" id="tracktop" data-chg="17"><div class="container" style="max-width:1060px">
- <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px"><div><span class="eyebrow">Your dashboard</span><h1 style="font-size:36px;margin-top:6px">Your Business LLC · Wyoming</h1><p class="muted">Order #<span class="ph">[ID]</span> · Updates also sent on WhatsApp</p></div><a class="btn btn-outline btn-sm" href="https://wa.me/919999630777" target="_blank" rel="noopener">Message your expert</a></div>
+ <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px"><div><span class="eyebrow">Your dashboard</span><h1 style="font-size:36px;margin-top:6px">Your Business LLC · Wyoming</h1><p class="muted">Order #<span class="ph">[ID]</span> · Updates also sent by email</p></div><a class="btn btn-outline btn-sm" href="/contact">Contact your expert</a></div>
  <div class="ob" style="max-width:none"><div class="card"><h3 style="margin-bottom:18px">Progress</h3><div class="trk">
  ${[['done','Payment received','Receipt emailed','Done'],['done','Details reviewed by our expert','Within 1 business day','Done'],['now','Filed with the state','~7 business days','In progress'],['','EIN application','[timeline to confirm]','Up next'],['','Bank account assistance','After EIN','Up next']].map((r,i,a)=>`<div class="trk-row"><div class="trk-l"><span class="d ${r[0]} ${r[0]==='now'?'pulse':''}"></span>${i<a.length-1?'<span class="ln"></span>':''}</div><div class="trk-c"><div><b>${r[1]}</b><div class="muted" style="font-size:13px">${r[2].startsWith('[')?'<span class="ph">'+r[2]+'</span>':r[2]}</div></div><span class="st ${r[0]==='done'?'done':r[0]==='now'?'now':'next'}">${r[3]}</span></div></div>`).join('')}</div></div>
  <form class="card form summary" id="addrForm" novalidate><h3>Complete your business details</h3><p class="muted" style="font-size:14px">Asked after payment — only what this service needs.</p>
@@ -1114,60 +1075,167 @@ PAGES.track=()=>`<section class="sec soft" style="padding-top:40px" id="tracktop
   <button class="btn btn-primary" type="submit">Save details</button><div class="ok-msg hide" id="addrOk">✓ Saved. Your expert will review it. (demo)</div></form></div></div></section>`;
 
 /* ================= ONBOARDING ================= */
-const PHONE_RULES={'+91':{re:/^[6-9]\d{9}$/,msg:'Enter a 10-digit Indian mobile number starting with 6–9.'},'+1':{re:/^\d{10}$/,msg:'Enter a 10-digit US number.'},'+44':{re:/^\d{10}$/,msg:'Enter a 10-digit UK number.'},'+971':{re:/^5\d{8}$/,msg:'Enter a 9-digit UAE mobile number starting with 5.'}};
-const EMAIL_RE=/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
+/* Country data: phone digits (national number, no leading 0) and postal-code rules.
+   cc = dial code; re = allowed national numbers; zip = postal pattern; zf = characters to strip while typing. */
+const D=/\D/g,DH=/[^\d-]/g,AN=/[^A-Za-z0-9 ]/g;
+const COUNTRIES=[
+ {iso:'IN',name:'India',cc:'+91',re:/^[6-9]\d{9}$/,len:'10 digits, starting with 6, 7, 8 or 9',max:10,ph:'98765 43210',zip:/^[1-9]\d{5}$/,zn:'PIN code',zh:'6 digits, e.g. 110001',zmax:6,zf:D},
+ {iso:'US',name:'United States',cc:'+1',re:/^[2-9]\d{2}[2-9]\d{6}$/,len:'10 digits (area code + number)',max:10,ph:'415 555 0132',zip:/^\d{5}(-\d{4})?$/,zn:'ZIP code',zh:'5 digits, e.g. 78701',zmax:10,zf:DH},
+ {iso:'CA',name:'Canada',cc:'+1',re:/^[2-9]\d{2}[2-9]\d{6}$/,len:'10 digits (area code + number)',max:10,ph:'416 555 0132',zip:/^[ABCEGHJ-NPRSTVXY]\d[ABCEGHJ-NPRSTV-Z] ?\d[ABCEGHJ-NPRSTV-Z]\d$/i,zn:'Postal code',zh:'e.g. M5V 2T6',zmax:7,zf:AN},
+ {iso:'GB',name:'United Kingdom',cc:'+44',re:/^[1-9]\d{8,9}$/,len:'9 or 10 digits, without the leading 0',max:10,ph:'7911 123456',zip:/^[A-Z]{1,2}\d[A-Z\d]? ?\d[A-Z]{2}$/i,zn:'Postcode',zh:'e.g. SW1A 1AA',zmax:8,zf:AN},
+ {iso:'AE',name:'United Arab Emirates',cc:'+971',re:/^(5\d{8}|[2-467-9]\d{7})$/,len:'9 digits for mobile (starting with 5) or 8 digits for landline',max:9,ph:'50 123 4567',zip:null},
+ {iso:'AU',name:'Australia',cc:'+61',re:/^[2-478]\d{8}$/,len:'9 digits, without the leading 0',max:9,ph:'412 345 678',zip:/^\d{4}$/,zn:'Postcode',zh:'4 digits, e.g. 2000',zmax:4,zf:D},
+ {iso:'SG',name:'Singapore',cc:'+65',re:/^[3689]\d{7}$/,len:'8 digits, starting with 3, 6, 8 or 9',max:8,ph:'9123 4567',zip:/^\d{6}$/,zn:'Postal code',zh:'6 digits, e.g. 018956',zmax:6,zf:D},
+ {iso:'DE',name:'Germany',cc:'+49',re:/^[1-9]\d{9,10}$/,len:'10 or 11 digits, without the leading 0',max:11,ph:'1512 3456789',zip:/^\d{5}$/,zn:'Postleitzahl',zh:'5 digits, e.g. 10115',zmax:5,zf:D},
+ {iso:'FR',name:'France',cc:'+33',re:/^[1-9]\d{8}$/,len:'9 digits, without the leading 0',max:9,ph:'6 12 34 56 78',zip:/^\d{5}$/,zn:'Code postal',zh:'5 digits, e.g. 75001',zmax:5,zf:D},
+ {iso:'NL',name:'Netherlands',cc:'+31',re:/^[1-9]\d{8}$/,len:'9 digits, without the leading 0',max:9,ph:'6 12345678',zip:/^\d{4} ?[A-Z]{2}$/i,zn:'Postcode',zh:'e.g. 1012 AB',zmax:7,zf:AN},
+ {iso:'JP',name:'Japan',cc:'+81',re:/^[1-9]\d{9}$/,len:'10 digits, without the leading 0',max:10,ph:'90 1234 5678',zip:/^\d{3}-?\d{4}$/,zn:'Postal code',zh:'7 digits, e.g. 100-0001',zmax:8,zf:DH},
+ {iso:'NG',name:'Nigeria',cc:'+234',re:/^[789]\d{9}$/,len:'10 digits, without the leading 0',max:10,ph:'802 123 4567',zip:/^\d{6}$/,zn:'Postal code',zh:'6 digits, e.g. 100001',zmax:6,zf:D},
+ {iso:'BR',name:'Brazil',cc:'+55',re:/^[1-9]{2}9?\d{8}$/,len:'10 or 11 digits (area code + number)',max:11,ph:'11 91234 5678',zip:/^\d{5}-?\d{3}$/,zn:'CEP',zh:'8 digits, e.g. 01310-100',zmax:9,zf:DH},
+ {iso:'ZA',name:'South Africa',cc:'+27',re:/^[1-9]\d{8}$/,len:'9 digits, without the leading 0',max:9,ph:'82 123 4567',zip:/^\d{4}$/,zn:'Postal code',zh:'4 digits, e.g. 2001',zmax:4,zf:D},
+ {iso:'MY',name:'Malaysia',cc:'+60',re:/^[1-9]\d{7,9}$/,len:'8 to 10 digits, without the leading 0',max:10,ph:'12 345 6789',zip:/^\d{5}$/,zn:'Postcode',zh:'5 digits, e.g. 50450',zmax:5,zf:D},
+ {iso:'BD',name:'Bangladesh',cc:'+880',re:/^1[3-9]\d{8}$/,len:'10 digits, starting with 1',max:10,ph:'1712 345678',zip:/^\d{4}$/,zn:'Postal code',zh:'4 digits, e.g. 1207',zmax:4,zf:D}
+];
+const PHONE_RULES={};
+COUNTRIES.forEach(c=>{if(!PHONE_RULES[c.cc])PHONE_RULES[c.cc]={re:c.re,max:c.max,ph:c.ph,name:c.cc==='+1'?'US / Canada':c.name,msg:'Enter a valid '+(c.cc==='+1'?'US / Canada':c.name)+' number: '+c.len+'.'};});
+const phoneOk=(cc,d)=>!!PHONE_RULES[cc]&&PHONE_RULES[cc].re.test(d);
+const zipOk=(c,v)=>!c.zip||c.zip.test(v.trim());
+const ccOptions=sel=>{const seen={};return COUNTRIES.filter(c=>!seen[c.cc]&&(seen[c.cc]=1)).map(c=>'<option value="'+c.cc+'"'+(c.cc===sel?' selected':'')+'>'+(c.cc==='+1'?'US/CA':c.iso)+' '+c.cc+'</option>').join('');};
+function bindPhone(inp,sel){if(!inp||!sel||inp.dataset.pv)return;inp.dataset.pv=1;
+ const ap=()=>{const r=PHONE_RULES[sel.value];inp.maxLength=r.max;inp.placeholder=r.ph;inp.inputMode='numeric';};ap();
+ sel.addEventListener('change',()=>{ap();inp.value=inp.value.replace(D,'').slice(0,PHONE_RULES[sel.value].max);});
+ inp.addEventListener('input',()=>{const d=inp.value.replace(D,'').slice(0,PHONE_RULES[sel.value].max);if(inp.value!==d)inp.value=d;});}
+function bindAddr(af){if(!af||af.dataset.on)return;af.dataset.on=1;
+ const st=$('#aStreet'),z=$('#aZip'),s=$('#aState'),c0=$('#aCity'),zl=$('label[for=aZip]',af),sl=$('label[for=aState]',af);
+ const cf=document.createElement('div');cf.className='field';cf.innerHTML='<label for="aCountry">Country</label><select id="aCountry">'+COUNTRIES.map(c=>'<option value="'+c.iso+'"'+(c.iso==='US'?' selected':'')+'>'+c.name+'</option>').join('')+'</select>';
+ st.closest('.field').before(cf);
+ const rg=document.createElement('input');rg.id='aRegion';rg.placeholder='State / province / region';rg.style.display='none';s.after(rg);
+ const cur=()=>COUNTRIES.find(x=>x.iso===$('#aCountry').value);
+ const ap=()=>{const c=cur(),us=c.iso==='US';s.style.display=us?'':'none';rg.style.display=us?'none':'';sl.textContent=us?'State':'State / region';
+  if(c.zip){zl.textContent=c.zn;z.placeholder=c.zh;z.maxLength=c.zmax;z.inputMode=c.zf===D?'numeric':'text';}else{zl.textContent='Postal code (optional)';z.placeholder='Not used in '+c.name;z.maxLength=12;z.inputMode='text';}};
+ $('#aCountry').addEventListener('change',()=>{ap();z.value='';});
+ z.addEventListener('input',()=>{const c=cur();let v=c.zf?z.value.replace(c.zf,''):z.value;if(c.iso==='GB'||c.iso==='CA'||c.iso==='NL')v=v.toUpperCase();if(v!==z.value)z.value=v;});
+ ap();
+ af.onsubmit=e=>{e.preventDefault();let ok=true;const c=cur(),us=c.iso==='US';
+  ok=setErr(st,st.value.trim().length<4?'Please enter the street address.':'')&&ok;
+  const city=c0.value.trim(),reg=us?s.value:rg.value.trim();
+  ok=setErr(c0,!/^[\p{L} .'-]{2,}$/u.test(city)?'City should contain letters only.':(city.toLowerCase()===reg.toLowerCase()?'This looks like a state name — please enter the city.':''))&&ok;
+  if(!us)ok=setErr(rg,/^[\p{L} .'-]{2,}$/u.test(reg)?'':'Please enter your state, province or region.')&&ok;
+  const zv=z.value.trim();
+  ok=setErr(z,c.zip?(zipOk(c,zv)?'':'Enter a valid '+c.zn+' for '+c.name+' ('+c.zh+').'):(zv&&!/^[A-Za-z0-9 -]{3,12}$/.test(zv)?'Enter a valid postal code.':''))&&ok;
+  if(ok){af.querySelector('button').classList.add('hide');$('#addrOk').classList.remove('hide');}};}
+const EMAIL_RE=/^(?!.*\.\.)[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?@(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+[A-Za-z]{2,24}$/;
+const REQ_IDS=['oName','oEmail','oPhone','oNeed','cfName','cfEmail','cfPhone','cfMsg','aStreet','aCity','aState','aRegion','aZip','aCountry'];
+function markReq(){REQ_IDS.forEach(id=>{const l=document.querySelector('label[for='+id+']'),i=document.getElementById(id);if(l)l.classList.add('req');if(i)i.setAttribute('aria-required','true');});}
 function setErr(input,msg){const f=input.closest('.field');f.classList.toggle('err',!!msg);$('.msg',f).textContent=msg||'';return !msg;}
-function obTotals(){const p=PLANS[state.plan],st=STATES.find(s=>s.n===state.st),showFee=p.form,fee=showFee?st.fee:0,einInc=state.plan==='premium';let one=0,mo=0,lines=[];
- if(p.form)ADDONS.forEach(a=>{if(state.add[a.id]&&!(a.id==='ein'&&einInc)){one+=a.one||0;mo+=a.mo||0;lines.push([a.n,a.one?money(a.one):money(a.mo)+'/mo']);}});
- return {p,st,fee,showFee,one,mo,lines,total:p.price+(fee||0)+one};}
-function summaryHTML(){const t=obTotals();return `<div class="card summary" style="display:flex;flex-direction:column;gap:10px"><h4>Your order</h4>
- <div class="trow"><span>${t.p.name} plan${t.p.form?' ('+t.p.sub+') · '+state.st:''}</span><b>${money(t.p.price)}</b></div>
- ${t.showFee?`<div class="trow muted"><span>${state.st} state fee</span><span>${t.fee==null?'<span class="ph">[to confirm]</span>':money(t.fee)}</span></div>`:''}
+const FEE_CONSULT=49;
+const isConsult=()=>state.flow==='expert'||state.flow==='global';
+function obTotals(){const manage=state.flow==='manage',p=manage?{name:'Existing company services',sub:'',price:0,form:false}:PLANS[state.plan],st=STATES.find(s=>s.n===state.st),showFee=!manage&&p.form,fee=showFee?st.fee:0,einInc=!manage&&state.plan==='premium';let one=0,mo=0,lines=[];
+ if(p.form||manage)ADDONS.forEach(a=>{if(state.add[a.id]&&!(a.id==='ein'&&einInc)){one+=a.one||0;mo+=a.mo||0;lines.push([a.n,a.one?money(a.one):money(a.mo)+'/mo']);}});
+ return {p,st,fee,showFee,one,mo,lines,manage,einInc,total:p.price+(fee||0)+one+mo};}
+function summaryHTML(){if(isConsult())return `<div class="card summary" style="display:flex;flex-direction:column;gap:10px"><h4>Your order</h4>
+ <div class="trow"><span>${state.flow==='global'?'Global plan — warehousing consultation':'Expert consultation (30 min)'}</span><b>${money(FEE_CONSULT)}</b></div>
+ <div class="trow" style="font-size:17px;border-top:1px solid var(--line);padding-top:10px"><b>Total today</b><b>${money(FEE_CONSULT)}</b></div>
+ <div style="background:var(--amber-50);border-radius:12px;padding:12px;font-size:13px;color:var(--amber-d)">After payment you book a time on our calendar. Secure payment by card.</div></div>`;
+ const t=obTotals();return `<div class="card summary" style="display:flex;flex-direction:column;gap:10px"><h4>Your order</h4>
+ ${t.manage?'':`<div class="trow"><span>${t.p.name} plan${t.p.form?' ('+t.p.sub+') · '+state.st:''}</span><b>${money(t.p.price)}</b></div>`}
+ ${t.showFee?`<div class="trow muted"><span>${state.st} state fee</span><span>${t.fee==null?'To be confirmed':money(t.fee)}</span></div>`:''}
  ${t.lines.map(l=>`<div class="trow muted"><span>${l[0]}</span><span>${l[1]}</span></div>`).join('')}
- ${state.plan==='premium'?'<div class="trow" style="color:var(--green)"><span>EIN</span><span>Included</span></div>':''}
- <div class="trow muted"><span>Tax</span><span class="ph">[to be confirmed]</span></div>
+ ${t.einInc?'<div class="trow" style="color:var(--green)"><span>EIN</span><span>Included</span></div>':''}
+ ${t.manage&&!t.lines.length?'<div class="trow muted"><span>No services chosen yet</span><span>—</span></div>':''}
+ <div class="trow muted"><span>Tax</span><span>Confirmed at checkout</span></div>
  <div class="trow" style="font-size:17px;border-top:1px solid var(--line);padding-top:10px"><b>Total today</b><b>${money(t.total)}${t.fee==null&&t.showFee?' + state fee':''}</b></div>
- ${t.mo?`<div class="trow muted"><span>Monthly after</span><span>${money(t.mo)}/mo</span></div>`:''}
- <div style="background:var(--amber-50);border-radius:12px;padding:12px;font-size:13px;color:var(--amber-d)">🛡 <span class="ph">[Money-back guarantee]</span> · Secure payment by Stripe</div></div>`;}
-function stepperHTML(){const s=['Your details','Plan & extras','Review & pay','Done'];return `<div class="stepper">${s.map((x,i)=>`<span class="stp ${state.step===i+1?'on':state.step>i+1?'done':''}"><i>${state.step>i+1?'✓':i+1}</i>${x}</span>${i<s.length-1?'<span class="stp-line"></span>':''}`).join('')}</div>`;}
+ ${t.mo?`<div class="trow muted"><span>Then every month</span><span>${money(t.mo)}/mo</span></div>`:''}
+ <div style="background:var(--amber-50);border-radius:12px;padding:12px;font-size:13px;color:var(--amber-d)">Secure card payment — card details never touch our servers.</div></div>`;}
+function stepperHTML(){const s=isConsult()?['Your details','Pay consultation fee','Book a call']:state.flow==='manage'?['About you','Your services','Total & notices','Review & pay','Done']:['About you','Plan, state & type','Add-ons & total','Review & pay','Done'];return `<div class="stepper">${s.map((x,i)=>`<span class="stp ${state.step===i+1?'on':state.step>i+1?'done':''}"><i>${state.step>i+1?'✓':i+1}</i>${x}</span>${i<s.length-1?'<span class="stp-line"></span>':''}`).join('')}</div>`;}
+function chipsHTML(attr){const t=obTotals();return `<div class="opt-grid">${ADDONS.map(a=>{const inc=a.id==='ein'&&t.einInc,on=inc||state.add[a.id];return `<button type="button" class="opt ${on?'on':''}" data-${attr}="${a.id}"><b>${on?'✓':'+'} ${a.n}</b><span>${inc?'Included':a.one?money(a.one)+' one-time':money(a.mo)+'/month'}</span></button>`}).join('')}</div>`;}
+function warningsHTML(){const t=obTotals(),w=[];
+ if(t.showFee&&t.fee==null)w.push(`The ${state.st} state fee is not final yet. We confirm it with you before we file, and you pay it only then.`);
+ if(!t.manage&&state.plan==='starter'&&!state.add.ein)w.push('Without an EIN you cannot open a US bank account or file US taxes. You can add it now ($80) or later.');
+ if(t.mo)w.push(`Monthly services (${money(t.mo)}/mo) renew every month until you cancel. The first month is included in today’s total.`);
+ if(t.manage&&!t.lines.length)w.push('You have not chosen any service yet. Go back and pick at least one.');
+ return w.length?`<div class="ok-msg" style="background:var(--amber-50);color:var(--amber-d);display:flex;flex-direction:column;gap:6px"><b>Please note</b>${w.map(x=>`<span>• ${x}</span>`).join('')}</div>`:`<div class="ok-msg" style="background:var(--green-50);color:var(--green)">Nothing to flag — your selection looks complete.</div>`;}
+function loginHintHTML(){return `<p class="muted" id="obAcct" style="font-size:14px">Your account is created from your email. <a href="/login" style="color:var(--blue);font-weight:600">Already have an account? Log in</a></p>`;}
 function renderOB(){const ob=$('#ob');if(!ob)return;let body='';
- if(state.step===1)body=`<form class="card form" id="ob1" novalidate><div><h2 style="font-size:30px">Tell us about you</h2><p class="muted" style="margin-top:4px">Takes under a minute. Company details come later, with our team’s help.</p></div>
+ const consult=isConsult(),manage=state.flow==='manage',last=consult?3:5;
+ if(state.step===1)body=`<form class="card form" id="ob1" novalidate><div><h2 style="font-size:30px">${consult?'Tell us what you need':'Tell us about you'}</h2><p class="muted" style="margin-top:4px">${consult?(state.flow==='global'?'Global plan (warehousing): tell us what you sell and where it ships.':'Share your details and what you want to discuss. A US-business expert will take your call.'):'Takes under a minute. Company details come later, with our team’s help.'}</p></div>${loginHintHTML()}
   <div class="field"><label for="oName">Full name</label><input id="oName" value="${state.name}" placeholder="e.g. Priya Sharma" autocomplete="name"><span class="msg"></span></div>
   <div class="field"><label for="oEmail">Email</label><input id="oEmail" type="email" value="${state.email}" placeholder="you@company.com" autocomplete="email"><span class="msg"></span></div>
-  <div class="field"><label for="oPhone">Phone / WhatsApp</label><div class="phone-row"><select id="oCc" aria-label="Country code">${Object.keys(PHONE_RULES).map(c=>`<option ${c===state.cc?'selected':''}>${c}</option>`).join('')}</select><input id="oPhone" type="tel" inputmode="numeric" value="${state.phone}" placeholder="98765 43210"></div><span class="msg"></span></div>
-  <div class="field"><label for="oCompany">Company name you want <span class="muted" style="font-weight:400">(optional)</span></label><input id="oCompany" value="${state.company}" placeholder="e.g. Sharma Tech LLC"><span class="hint">We’ll check availability for you. Not decided? Leave it blank.</span></div>
-  <button class="btn btn-primary btn-lg" type="submit">Continue</button><p class="muted" style="font-size:13px;text-align:center">Your progress is saved — you can go back any time.</p></form>`;
- if(state.step===2){const p=PLANS[state.plan];body=`<div class="card form"><h2 style="font-size:30px">Choose your plan</h2>
-  <div class="opt-grid" style="grid-template-columns:repeat(3,minmax(0,1fr))">${Object.entries(PLANS).map(([id,x])=>`<button type="button" class="opt ${state.plan===id?'on':''}" data-plan="${id}"><b>${x.name}${x.rec?' ★':''}</b><span>${x.sub} · ${money(x.price)}</span></button>`).join('')}</div>
-  ${p.form?`<div class="field"><label for="oState">State of formation</label><select id="oState">${STATES.map(s=>`<option ${s.n===state.st?'selected':''}>${s.n}${s.fee!=null?' — state fee '+money(s.fee):''}</option>`).join('')}</select><span class="hint">Not sure? Most Indian founders choose Wyoming (LLC) or Delaware (C-Corp).</span></div>
-  <div><h4 style="margin-bottom:10px">Add-ons (optional)</h4><div class="opt-grid">${ADDONS.map(a=>{const inc=a.id==='ein'&&state.plan==='premium',on=inc||state.add[a.id];return `<button type="button" class="opt ${on?'on':''}" data-oadd="${a.id}"><b>${on?'✓':'+'} ${a.n}</b><span>${inc?'Included':a.one?money(a.one)+' one-time':money(a.mo)+'/month'}</span></button>`}).join('')}</div></div>`
-  :`<div class="ok-msg" style="background:var(--blue-50);color:var(--blue-d)">Warehousing only — no company-formation questions. We’ll ask about your products after payment.</div>`}
-  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-next>Continue to review</button></div></div>`;}
- if(state.step===3)body=`<div class="card form"><h2 style="font-size:30px">Review &amp; pay</h2>
+  <div class="field"><label for="oPhone">Phone</label><div class="phone-row"><select id="oCc" aria-label="Country code">${ccOptions(state.cc)}</select><input id="oPhone" type="tel" inputmode="numeric" value="${state.phone}" placeholder="98765 43210"></div><span class="msg"></span></div>
+  ${consult?`<div class="field"><label for="oNeed">${state.flow==='global'?'What will you ship, and to which US states?':'What do you want to discuss?'}</label><textarea id="oNeed" rows="4" placeholder="${state.flow==='global'?'e.g. Skincare products to customers in NY, TX and CA':'e.g. LLC or C-Corp, which state, EIN without SSN'}">${state.need}</textarea><span class="msg"></span></div>`:`<div class="field"><label for="oCompany">Company name you want <span class="muted" style="font-weight:400">(optional)</span></label><input id="oCompany" value="${state.company}" placeholder="e.g. Sharma Tech LLC"><span class="hint">We’ll check availability for you. Not decided? Leave it blank.</span></div>`}
+  <button class="btn btn-primary btn-lg" type="submit">${consult?'Continue to payment':'Continue'}</button><p class="muted" style="font-size:13px;text-align:center">Your progress is saved — you can go back any time.</p></form>`;
+ if(consult&&state.step===2)body=`<div class="card form"><h2 style="font-size:30px">Pay the consultation fee</h2><p class="muted">One 30-minute call with a US-business expert. If you go ahead with us afterwards, your expert can set up your Premium plan.</p>
+  <div class="card locked" style="text-align:center;color:var(--muted)">${ICON.lock}<div style="margin-top:6px"><b style="color:var(--text)">Secure card payment</b></div><div style="font-size:13px">Card details are entered on the payment provider’s secure page — never stored by us.</div></div>
+  <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px"><input type="checkbox" id="oAgree" ${state.agree?'checked':''} style="margin-top:3px;width:18px;height:18px;accent-color:var(--blue)"> I agree to the <a href="/legal/terms" target="_blank" rel="noopener" style="color:var(--blue)">Terms</a> and <a href="/legal/refund" target="_blank" rel="noopener" style="color:var(--blue)">Refund policy</a></label>
+  <span id="agreeMsg" style="color:var(--red);font-size:13px"></span>
+  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-pay>Pay ${money(FEE_CONSULT)} (demo)</button></div></div>`;
+ if(consult&&state.step===3){const cal=($('#app')&&$('#app').dataset.calendly)||'';body=`<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding:40px"><div style="width:70px;height:70px;border-radius:50%;background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:34px">✓</div><h2>Payment received — book your call</h2><p class="muted">Pick a time that suits you. You will get a confirmation email and the call appears in your dashboard.</p>${cal?`<a class="btn btn-primary btn-lg" href="${cal}" target="_blank" rel="noopener">Book on Calendly</a>`:'<div class="ok-msg" style="background:var(--amber-50);color:var(--amber-d)">The booking calendar is being connected. Our team will email you a booking link shortly.</div>'}<a class="btn btn-outline" href="/track-order">Go to my dashboard</a></div>`;}
+ if(!consult&&state.step===2){body=manage?`<div class="card form"><h2 style="font-size:30px">Choose your services</h2><p class="muted">Already have a US company? Pick what you want us to handle.</p>${chipsHTML('oadd')}<span id="stepMsg" style="color:var(--red);font-size:13px"></span>
+  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-next>Continue</button></div></div>`
+  :`<div class="card form"><h2 style="font-size:30px">Plan, state &amp; type</h2>
+  <div class="opt-grid">${['starter','premium'].map(id=>{const x=PLANS[id];return `<button type="button" class="opt ${state.plan===id?'on':''}" data-plan="${id}"><b>${x.sub}${x.rec?' ★':''} · ${x.name}</b><span>${money(x.price)} + state fee</span></button>`}).join('')}</div>
+  <div class="field"><label for="oState">State of formation</label><select id="oState">${STATES.map(s=>`<option ${s.n===state.st?'selected':''}>${s.n}${s.fee!=null?' — state fee '+money(s.fee):''}</option>`).join('')}</select><span class="hint">Not sure? Most founders choose Wyoming (LLC) or Delaware (C-Corp).</span></div>
+  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-next>Continue</button></div></div>`;}
+ if(!consult&&state.step===3)body=`<div class="card form"><h2 style="font-size:30px">${manage?'Total &amp; notices':'Add-ons &amp; total'}</h2>${manage?'':`<div><h4 style="margin-bottom:10px">Add-ons (optional)</h4>${chipsHTML('oadd')}</div>`}${warningsHTML()}
+  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-next ${manage&&!obTotals().lines.length?'disabled':''}>Continue to review</button></div></div>`;
+ if(!consult&&state.step===4)body=`<div class="card form"><h2 style="font-size:30px">Review &amp; pay</h2>
   <div class="card" style="background:var(--soft);border:0"><b>${state.name}</b><div class="muted">${state.email} · ${state.cc} ${state.phone}</div>${state.company?`<div class="muted">Company name: ${state.company}</div>`:''}<button type="button" class="btn btn-outline btn-sm" style="margin-top:10px" data-goto="1">Edit details</button></div>
-  <div class="card locked" style="text-align:center;color:var(--muted)">${ICON.lock}<div style="margin-top:6px"><b style="color:var(--text)">Secure card payment by Stripe</b></div><div style="font-size:13px">Card details are entered on Stripe’s secure page — never stored by us. <span class="ph">[UPI / INR option to confirm]</span></div></div>
-  <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px"><input type="checkbox" id="oAgree" ${state.agree?'checked':''} style="margin-top:3px;width:18px;height:18px;accent-color:var(--blue)"> I agree to the <span class="ph">[Terms]</span> and <span class="ph">[Refund policy]</span></label>
+  <div class="card locked" style="text-align:center;color:var(--muted)">${ICON.lock}<div style="margin-top:6px"><b style="color:var(--text)">Secure card payment</b></div><div style="font-size:13px">Card details are entered on the payment provider’s secure page — never stored by us.</div></div>
+  <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px"><input type="checkbox" id="oAgree" ${state.agree?'checked':''} style="margin-top:3px;width:18px;height:18px;accent-color:var(--blue)"> I agree to the <a href="/legal/terms" target="_blank" rel="noopener" style="color:var(--blue)">Terms</a> and <a href="/legal/refund" target="_blank" rel="noopener" style="color:var(--blue)">Refund policy</a></label>
   <span id="agreeMsg" style="color:var(--red);font-size:13px"></span>
   <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-pay>Pay ${money(obTotals().total)} (demo)</button></div></div>`;
- if(state.step===4)body=`<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding:40px"><div style="width:70px;height:70px;border-radius:50%;background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:34px">✓</div><h2>Payment received — welcome aboard!</h2><p class="muted">Your expert will contact you on WhatsApp within <span class="ph">[1 business day]</span>. Next: complete your business details in the dashboard.</p><a class="btn btn-primary" href="#/track">Go to my dashboard</a></div>`;
- ob.innerHTML=stepperHTML()+`<div class="ob">${body}${state.step<4?summaryHTML():'<div></div>'}</div>`;bindOB();}
-function bindOB(){const f1=$('#ob1');
- if(f1){f1.addEventListener('submit',e=>{e.preventDefault();const n=$('#oName'),em=$('#oEmail'),ph=$('#oPhone');
-   state.name=n.value.trim();state.email=em.value.trim();state.cc=$('#oCc').value;state.phone=ph.value.replace(/\D/g,'');state.company=$('#oCompany').value.trim();
+ if(!consult&&state.step===5)body=`<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding:40px"><div style="width:70px;height:70px;border-radius:50%;background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:34px">✓</div><h2>Payment received — welcome aboard!</h2><p class="muted">A receipt is on its way to your email. Next: fill in your business details and upload your passport and address proof in the dashboard. Our team reviews them and files with the state.</p><a class="btn btn-primary" href="/track-order">Go to my dashboard</a></div>`;
+ ob.innerHTML=stepperHTML()+`<div class="ob">${body}${state.step<last?summaryHTML():'<div></div>'}</div>`;bindOB();markReq();}
+let obAcctChecked=false;
+let acctP=null;
+function needLogin(step){try{sessionStorage.setItem('jc_draft',JSON.stringify({flow:state.flow,plan:state.plan,st:state.st,add:state.add,name:state.name,email:state.email,cc:state.cc,phone:state.phone,company:state.company,need:state.need,resume:step}));}catch(e){}location.href='/login?next='+encodeURIComponent(location.pathname+location.search);}
+function restoreDraft(){try{const d=JSON.parse(sessionStorage.getItem('jc_draft')||'null');if(d&&d.flow===state.flow){const r=d.resume;delete d.resume;Object.assign(state,d);state.resumeStep=r;}}catch(e){}}
+function checkAcct(){if(obAcctChecked)return acctP;obAcctChecked=true;acctP=fetch('/api/auth/session').then(r=>r.ok?r.json():null).then(s=>{if(!s||!s.user)return;if(!state.email)state.email=s.user.email||'';if(!state.name)state.name=s.user.name||'';state.loggedIn=true;if(state.step===1&&state.resumeStep){state.step=state.resumeStep;state.resumeStep=0;try{sessionStorage.removeItem('jc_draft');}catch(e){}}renderOB();}).catch(()=>{});return acctP;}
+function bindOB(){const f1=$('#ob1');checkAcct();if(f1)bindPhone($('#oPhone'),$('#oCc'));
+ const acct=$('#obAcct');if(acct&&state.loggedIn)acct.innerHTML='You are logged in. <a href="/account" style="color:var(--blue);font-weight:600">View my account</a>';
+ if(f1){f1.addEventListener('submit',e=>{e.preventDefault();const n=$('#oName'),em=$('#oEmail'),ph=$('#oPhone'),nd=$('#oNeed');
+   state.name=n.value.trim();state.email=em.value.trim();state.cc=$('#oCc').value;state.phone=ph.value.replace(/\D/g,'');if(nd)state.need=nd.value.trim();else state.company=$('#oCompany').value.trim();
    let ok=true;ok=setErr(n,state.name.length<2||/\d/.test(state.name)?'Please enter your full name (letters only).':'')&&ok;
    ok=setErr(em,EMAIL_RE.test(state.email)?'':'Please enter a valid email, e.g. name@company.com.')&&ok;
-   ok=setErr(ph,PHONE_RULES[state.cc].re.test(state.phone)?'':PHONE_RULES[state.cc].msg)&&ok;
-   if(ok){state.step=2;renderOB();window.scrollTo({top:0,behavior:'smooth'});}});
-  ['oName','oEmail','oPhone','oCompany'].forEach(id=>$('#'+id).addEventListener('input',e=>{state[{oName:'name',oEmail:'email',oPhone:'phone',oCompany:'company'}[id]]=e.target.value;}));
+   ok=setErr(ph,phoneOk(state.cc,state.phone)?'':PHONE_RULES[state.cc].msg)&&ok;
+   if(nd)ok=setErr(nd,state.need.length<10?'Tell us a little more (at least 10 characters).':'')&&ok;
+   if(ok){(acctP||Promise.resolve()).then(()=>{if(!state.loggedIn){needLogin(2);return;}state.step=2;renderOB();window.scrollTo({top:0,behavior:'smooth'});});}});
+  const ids={oName:'name',oEmail:'email',oPhone:'phone',oCompany:'company',oNeed:'need'};
+  Object.keys(ids).forEach(id=>{const el=$('#'+id);if(el)el.addEventListener('input',e=>{state[ids[id]]=e.target.value;});});
   $('#oCc').addEventListener('change',e=>state.cc=e.target.value);}
  $$('[data-plan]').forEach(b=>b.onclick=()=>{state.plan=b.dataset.plan;renderOB();});
- $$('[data-oadd]').forEach(b=>b.onclick=()=>{const id=b.dataset.oadd;if(id==='ein'&&state.plan==='premium')return;state.add[id]=!state.add[id];renderOB();});
+ $$('[data-oadd]').forEach(b=>b.onclick=()=>{const id=b.dataset.oadd;if(id==='ein'&&!obTotals().manage&&state.plan==='premium')return;state.add[id]=!state.add[id];renderOB();});
  const os=$('#oState');if(os)os.onchange=()=>{state.st=STATES[os.selectedIndex].n;renderOB();};
  $$('[data-back]').forEach(b=>b.onclick=()=>{state.step--;renderOB();});
- $$('[data-next]').forEach(b=>b.onclick=()=>{state.step++;renderOB();window.scrollTo({top:0,behavior:'smooth'});});
+ $$('[data-next]').forEach(b=>b.onclick=()=>{if(state.flow==='manage'&&state.step===2&&!obTotals().lines.length){const m=$('#stepMsg');if(m)m.textContent='Please choose at least one service.';return;}state.step++;renderOB();window.scrollTo({top:0,behavior:'smooth'});});
  $$('[data-goto]').forEach(b=>b.onclick=()=>{state.step=+b.dataset.goto;renderOB();});
  const ag=$('#oAgree');if(ag)ag.onchange=()=>state.agree=ag.checked;
- const pay=$('[data-pay]');if(pay)pay.onclick=()=>{if(!state.agree){$('#agreeMsg').textContent='Please accept the terms to continue.';return;}state.step=4;renderOB();window.scrollTo({top:0,behavior:'smooth'});};}
+ const pay=$('[data-pay]');if(pay)pay.onclick=()=>{if(!state.loggedIn){needLogin(isConsult()?2:4);return;}if(!state.agree){$('#agreeMsg').textContent='Please accept the terms to continue.';return;}state.step=isConsult()?3:5;renderOB();window.scrollTo({top:0,behavior:'smooth'});};}
+function applyStartParams(){const q=new URLSearchParams(location.search),f=q.get('flow'),pl=q.get('plan'),s=q.get('state');
+ if(['start','manage','expert','global'].includes(f))state.flow=f;
+ if(pl==='warehouse')state.flow='global';else if(pl&&PLANS[pl]&&PLANS[pl].form)state.plan=pl;
+ if(s&&STATES.some(x=>x.n===s))state.st=s;
+ (q.get('add')||'').split(',').forEach(id=>{if(ADDONS.some(a=>a.id===id))state.add[id]=true;});state.step=1;restoreDraft();}
+
+/* ===== Pricing builder: pick a card, add chips, total updates ===== */
+const pk={plan:'premium',st:'Wyoming',add:{}};
+function pkTotals(){const p=PLANS[pk.plan],einInc=pk.plan==='premium',st=STATES.find(s=>s.n===pk.st);let one=0,mo=0;const parts=[`${p.name}${p.form?' ('+p.sub+')':''} ${money(p.price)}`];
+ let feeUnknown=false;if(p.form){if(st.fee==null)feeUnknown=true;else parts.push(`${st.n} state fee ${money(st.fee)}`);ADDONS.forEach(a=>{if(pk.add[a.id]&&!(a.id==='ein'&&einInc)){one+=a.one||0;mo+=a.mo||0;parts.push(`${a.n} ${a.one?money(a.one):money(a.mo)+'/mo'}`);}});}
+ return {p,einInc,st,one,mo,feeUnknown,parts,total:p.price+(p.form&&st.fee?st.fee:0)+one+mo};}
+function renderPk(){const root=$('#pk');if(!root)return;const t=pkTotals();
+ $('.pk-cards',root).style.setProperty('--s',['premium','starter','warehouse'].indexOf(pk.plan));
+ $$('.pk-card',root).forEach(c=>{const on=c.dataset.pk===pk.plan;c.classList.toggle('sel',on);c.setAttribute('aria-pressed',on);});
+ $('#pkOpts').classList.toggle('hide',!t.p.form);
+ const sel=$('#pkState');if(sel&&sel.value!==pk.st)sel.value=pk.st;
+ $('#pkChips').innerHTML=ADDONS.map(a=>{const inc=a.id==='ein'&&t.einInc,on=inc||pk.add[a.id];return `<button type="button" class="pk-chip ${on?'on':''}" data-chip="${a.id}" aria-pressed="${!!on}" ${inc?'disabled':''}>${inc?'✓':'+'} ${a.n} · ${inc?'Included':a.one?money(a.one):money(a.mo)+'/mo'}</button>`}).join('');
+ $('#pkFormula').textContent=t.parts.join(' + ')+(t.feeUnknown?' + state fee (confirmed before filing)':'');
+ $('#pkTotal').textContent=money(t.total);
+ $('#pkSub').textContent=t.mo?`Includes the first month of monthly add-ons. Then ${money(t.mo)}/mo.`:(t.p.form?'One-time total. No hidden fees.':'One-time consultation fee.');
+ const go=$('#pkGo'),on=Object.keys(pk.add).filter(k=>pk.add[k]);go.firstChild.textContent=t.p.form?'Launch Your Company':'Book the Global plan call';
+ go.href=t.p.form?`/start?flow=start&plan=${pk.plan}&state=${encodeURIComponent(pk.st)}${on.length?'&add='+on.join(','):''}`:'/start?flow=global';}
+function bindPk(){const root=$('#pk');if(!root||root.dataset.on)return;root.dataset.on=1;
+ root.addEventListener('click',e=>{const c=e.target.closest('[data-pk]'),ch=e.target.closest('[data-chip]');if(c){pk.plan=c.dataset.pk;renderPk();}else if(ch&&!ch.disabled){pk.add[ch.dataset.chip]=!pk.add[ch.dataset.chip];renderPk();}});
+ $('#pkState').addEventListener('change',e=>{pk.st=e.target.value;renderPk();});renderPk();}
 
 /* ================= QUIZ & WHO ================= */
 const QUIZ=[{q:'Where do the owners live?',o:['India / outside the US','US citizen or green-card holder']},{q:'Do you plan to raise money from investors (VCs / angels)?',o:['Yes, in the next 1–2 years','No / not sure']},{q:'What will your US company mainly do?',o:['Sell products online / import-export','IT services, consulting or freelancing','Build a startup product','Something else']}];
@@ -1213,28 +1281,24 @@ function render(){const {page,arg,params}=parseHash();const fn=PAGES[page]||PAGE
  if(!pendingJump)window.scrollTo(0,0);else{const el=document.getElementById(pendingJump);pendingJump=null;if(el)setTimeout(()=>{el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1700);},80);}}
 function bindPage(page,arg){
  $$('[data-filter]').forEach(b=>b.onclick=()=>{const sec=b.closest('section');$$('[data-filter]',sec).forEach(x=>x.classList.toggle('on',x===b));$('.svc-grid',sec).innerHTML=svcCards(b.dataset.filter);observe();});
- $$('[data-pv]').forEach(b=>b.onclick=()=>{const sec=b.closest('section');$$('[data-pv]',sec).forEach(x=>x.classList.toggle('on',x===b));$$('[data-pv-panel]',sec).forEach(p=>p.classList.toggle('hide',p.dataset.pvPanel!==b.dataset.pv));renderCalc();bindCalc();});
- renderCalc();bindCalc();
+
+ renderPk();bindPk();
  if($('#whoTabs')){renderWho(0);$$('[data-who]').forEach(b=>b.onclick=()=>{$$('[data-who]').forEach(x=>x.classList.toggle('on',x===b));renderWho(+b.dataset.who);});}
  if($('#quizBox'))renderQuiz();
  bindHero($('#app'));
  const mf=$('#magnetForm');if(mf)mf.onsubmit=e=>{e.preventDefault();const em=$('#mEmail');if(setErr(em,EMAIL_RE.test(em.value.trim())?'':'Please enter a valid email.')){mf.classList.add('hide');$('#magnetOk').classList.remove('hide');}};
- const cf=$('#contactForm');if(cf)cf.onsubmit=e=>{e.preventDefault();let ok=true;const n=$('#cfName'),em=$('#cfEmail'),ph=$('#cfPhone'),cc=$('#cfCc').value,m=$('#cfMsg');
+ const cf=$('#contactForm');if(cf){markReq();const cc0=$('#cfCc');cc0.innerHTML=ccOptions('+91');bindPhone($('#cfPhone'),cc0);}if(cf)cf.onsubmit=e=>{e.preventDefault();let ok=true;const n=$('#cfName'),em=$('#cfEmail'),ph=$('#cfPhone'),cc=$('#cfCc').value,m=$('#cfMsg');
   ok=setErr(n,n.value.trim().length<2||/\d/.test(n.value)?'Please enter your full name (letters only).':'')&&ok;ok=setErr(em,EMAIL_RE.test(em.value.trim())?'':'Please enter a valid email, e.g. name@company.com.')&&ok;
-  ok=setErr(ph,PHONE_RULES[cc].re.test(ph.value.replace(/\D/g,''))?'':PHONE_RULES[cc].msg)&&ok;ok=setErr(m,m.value.trim().length<10?'Tell us a little more (at least 10 characters).':'')&&ok;
+  ok=setErr(ph,phoneOk(cc,ph.value.replace(/\D/g,''))?'':PHONE_RULES[cc].msg)&&ok;ok=setErr(m,m.value.trim().length<10?'Tell us a little more (at least 10 characters).':'')&&ok;
   if(ok){cf.querySelector('button').classList.add('hide');$('#cfOk').classList.remove('hide');}};
- const ds=$('#dState');if(ds){const s=SERVICES[arg]||SERVICES.llc,base=PLANS[s.plan].price;const upd=()=>{const st=STATES[ds.selectedIndex];$('#dTotal').innerHTML=st.fee==null?money(base)+' + <span class="ph">[state fee]</span>':money(base+st.fee);$('#dGo').href=`#/start?plan=${s.plan}&state=${encodeURIComponent(st.n)}`;};ds.onchange=upd;upd();}
- const af=$('#addrForm');if(af)af.onsubmit=e=>{e.preventDefault();let ok=true;const st=$('#aStreet'),c=$('#aCity'),z=$('#aZip'),s=$('#aState');
-  ok=setErr(st,st.value.trim().length<4?'Please enter the street address.':'')&&ok;
-  ok=setErr(c,!/^[a-z .'-]{2,}$/i.test(c.value.trim())?'City should contain letters only.':(c.value.trim().toLowerCase()===s.value.toLowerCase()?'This looks like a state name — please enter the city.':''))&&ok;
-  ok=setErr(z,/^\d{5}$/.test(z.value.trim())?'':'US ZIP codes have exactly 5 digits.')&&ok;if(ok){af.querySelector('button').classList.add('hide');$('#addrOk').classList.remove('hide');}};
+ const ds=$('#dState');if(ds){const s=SERVICES[arg]||SERVICES.llc;const upd=()=>{$('#dGo').href=`/start?flow=start&plan=${s.plan}&state=${encodeURIComponent(STATES[ds.selectedIndex].n)}`;};ds.onchange=upd;upd();}
+ bindAddr($('#addrForm'));markReq();
  $$('#app [data-jump]').forEach(a=>a.addEventListener('click',e=>{const id=a.dataset.jump,t=a.getAttribute('href');if(t===location.hash||(t==='#/home'&&parseHash().page==='home')){e.preventDefault();const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}else pendingJump=id;}));
  $$('[data-theme]').forEach(c=>{const f=()=>applyTheme(+c.dataset.theme);c.onclick=f;c.onkeydown=e=>{if(e.key==='Enter')f();};});
  $$('[data-layout]').forEach(c=>{const f=()=>{applyLayout(+c.dataset.layout);location.hash='#/home';};c.onclick=f;c.onkeydown=e=>{if(e.key==='Enter')f();};});
  $$('[data-gcombo]').forEach(b=>b.onclick=()=>{const c=COMBOS[+b.dataset.gcombo];applyTheme(c.t);applyLayout(c.l);cur.hero=c.h;store.set('hero3',c.h);updRanks();location.hash='#/home';});
  $$('[data-usehero]').forEach(b=>b.onclick=()=>{cur.hero=+b.dataset.usehero;store.set('hero',cur.hero);updRanks();location.hash='#/home';});
- if(page==='start')renderOB();}
-function bindCalc(){$$('[data-ent]').forEach(b=>b.onclick=()=>{calc.ent=b.dataset.ent;renderCalc();bindCalc();});$$('[data-add]').forEach(b=>b.onclick=()=>{const id=b.dataset.add;if(id==='ein'&&calc.ent==='premium')return;calc.add[id]=!calc.add[id];renderCalc();bindCalc();});const cs=$('#cState');if(cs)cs.onchange=()=>{calc.st=cs.value;renderCalc();bindCalc();};}
+ if(page==='start'){applyStartParams();renderOB();}}
 
 /* ================= REVEAL ================= */
 let io;

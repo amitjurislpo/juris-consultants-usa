@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { blogPosts, services } from "../components/marketing/content";
+import { services } from "../components/marketing/content";
 
 const deploymentHost =
   process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
@@ -16,7 +16,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     "/contact",
     "/faq",
-    "/blog",
     "/track-order",
     "/start",
     "/legal/privacy",
@@ -32,11 +31,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...services.map((service) => ({
       url: `${siteUrl}/services/${service.slug}`,
-      changeFrequency: "monthly" as const,
-      priority: 0.6,
-    })),
-    ...blogPosts.map((post) => ({
-      url: `${siteUrl}/blog/${post.slug}`,
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),

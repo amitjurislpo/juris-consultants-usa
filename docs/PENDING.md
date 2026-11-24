@@ -49,3 +49,25 @@ For active public website progress and handoff details, see [WORK_MEMORY.md](./W
 - 2026-11-24 · Follow-up Theme 11 color pass: browser-computed styles match the final HTML for global glows/grid, hero background/title/body/CTA, story route and milestones, take-off scene, departures board, and documents background. Globe route markers and story accents now resolve to Theme 11 cyan; intentional gold flight-board details remain gold. Lint, typecheck, Prettier, and `git diff --check` pass. Localhost is responsive. Build was not rerun to avoid disturbing the active dev server's Next output; the PR's prior build passed. · https://github.com/amitjurislpo/juris-consultants-usa/pull/5
 - 2026-11-24 · Latest visual follow-up: updated the hero headline/gradient/CTAs and reduced mobile menu-to-hero spacing; rebuilt the d6 document-folder animation with sequential cards and a 0–5 counter; completed the departures board with a live IST clock, five desktop columns, six illustrative rows, and its explanatory footer. Mobile and desktop checked in the browser. Web lint, typecheck, formatting, and whitespace checks pass; no web test files exist. Build not rerun to avoid disrupting the active localhost dev server. · https://github.com/amitjurislpo/juris-consultants-usa/pull/5
 - In progress · Removed the preview notice and sticky "Formation fees to be confirmed" title; reduced desktop and mobile menu-to-hero spacing. Browser confirms a 20px gap; lint, typecheck, formatting, and whitespace checks pass. Changes are uncommitted and unpushed on `fix/web-marketing-final-design`; resume in Claude Code and commit/push only when requested. The detached localhost dev process on port 3000 has exited and will need restarting.
+
+## 2026-11-24 — marketing flow update (web)
+- Done: announce bar and header CTA buttons removed, menu aligned right, Log in / My account button, /login (email OTP) and /account pages, hero CTAs follow the flow PDF (start / manage / expert / global), /start?flow=... steps, pricing card-and-chips builder, globe no longer clipped, document cards hidden until scroll.
+- `components/marketing/final/generated.ts` is now hand-maintained (no longer regenerated from the design HTML).
+- Open: leads for people who leave before paying are not saved yet (needs Lead API + DB); Calendly link comes from env `CALENDLY_EXPERT_URL` (unset = placeholder message); login and /account need DATABASE_URL, AUTH_SECRET to be tested end to end; payment steps are still demo.
+
+## 2026-11-24 — content fill (web)
+- Stats set by owner: 500+ US companies, 7+ years, 4.5 Google rating (review count not given, so not shown).
+- Terms, Privacy and Refund pages written as DRAFTS by Claude. Must be reviewed by a lawyer / CA before launch. Assumptions to confirm: India law and New Delhi courts, 2-business-day reply and 7-10 day refund time, 24h reschedule rule, cancel-before-work = full refund.
+- Still open: state fees for 7 states, EIN timeline, Registered Agent / Compliance / Tax Filing prices, mailbox terms, warehousing details, client logos, testimonials, team names, office address, Calendly URL, payment provider, blog URL (plan: redirect /blog to the existing blog).
+
+## 2026-11-24 — test-link defaults (TEAM MUST CONFIRM BEFORE LIVE)
+- Timelines used: formation ~7 business days; EIN ~7-10 days after formation; IRS EIN letter 20-25 more days; warehousing ~7 business days.
+- State filing fees used (approximate, confirm): DE $90, FL $125, NV $425 (articles + initial list + business licence), NY $200, CA $70, NM $50, WA $200; WY $103.75 and TX $310 unchanged. NY also has a newspaper publication cost and CA an $800 yearly franchise tax, not included.
+- Blog: /blog redirects (temporary) to https://www.jurisconsultantsusa.com/blogs, override with NEXT_PUBLIC_BLOG_URL. If the new site later takes over that same domain, move the blog or the redirect will loop.
+- Removed until real content exists: client logos and testimonials (home), team section (about), office address (contact).
+
+## 2026-11-24 — login, architecture, memory
+- Checkout now sends logged-out users to /login (Google or email code) and returns them to their order. /track-order and /account need login. Cannot be tested end to end locally (needs DATABASE_URL, AUTH_SECRET, AUTH_GOOGLE_ID/SECRET).
+- Real order creation must check the session on the server. The pay button is still a demo.
+- Waiting on owner: approval of docs/ARCHITECTURE.md, old-site sitemap (URL mapping), Google OAuth client, Calendly link, payment provider.
+- Before go-live set ALLOW_INDEXING=true on the live website project.
