@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="subpage legal-page">
+    <main id="app" data-page="misc" className="subpage legal-page">
       <div className="page-container">
         <PageIntro
           description="Draft placeholder · This page is not a privacy policy."

@@ -1,5 +1,3 @@
-import { Reveal } from "./Reveal";
-
 export function PageIntro({
   eyebrow,
   title,
@@ -10,12 +8,10 @@ export function PageIntro({
   description: string;
 }) {
   return (
-    <div className="page-intro">
-      <Reveal>
-        <p className="eyebrow">{eyebrow}</p>
-        <h1>{title}</h1>
-        <p>{description}</p>
-      </Reveal>
+    <div className="sec-head">
+      <span className="eyebrow">{eyebrow}</span>
+      <h1 style={{ fontSize: "clamp(34px,4.4vw,52px)" }}>{title}</h1>
+      <p>{description}</p>
     </div>
   );
 }
