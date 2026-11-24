@@ -12,8 +12,20 @@ const requestSchema = z.object({
     .transform((email) => email.trim().toLowerCase()),
 });
 
+/**
+ * TEST ONLY. When FIXED_TEST_OTP (6 digits) is set, every code is that value so the team can
+ * sign in before email delivery works. Ignored on a Vercel production deployment.
+ * Remove the variable before go-live.
+ */
+function fixedTestOtp(): string | null {
+  const fixed = process.env.FIXED_TEST_OTP?.trim();
+  if (!fixed || !/^\d{6}$/.test(fixed)) return null;
+  if (process.env.VERCEL_ENV === "production") return null;
+  return fixed;
+}
+
 const codeLifetimeMs = 10 * 60 * 1000;
-const resendCooldownMs = 60 * 1000;
+const resendCooldownMs = 30 * 1000;
 
 export async function POST(request: Request) {
   const parsed = requestSchema.safeParse(await request.json());
@@ -65,7 +77,8 @@ export async function POST(request: Request) {
   if (!authSecret)
     throw new Error("AUTH_SECRET is required to issue email sign-in codes");
 
-  const code = randomInt(0, 100_000_000).toString().padStart(8, "0");
+  const code =
+    fixedTestOtp() ?? randomInt(0, 1_000_000).toString().padStart(6, "0");
   const token = hashEmailOtp(email, code, authSecret);
   await prisma.verificationToken.deleteMany({ where: { identifier: email } });
   await prisma.verificationToken.create({

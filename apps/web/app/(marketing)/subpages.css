@@ -110,3 +110,30 @@
   flex-wrap: wrap;
   justify-content: center;
 }
+
+.legal-doc {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 1.7;
+}
+.legal-doc h2 {
+  font-size: 22px;
+  margin: 26px 0 8px;
+}
+.legal-doc p,
+.legal-doc li {
+  color: var(--body);
+  font-size: 16px;
+}
+.legal-doc ul {
+  margin: 8px 0 0;
+  padding-left: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.legal-doc a {
+  color: var(--blue);
+  text-decoration: underline;
+}

@@ -10,3 +10,5 @@ export * from "./components/Badge";
 export * from "./components/Modal";
 export * from "./components/Toast";
 export * from "./components/Table";
+export * from "./components/OtpInput";
+export * from "./components/ResendCodeButton";

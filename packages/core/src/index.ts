@@ -6,3 +6,4 @@ export * from "./adapters/auth.js";
 export * from "./adapters/storage.js";
 export * from "./adapters/email.js";
 export * from "./adapters/payment.js";
+export * from "./adapters/storage-local.js";

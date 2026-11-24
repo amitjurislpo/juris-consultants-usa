@@ -24,7 +24,7 @@ export default function ComingSoonPage() {
         <Link className="btn btn-primary" href="/">
           Back to home <span aria-hidden="true">↗</span>
         </Link>
-        <Link className="btn btn-outline" href="/contact">
+        <Link className="btn btn-outline" href="/contacts">
           Contact
         </Link>
       </div>
