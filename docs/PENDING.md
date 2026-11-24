@@ -38,6 +38,14 @@ For active public website progress and handoff details, see [WORK_MEMORY.md](./W
 
 (add here: date · agent · request)
 
+- 2026-11-25 · Admin orders agent · Add an explicit `detailsComplete` flag (or a `DETAILS_SUBMITTED` marker) on Order. Admin now treats details as complete when the order has a company with at least one member, so staff cannot send an order back for incomplete details unless a KYC document is rejected.
+- 2026-11-25 · Admin orders agent · Add a `reason` column on Order status changes (or a StatusChange model). The rejection reason is stored in the AuditLog `after` JSON for now.
+- 2026-11-25 · Admin orders agent · Decide how admin knows an EIN was bought. Admin uses the catalog item slug `ein` (`einOrdered` for the status machine).
+
+- 2026-11-25 · admin settings/staff/activity/export · (1) `User.mfaSecret` is stored in clear text (needed to verify TOTP); production should encrypt it (KMS) or move MFA to Cognito. (2) No audit `before` column is written by the shared `writeAudit` helper; settings changes store `{ before, after }` (changed fields only) inside the `after` column. Add a `before` argument to the helper when convenient. (3) Staff creation shows the authenticator secret and otpauth link as text; adding a QR image needs a `qrcode` dependency in apps/admin.
+
+- 2026-11-24 · Admin leads/customers · `Note` requires an `orderId`, so notes on leads and customers cannot use it. They are stored as `AuditLog` rows (`LEAD_CONTACTED`, `CUSTOMER_NOTE`, note text in `after.note`). Request: make `Note.orderId` optional and add optional `userId` and `leadId`, then move these notes over.
+
 ## Done
 
 (date · what · PR)
@@ -71,3 +79,22 @@ For active public website progress and handoff details, see [WORK_MEMORY.md](./W
 - Real order creation must check the session on the server. The pay button is still a demo.
 - Waiting on owner: approval of docs/ARCHITECTURE.md, old-site sitemap (URL mapping), Google OAuth client, Calendly link, payment provider.
 - Before go-live set ALLOW_INDEXING=true on the live website project.
+
+## 2026-11-25 — localhost verification (web + admin)
+- Web (3000): 18 routes return 200 with no console errors; old URLs (/contact, /legal/*) redirect; /signup shows login; customer email-OTP login and the 5-step order flow work. Fixed LegalDoc import paths after the folder rename.
+- Admin (3001): fixed two crashes (`"use server"` file exporting a constant in login/actions.ts; missing `"use client"` in packages/ui Modal.tsx). Verified: login with password + TOTP (bad password/TOTP rejected), reauth for settings/staff/export, order status change, notes, KYC approve (unlocks "Ready for review"), activity log.
+- Gaps: web "Pay (demo)" shows "Payment received" but creates no Order/Payment row (only a Lead); catalog prices are seeded as 0.00 while the site shows hard-coded prices; no admin Dockerfile yet; KYC file preview needs Vercel Blob token; one React hydration warning in admin order page.
+- Local test setup: Docker Postgres `juris-pg` on 127.0.0.1:5440; `.env.local` in apps/web, apps/admin, packages/db (gitignored); admin@test.local / TestAdmin!2345 / TOTP secret JBSWY3DPEHPK3PXP. Port 5433 on this PC is taken by another Postgres.
+
+## 2026-11-25 — admin email-OTP, 6-digit codes
+- Done: admin login now password + emailed 6-digit code (no TOTP); admin forgot-password; reauth via emailed code; staff create/reset show a temporary password only; seed creates amit@ and ritz@ super admins (bcrypt). Customer + admin codes are 6 boxes, digits only, with a resend button (30 s). Google button is now always visible on the customer login (disabled until AUTH_GOOGLE_ID/SECRET are set).
+- To deliver codes by real email set RESEND_API_KEY and AUTH_EMAIL_FROM in both apps (a verified sender domain is needed). Until then codes print in the dev server console.
+- Cleanup later: `User.mfaSecret` column and `otplib` dependency are now unused (Foundation to drop). Starting passwords for amit@/ritz@ are temporary test values: change before real use.
+- 2026-11-25 · Strict admin lockout (DECISIONS #32) and fixed test OTP 999963 (DECISIONS #33) added. New table `AdminLoginLock` (schema change made by admin agent at Amit's request; Foundation to review). Before go-live: unset FIXED_TEST_OTP, set RESEND_API_KEY + AUTH_EMAIL_FROM, change the temporary amit@/ritz@ passwords. Customer-side lockout is not escalating yet (only 5 tries per code).
+- 2026-11-25 · Removed the "confirm it is you" re-authentication step (password + code again for settings/staff/export) at Amit's request. Sign-in itself needs password + emailed code; role checks still protect those pages. `requireRecentAuth` is now just `requireAdmin` (kept so callers did not change). Reconsider before production if stricter control is wanted.
+- 2026-11-25 · Admin UI pass: all pages responsive (slide-in menu on tablet/phone, one filter/pager style, tables become labelled cards on phones); time zone dropdown + seconds on all dates (DECISIONS #34); account menu with avatar/photo and My details (DECISIONS #35). New column `User.timezone`. NOT done: the same photo/My-details option for customers on the website account page (`User.image` already exists, needs the customer dashboard).
+- 2026-11-25 · Customer portal built at /account (DECISIONS #36-38). Done: profile + business details, My Orders (+ order page with progress), Documents (checklist from KYC requirements, uploads, team deliverables with signed download), Payments, logout confirmation, avatar pencil. NOT built: customer KYC file upload (needs the storage token and the upload UI), editing business/company details, paying a pending order from the portal. Customer dates are shown as plain dates (UTC); the time zone switcher is admin-only.
+- 2026-11-25 · `packages/db` now has a baseline migration and `db:bootstrap` (DECISIONS #39). From now on schema changes need a migration (`db:migrate:dev`), not only `db push`. The local dev database was created with `db push`; to move it onto migrations run `prisma migrate resolve --applied 20261125000000_init`.
+- Known dev-only noise: Next shows a React style-mixing warning on the marketing /about page (from the ported final design) and "Could not sign KYC file URL" on the KYC detail page until a Blob token exists.
+- 2026-11-25 · Completed the items listed as "not built" for the portal (DECISIONS #40-41): customer KYC upload (+ admin preview/approve works end to end), company address/member editing with a lock after filing, "Pay now" for unpaid orders (mock provider), customer time zone. Tested end to end with Playwright; core has 4 new tests for the local storage adapter.
+- Still open: (1) the website checkout still does not create Order/Payment rows (it only saves a lead), so real orders from the site do not exist yet; the portal and admin work on orders created in the database. Needs the order-creation step with DB prices. (2) Catalog prices in the database are 0.00 placeholders while the site shows fixed prices. (3) Email delivery (Resend) and Google login keys. (4) Company-name change requests and EIN entry stay admin-only by design.

@@ -10,3 +10,6 @@ coverage/
 apps/*/next-env.d.ts
 playwright-report/
 test-results/
+
+# local test file storage
+.local-uploads/

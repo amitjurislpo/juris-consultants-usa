@@ -4,8 +4,7 @@ import { FINAL_PAGES } from "../../../components/marketing/final/generated";
 
 export const metadata: Metadata = {
   title: "Start your US company | Juris Consultants USA",
-  description:
-    "Tell us about you, choose a plan and review your order.",
+  description: "Tell us about you, choose a plan and review your order.",
 };
 
 export default function Page() {

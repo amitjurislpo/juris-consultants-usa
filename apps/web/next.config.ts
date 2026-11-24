@@ -5,11 +5,12 @@ const nextConfig: NextConfig = {
   transpilePackages: ["@juris/core", "@juris/db", "@juris/ui"],
   async redirects() {
     return [
-      // Old website URLs (from its sitemap) that moved on the new site.
-      { source: "/contacts", destination: "/contact", permanent: true },
-      { source: "/signup", destination: "/login", permanent: true },
-      { source: "/privacy", destination: "/legal/privacy", permanent: true },
-      { source: "/terms", destination: "/legal/terms", permanent: true },
+      // Same URLs as the old website, so search engines keep what they indexed.
+      // These only catch addresses that may have been typed or shared by mistake.
+      { source: "/contact", destination: "/contacts", permanent: true },
+      { source: "/legal/privacy", destination: "/privacy", permanent: true },
+      { source: "/legal/terms", destination: "/terms", permanent: true },
+      { source: "/legal/refund", destination: "/refund", permanent: true },
       // Older draft blog paths.
       {
         source: "/blog/:path*",
@@ -33,10 +34,18 @@ const nextConfig: NextConfig = {
     ];
   },
   async rewrites() {
-    if (!BLOG_ORIGIN) return [];
     return [
-      { source: "/blogs", destination: `${BLOG_ORIGIN}/blogs` },
-      { source: "/blogs/:path*", destination: `${BLOG_ORIGIN}/blogs/:path*` },
+      // The old sign-up address now shows the login / create-account page.
+      { source: "/signup", destination: "/login" },
+      ...(BLOG_ORIGIN
+        ? [
+            { source: "/blogs", destination: `${BLOG_ORIGIN}/blogs` },
+            {
+              source: "/blogs/:path*",
+              destination: `${BLOG_ORIGIN}/blogs/:path*`,
+            },
+          ]
+        : []),
     ];
   },
 };

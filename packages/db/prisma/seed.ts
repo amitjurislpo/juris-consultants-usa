@@ -5,61 +5,45 @@ const prisma = new PrismaClient();
 
 async function main() {
   const databaseUrl = process.env.DATABASE_URL?.trim();
-  const seedAdminEmail = process.env.SEED_SUPER_ADMIN_EMAIL?.trim();
-  const seedAdminPassword = process.env.SEED_SUPER_ADMIN_PASSWORD;
-  const seedAdminTotpSecret = process.env.SEED_SUPER_ADMIN_TOTP_SECRET?.trim();
-
   if (!databaseUrl)
     throw new Error("Missing required seed environment variable: DATABASE_URL");
-  if (!seedAdminEmail)
-    throw new Error(
-      "Missing required seed environment variable: SEED_SUPER_ADMIN_EMAIL",
-    );
-  if (!seedAdminPassword)
-    throw new Error(
-      "Missing required seed environment variable: SEED_SUPER_ADMIN_PASSWORD",
-    );
-  if (!seedAdminTotpSecret)
-    throw new Error(
-      "Missing required seed environment variable: SEED_SUPER_ADMIN_TOTP_SECRET",
-    );
-
   if (!/^postgres(?:ql)?:\/\//i.test(databaseUrl)) {
     throw new Error("DATABASE_URL must be a PostgreSQL connection URL");
   }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(seedAdminEmail)) {
-    throw new Error("SEED_SUPER_ADMIN_EMAIL must be a valid email address");
-  }
-  if (seedAdminPassword.length < 12) {
-    throw new Error("SEED_SUPER_ADMIN_PASSWORD must be at least 12 characters");
-  }
-  if (!/^[A-Z2-7]+=*$/i.test(seedAdminTotpSecret)) {
+
+  // SEED_SUPER_ADMINS is JSON: [{"email":"a@x.com","name":"A","password":"..."}].
+  // Passwords are stored only as bcrypt hashes. Admins sign in with a code emailed to them.
+  const rawAdmins = process.env.SEED_SUPER_ADMINS?.trim();
+  if (!rawAdmins)
     throw new Error(
-      "SEED_SUPER_ADMIN_TOTP_SECRET must be a base32 TOTP secret",
+      "Missing required seed environment variable: SEED_SUPER_ADMINS",
     );
+  const admins = JSON.parse(rawAdmins) as {
+    email: string;
+    name?: string;
+    password: string;
+  }[];
+  for (const admin of admins) {
+    const email = admin.email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      throw new Error(`Invalid super admin email: ${admin.email}`);
+    }
+    if (admin.password.length < 12) {
+      throw new Error(`Password for ${email} must be at least 12 characters`);
+    }
+    const passwordHash = await bcrypt.hash(admin.password, 12);
+    await prisma.user.upsert({
+      where: { email },
+      update: { role: "SUPER_ADMIN", status: "ACTIVE", passwordHash },
+      create: {
+        email,
+        name: admin.name?.trim() || "Super Admin",
+        role: "SUPER_ADMIN",
+        status: "ACTIVE",
+        passwordHash,
+      },
+    });
   }
-
-  const seedAdminName =
-    process.env.SEED_SUPER_ADMIN_NAME?.trim() || "Super Admin";
-  const passwordHash = await bcrypt.hash(seedAdminPassword, 12);
-
-  await prisma.user.upsert({
-    where: { email: seedAdminEmail },
-    update: {
-      role: "SUPER_ADMIN",
-      status: "ACTIVE",
-      passwordHash,
-      mfaSecret: seedAdminTotpSecret,
-    },
-    create: {
-      email: seedAdminEmail,
-      name: seedAdminName,
-      role: "SUPER_ADMIN",
-      status: "ACTIVE",
-      passwordHash,
-      mfaSecret: seedAdminTotpSecret,
-    },
-  });
 
   // PLACEHOLDER: final prices have not been agreed. All monetary values remain $0.00
   // until they are entered in the admin settings.

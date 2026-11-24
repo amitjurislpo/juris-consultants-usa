@@ -14,13 +14,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/pricing",
     "/how-it-works",
     "/about",
-    "/contact",
+    "/contacts",
     "/faq",
     "/track-order",
     "/start",
-    "/legal/privacy",
-    "/legal/terms",
-    "/legal/refund",
+    "/privacy",
+    "/terms",
+    "/refund",
   ];
 
   return [

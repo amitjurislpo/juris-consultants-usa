@@ -14,11 +14,41 @@ const otpCredentials = z.object({
     .string()
     .email()
     .transform((email) => email.trim().toLowerCase()),
-  code: z.string().regex(/^\d{8}$/),
+  code: z.string().regex(/^\d{6}$/),
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  // Own cookie names so a customer cookie and an admin cookie can never be mixed up, even on one
+  // host (localhost in development). Each app also uses its own AUTH_SECRET.
+  cookies: {
+    sessionToken: {
+      name: "juris-customer.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    callbackUrl: {
+      name: "juris-customer.callback-url",
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    csrfToken: {
+      name: "juris-customer.csrf-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   providers: [
     // Google sign-in is switched on by setting AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET.

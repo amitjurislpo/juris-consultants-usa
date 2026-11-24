@@ -70,7 +70,7 @@ export function FinalShell({ children }: { children: ReactNode }) {
             <a data-nav="about" href="/about">
               About Us
             </a>
-            <a data-nav="contact" href="/contact">
+            <a data-nav="contact" href="/contacts">
               Contact
             </a>
           </nav>
@@ -104,7 +104,7 @@ export function FinalShell({ children }: { children: ReactNode }) {
           <a href="/how-it-works">How it works</a>
           <a href={BLOG_URL}>Blogs</a>
           <a href="/about">About Us</a>
-          <a href="/contact">Contact</a>
+          <a href="/contacts">Contact</a>
           <AuthNav mobile />
         </div>
       </header>
@@ -169,7 +169,7 @@ export function FinalShell({ children }: { children: ReactNode }) {
               <a href="/pricing">Pricing</a>
               <a href={BLOG_URL}>Blogs</a>
               <a href="/how-it-works">How it works</a>
-              <a href="/contact">Contact</a>
+              <a href="/contacts">Contact</a>
             </div>
             <div>
               <h5>Talk to us</h5>
@@ -183,10 +183,8 @@ export function FinalShell({ children }: { children: ReactNode }) {
           <div className="foot-bottom">
             <span>© 2026 Juris Consultants USA. All rights reserved.</span>
             <span>
-              Not a law firm. No legal or tax advice.{" "}
-              <a href="/legal/terms">Terms</a> ·{" "}
-              <a href="/legal/privacy">Privacy</a> ·{" "}
-              <a href="/legal/refund">Refunds</a>
+              Not a law firm. No legal or tax advice. <a href="/terms">Terms</a>{" "}
+              · <a href="/privacy">Privacy</a> · <a href="/refund">Refunds</a>
             </span>
           </div>
         </div>

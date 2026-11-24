@@ -128,6 +128,8 @@ model User {
   role        UserRole    @default(CUSTOMER)
   passwordHash String?
   mfaSecret   String?
+  /// IANA time zone the admin chose as default (e.g. "Asia/Kolkata"). Null = IST.
+  timezone    String?
   status      UserStatus  @default(ACTIVE)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
@@ -468,4 +470,14 @@ model Setting {
   id    String @id @default(cuid())
   key   String @unique
   value Json
+}
+
+/// Failed admin sign-in counter. Escalating blocks: 3 fails = 15 min, 4th = 1 hour, 5th+ = 1 day.
+/// A successful sign-in (or a super admin's "Unlock") resets it. Only real admin accounts get a row.
+model AdminLoginLock {
+  email        String    @id
+  failures     Int       @default(0)
+  lockedUntil  DateTime?
+  lastFailedAt DateTime?
+  updatedAt    DateTime  @updatedAt
 }

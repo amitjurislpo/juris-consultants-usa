@@ -13,7 +13,10 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:validate": "prisma validate",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "db:bootstrap": "tsx scripts/bootstrap.ts",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:dev": "prisma migrate dev"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
