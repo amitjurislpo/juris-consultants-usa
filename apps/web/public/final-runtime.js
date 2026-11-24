@@ -1128,7 +1128,7 @@ const EMAIL_RE=/^(?!.*\.\.)[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?@(?:
 const REQ_IDS=['oName','oEmail','oPhone','oNeed','cfName','cfEmail','cfPhone','cfMsg','aStreet','aCity','aState','aRegion','aZip','aCountry'];
 function markReq(){REQ_IDS.forEach(id=>{const l=document.querySelector('label[for='+id+']'),i=document.getElementById(id);if(l)l.classList.add('req');if(i)i.setAttribute('aria-required','true');});}
 function setErr(input,msg){const f=input.closest('.field');f.classList.toggle('err',!!msg);$('.msg',f).textContent=msg||'';return !msg;}
-const FEE_CONSULT=49;
+let FEE_CONSULT=49;
 const isConsult=()=>state.flow==='expert'||state.flow==='global';
 function obTotals(){const manage=state.flow==='manage',p=manage?{name:'Existing company services',sub:'',price:0,form:false}:PLANS[state.plan],st=STATES.find(s=>s.n===state.st),showFee=!manage&&p.form,fee=showFee?st.fee:0,einInc=!manage&&state.plan==='premium';let one=0,mo=0,lines=[];
  if(p.form||manage)ADDONS.forEach(a=>{if(state.add[a.id]&&!(a.id==='ein'&&einInc)){one+=a.one||0;mo+=a.mo||0;lines.push([a.n,a.one?money(a.one):money(a.mo)+'/mo']);}});
@@ -1168,7 +1168,7 @@ function renderOB(){const ob=$('#ob');if(!ob)return;let body='';
   <div class="card locked" style="text-align:center;color:var(--muted)">${ICON.lock}<div style="margin-top:6px"><b style="color:var(--text)">Secure card payment</b></div><div style="font-size:13px">Card details are entered on the payment provider’s secure page — never stored by us.</div></div>
   <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px"><input type="checkbox" id="oAgree" ${state.agree?'checked':''} style="margin-top:3px;width:18px;height:18px;accent-color:var(--blue)"> I agree to the <a href="/terms" target="_blank" rel="noopener" style="color:var(--blue)">Terms</a> and <a href="/refund" target="_blank" rel="noopener" style="color:var(--blue)">Refund policy</a></label>
   <span id="agreeMsg" style="color:var(--red);font-size:13px"></span>
-  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-pay>Pay ${money(FEE_CONSULT)} (demo)</button></div></div>`;
+  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-pay>Place order · ${money(FEE_CONSULT)}</button></div></div>`;
  if(consult&&state.step===3){const cal=($('#app')&&$('#app').dataset.calendly)||'';body=`<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding:40px"><div style="width:70px;height:70px;border-radius:50%;background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:34px">✓</div><h2>Payment received — book your call</h2><p class="muted">Pick a time that suits you. You will get a confirmation email and the call appears in your dashboard.</p>${cal?`<a class="btn btn-primary btn-lg" href="${cal}" target="_blank" rel="noopener">Book on Calendly</a>`:'<div class="ok-msg" style="background:var(--amber-50);color:var(--amber-d)">The booking calendar is being connected. Our team will email you a booking link shortly.</div>'}<a class="btn btn-outline" href="/track-order">Go to my dashboard</a></div>`;}
  if(!consult&&state.step===2){body=manage?`<div class="card form"><h2 style="font-size:30px">Choose your services</h2><p class="muted">Already have a US company? Pick what you want us to handle.</p>${chipsHTML('oadd')}<span id="stepMsg" style="color:var(--red);font-size:13px"></span>
   <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-next>Continue</button></div></div>`
@@ -1183,7 +1183,7 @@ function renderOB(){const ob=$('#ob');if(!ob)return;let body='';
   <div class="card locked" style="text-align:center;color:var(--muted)">${ICON.lock}<div style="margin-top:6px"><b style="color:var(--text)">Secure card payment</b></div><div style="font-size:13px">Card details are entered on the payment provider’s secure page — never stored by us.</div></div>
   <label style="display:flex;gap:10px;align-items:flex-start;font-size:14px"><input type="checkbox" id="oAgree" ${state.agree?'checked':''} style="margin-top:3px;width:18px;height:18px;accent-color:var(--blue)"> I agree to the <a href="/terms" target="_blank" rel="noopener" style="color:var(--blue)">Terms</a> and <a href="/refund" target="_blank" rel="noopener" style="color:var(--blue)">Refund policy</a></label>
   <span id="agreeMsg" style="color:var(--red);font-size:13px"></span>
-  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-pay>Pay ${money(obTotals().total)} (demo)</button></div></div>`;
+  <div style="display:flex;gap:12px;justify-content:space-between"><button type="button" class="btn btn-outline" data-back>← Back</button><button type="button" class="btn btn-primary" data-pay>Place order · ${money(obTotals().total)}</button></div></div>`;
  if(!consult&&state.step===5)body=`<div class="card" style="text-align:center;display:flex;flex-direction:column;gap:14px;align-items:center;padding:40px"><div style="width:70px;height:70px;border-radius:50%;background:var(--green-50);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:34px">✓</div><h2>Payment received — welcome aboard!</h2><p class="muted">A receipt is on its way to your email. Next: fill in your business details and upload your passport and address proof in the dashboard. Our team reviews them and files with the state.</p><a class="btn btn-primary" href="/track-order">Go to my dashboard</a></div>`;
  ob.innerHTML=stepperHTML()+`<div class="ob">${body}${state.step<last?summaryHTML():'<div></div>'}</div>`;bindOB();markReq();leadPing();}
 let obAcctChecked=false;
@@ -1211,7 +1211,11 @@ function bindOB(){const f1=$('#ob1');checkAcct();if(f1)bindPhone($('#oPhone'),$(
  $$('[data-next]').forEach(b=>b.onclick=()=>{if(state.flow==='manage'&&state.step===2&&!obTotals().lines.length){const m=$('#stepMsg');if(m)m.textContent='Please choose at least one service.';return;}state.step++;renderOB();window.scrollTo({top:0,behavior:'smooth'});});
  $$('[data-goto]').forEach(b=>b.onclick=()=>{state.step=+b.dataset.goto;renderOB();});
  const ag=$('#oAgree');if(ag)ag.onchange=()=>state.agree=ag.checked;
- const pay=$('[data-pay]');if(pay)pay.onclick=()=>{if(!state.loggedIn){needLogin(isConsult()?2:4);return;}if(!state.agree){$('#agreeMsg').textContent='Please accept the terms to continue.';return;}state.step=isConsult()?3:5;renderOB();window.scrollTo({top:0,behavior:'smooth'});};}
+ const pay=$('[data-pay]');if(pay)pay.onclick=()=>{if(!state.loggedIn){needLogin(isConsult()?2:4);return;}if(!state.agree){$('#agreeMsg').textContent='Please accept the terms to continue.';return;}pay.disabled=true;const msg=$('#agreeMsg');msg.textContent='';
+  const f=({start:'START',manage:'MANAGE',expert:'EXPERT',global:'GLOBAL'})[state.flow]||'START';
+  fetch('/api/checkout',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({flow:f,plan:isConsult()||f==='MANAGE'?undefined:state.plan,state:isConsult()||f==='MANAGE'?undefined:state.st,add:f==='MANAGE'||f==='START'?Object.keys(state.add).filter(k=>state.add[k]):[],company:state.company||undefined})})
+   .then(r=>r.json().catch(()=>({})).then(j=>({ok:r.ok,status:r.status,j}))).then(({ok,status,j})=>{if(status===401){needLogin(isConsult()?2:4);return;}if(!ok||!j.orderId)throw new Error(j.error||'x');location.href='/account/orders/'+j.orderId;})
+   .catch(e=>{pay.disabled=false;msg.textContent=e&&e.message&&e.message!=='x'?e.message:'We could not place your order. Please try again.';});};}
 function applyStartParams(){const q=new URLSearchParams(location.search),f=q.get('flow'),pl=q.get('plan'),s=q.get('state');
  if(['start','manage','expert','global'].includes(f))state.flow=f;
  if(pl==='warehouse')state.flow='global';else if(pl&&PLANS[pl]&&PLANS[pl].form)state.plan=pl;
@@ -1311,7 +1315,12 @@ window.addEventListener('scroll',()=>{$('#stickyCta').classList.toggle('show',wi
 
 
 /* ================= MOUNT (real URLs; markup is server-rendered) ================= */
-(function(){
+function applyCatalog(c){if(!c)return;
+ if(c.plans){if(c.plans.starter!=null)PLANS.starter.price=c.plans.starter;if(c.plans.premium!=null)PLANS.premium.price=c.plans.premium;}
+ if(c.consult!=null){FEE_CONSULT=c.consult;PLANS.warehouse.price=c.consult;}
+ if(c.addons)ADDONS.forEach(a=>{const x=c.addons[a.id];if(!x)return;delete a.one;delete a.mo;if(x.billing==='MONTHLY')a.mo=x.price;else a.one=x.price;});
+ if(Array.isArray(c.states)&&c.states.length){STATES.length=0;c.states.forEach(s=>STATES.push({n:s.name,fee:s.fee}));if(!STATES.some(s=>s.n===state.st))state.st=STATES[0].n;}}
+fetch('/api/catalog',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null).then(function(cat){applyCatalog(cat);
  const {page,arg,params}=parseHash();
  if(page==='start'){if(params.get('plan')&&PLANS[params.get('plan')])state.plan=params.get('plan');if(params.get('state')&&STATES.some(s=>s.n===params.get('state')))state.st=params.get('state');}
  const sc=document.getElementById('stickyCta');
@@ -1326,6 +1335,6 @@ window.addEventListener('scroll',()=>{$('#stickyCta').classList.toggle('show',wi
  window.addEventListener('hashchange',()=>{if(location.hash.indexOf('#/')===0){const p=toPath(location.hash);if(p){history.replaceState(null,'',location.pathname+location.search);location.href=p;}}});
  $$('.menu > a').forEach(a=>a.classList.toggle('active',a.dataset.nav===page));
  bindPage(page,arg);observe();initStory();fxUpdate();fx2(document);
-})();
+});
 
 })();

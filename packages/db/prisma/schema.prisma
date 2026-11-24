@@ -30,6 +30,9 @@ enum StateCode {
   DELAWARE
   FLORIDA
   NEW_YORK
+  NEVADA
+  NEW_MEXICO
+  WASHINGTON
 }
 
 enum LeadFlow {

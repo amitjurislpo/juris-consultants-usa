@@ -9,6 +9,9 @@ export const STATE_CODES = [
   "DELAWARE",
   "FLORIDA",
   "NEW_YORK",
+  "NEVADA",
+  "NEW_MEXICO",
+  "WASHINGTON",
 ] as const;
 export const KYC_APPLIES_TO = ["OWNER", "ORDER", "SERVICE"] as const;
 export const INTAKE_INPUT_TYPES = [

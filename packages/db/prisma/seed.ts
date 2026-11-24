@@ -45,130 +45,165 @@ async function main() {
     });
   }
 
-  // PLACEHOLDER: final prices have not been agreed. All monetary values remain $0.00
-  // until they are entered in the admin settings.
-  const placeholderPrice = new Prisma.Decimal("0.00");
-
-  await prisma.catalogItem.upsert({
-    where: { slug: "starter-llc" },
-    update: {},
-    create: {
-      type: "PLAN",
+  // Launch prices from the approved website. They are only written while an item is still at
+  // the old $0.00 placeholder, so prices edited later in admin Settings are never overwritten.
+  const D = (value: string) => new Prisma.Decimal(value);
+  const catalog = [
+    {
       slug: "starter-llc",
-      name: "Starter LLC — PLACEHOLDER",
-      description: "PLACEHOLDER plan price",
-      priceUsd: placeholderPrice,
-      billing: "ONE_TIME",
-      active: true,
-      sort: 10,
-      warnings: [],
-    },
-  });
-
-  await prisma.catalogItem.upsert({
-    where: { slug: "premium-c-corp" },
-    update: {},
-    create: {
       type: "PLAN",
-      slug: "premium-c-corp",
-      name: "Premium C-Corp — PLACEHOLDER",
-      description: "PLACEHOLDER plan price",
-      priceUsd: placeholderPrice,
+      name: "Starter (LLC)",
+      price: "249",
       billing: "ONE_TIME",
-      active: true,
-      sort: 20,
-      warnings: [],
+      sort: 10,
     },
-  });
+    {
+      slug: "premium-c-corp",
+      type: "PLAN",
+      name: "Premium (C-Corp)",
+      price: "849",
+      billing: "ONE_TIME",
+      sort: 20,
+    },
+    {
+      slug: "warehousing",
+      type: "PLAN",
+      name: "Warehousing (Fulfilment)",
+      price: "49",
+      billing: "ONE_TIME",
+      sort: 25,
+    },
+    {
+      slug: "ein",
+      type: "ADDON",
+      name: "EIN (US tax ID)",
+      price: "80",
+      billing: "ONE_TIME",
+      sort: 40,
+    },
+    {
+      slug: "virtual-bank",
+      type: "ADDON",
+      name: "Bank account assistance",
+      price: "100",
+      billing: "ONE_TIME",
+      sort: 50,
+    },
+    {
+      slug: "virtual-mailbox",
+      type: "ADDON",
+      name: "Virtual mailbox",
+      price: "25",
+      billing: "MONTHLY",
+      sort: 60,
+    },
+    {
+      slug: "bookkeeping",
+      type: "ADDON",
+      name: "Bookkeeping",
+      price: "200",
+      billing: "MONTHLY",
+      sort: 70,
+    },
+    {
+      slug: "office-address",
+      type: "ADDON",
+      name: "Physical office address",
+      price: "200",
+      billing: "MONTHLY",
+      sort: 80,
+    },
+    {
+      slug: "expert-call",
+      type: "SERVICE",
+      name: "Expert consultation (30 min)",
+      price: "49",
+      billing: "ONE_TIME",
+      sort: 90,
+    },
+  ] as const;
+  for (const item of catalog) {
+    await prisma.catalogItem.upsert({
+      where: { slug: item.slug },
+      update: {},
+      create: {
+        type: item.type,
+        slug: item.slug,
+        name: item.name,
+        priceUsd: D(item.price),
+        billing: item.billing,
+        active: true,
+        sort: item.sort,
+        warnings: [],
+      },
+    });
+    await prisma.catalogItem.updateMany({
+      where: { slug: item.slug, priceUsd: D("0.00") },
+      data: {
+        name: item.name,
+        priceUsd: D(item.price),
+        billing: item.billing,
+        description: null,
+      },
+    });
+  }
 
+  // Not part of the approved price list yet (price unknown), so it is not sold.
   await prisma.catalogItem.upsert({
     where: { slug: "registered-agent" },
     update: {},
     create: {
       type: "ADDON",
       slug: "registered-agent",
-      name: "Registered agent — PLACEHOLDER",
-      description: "Mandatory on every formation order",
-      priceUsd: placeholderPrice,
+      name: "Registered agent",
+      description: "Price not decided yet",
+      priceUsd: D("0.00"),
       billing: "ONE_TIME",
-      mandatory: true,
-      active: true,
+      mandatory: false,
+      active: false,
       sort: 30,
       warnings: [],
     },
   });
-
-  await prisma.catalogItem.upsert({
-    where: { slug: "ein" },
-    update: {},
-    create: {
-      type: "ADDON",
-      slug: "ein",
-      name: "EIN — PLACEHOLDER",
-      description: "PLACEHOLDER add-on price",
-      priceUsd: placeholderPrice,
-      billing: "ONE_TIME",
-      active: true,
-      sort: 40,
-      warnings: ["EIN processing warning to be confirmed"],
-    },
-  });
-
-  await prisma.catalogItem.upsert({
-    where: { slug: "virtual-bank" },
-    update: {},
-    create: {
-      type: "ADDON",
-      slug: "virtual-bank",
-      name: "Virtual bank — PLACEHOLDER",
-      description: "PLACEHOLDER add-on price",
-      priceUsd: placeholderPrice,
-      billing: "ONE_TIME",
-      active: true,
-      sort: 50,
-      warnings: ["Virtual bank warning to be confirmed"],
-    },
-  });
-
   await prisma.catalogItem.upsert({
     where: { slug: "boir" },
     update: {},
     create: {
       type: "ADDON",
       slug: "boir",
-      name: "BOIR — PLACEHOLDER",
+      name: "BOIR",
       description: "Inactive add-on; legal review pending",
-      priceUsd: placeholderPrice,
+      priceUsd: D("0.00"),
       billing: "ONE_TIME",
-      mandatory: false,
       active: false,
-      sort: 60,
+      sort: 100,
       warnings: [
         "US-formed companies are exempt since Mar 2025; legal confirmation pending",
       ],
     },
   });
 
+  // State filing fees from the approved website. Same rule: only replaces a $0.00 placeholder.
   const stateFees = [
-    ["TEXAS", true],
-    ["CALIFORNIA", false],
-    ["WYOMING", false],
-    ["DELAWARE", false],
-    ["FLORIDA", false],
-    ["NEW_YORK", false],
+    ["WYOMING", "103.75", false],
+    ["TEXAS", "310", true],
+    ["DELAWARE", "90", false],
+    ["FLORIDA", "125", false],
+    ["NEVADA", "425", false],
+    ["NEW_YORK", "200", false],
+    ["CALIFORNIA", "70", false],
+    ["NEW_MEXICO", "50", false],
+    ["WASHINGTON", "200", false],
   ] as const;
-
-  for (const [state, premiumAvailable] of stateFees) {
+  for (const [state, fee, premiumAvailable] of stateFees) {
     await prisma.stateFee.upsert({
       where: { state },
       update: {},
-      create: {
-        state,
-        feeUsd: placeholderPrice,
-        active: true,
-        premiumAvailable,
-        notes: "PLACEHOLDER state fee",
-      },
+      create: { state, feeUsd: D(fee), active: true, premiumAvailable },
+    });
+    await prisma.stateFee.updateMany({
+      where: { state, feeUsd: D("0.00") },
+      data: { feeUsd: D(fee), notes: null },
     });
   }
 
@@ -265,7 +300,7 @@ async function main() {
     },
   });
 
-  console.log("Seeded database configuration with PLACEHOLDER prices.");
+  console.log("Seeded database configuration.");
 }
 
 main()

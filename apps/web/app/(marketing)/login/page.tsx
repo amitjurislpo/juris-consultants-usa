@@ -27,9 +27,7 @@ export default async function Page({
         <div className="auth-wrap" style={{ paddingTop: 28 }}>
           <h1>Your Juris account</h1>
           <p className="muted" style={{ marginBottom: 20 }}>
-            Track your US company, upload documents and see every payment in one
-            place. No password to remember. New here? We create your account in
-            the same step.
+            New here? We create your account in the same step.
           </p>
           <form action={googleSignIn}>
             <input name="next" type="hidden" value={next} />
