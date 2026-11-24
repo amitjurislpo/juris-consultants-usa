@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ComingSoonPage() {
   return (
-    <main className="coming-soon-page">
+    <main id="app" data-page="misc" className="coming-soon-page">
       <div aria-hidden="true" className="coming-orbit">
         <span>J</span>
       </div>
@@ -21,10 +21,10 @@ export default function ComingSoonPage() {
         public website is here for your review.
       </p>
       <div className="hero-actions">
-        <Link className="button" href="/">
+        <Link className="btn btn-primary" href="/">
           Back to home <span aria-hidden="true">↗</span>
         </Link>
-        <Link className="button button-outline" href="/contact">
+        <Link className="btn btn-outline" href="/contact">
           Contact
         </Link>
       </div>

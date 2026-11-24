@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function FaqPage() {
   return (
-    <main className="subpage">
+    <main id="app" data-page="misc" className="subpage">
       <div className="page-container">
         <PageIntro
           description="These draft answers are intended to help frame a conversation. Confirm all service, legal, tax, and timing details before launch."

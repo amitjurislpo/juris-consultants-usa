@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function RefundPage() {
   return (
-    <main className="subpage legal-page">
+    <main id="app" data-page="misc" className="subpage legal-page">
       <div className="page-container">
         <PageIntro
           description="Draft placeholder · This page does not set refund terms."
