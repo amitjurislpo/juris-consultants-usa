@@ -1,0 +1,20 @@
+import { chromium } from 'file:///C:/JurisLPO/juris-consultant-usa/node_modules/.pnpm/playwright-core@1.65.1/node_modules/playwright-core/index.mjs';
+import fs from 'fs';
+const b = await chromium.launch({executablePath:'C:/Program Files/Google/Chrome/Application/chrome.exe'});
+const p = await b.newPage({viewport:{width:1280,height:800}});
+await p.goto('file:///C:/JurisLPO/juris-consultant-usa/docs/design/final/Juris_USA_Website_Final_Design.html#/home'); await p.waitForTimeout(2000);
+const out = await p.evaluate(()=>{
+  const r={};
+  r.rootStyle=document.documentElement.getAttribute('style');
+  r.bodyClass=document.body.className;
+  r.mega=document.getElementById('mega').innerHTML;
+  r.svcIds=Object.keys(SERVICES); r.blogIds=BLOGS.map(b=>b.id);
+  r.pages={};
+  for(const k of ['home','services','pricing','how','blogs','about','contact','start','track']) r.pages[k]=PAGES[k]();
+  r.service={}; for(const id of r.svcIds) r.service[id]=PAGES.service(id);
+  r.blog={}; for(const id of r.blogIds) r.blog[id]=PAGES.blog(id);
+  return r;
+});
+fs.writeFileSync('dump.json',JSON.stringify(out));
+console.log(out.rootStyle.length,out.bodyClass,out.svcIds,out.blogIds,Object.fromEntries(Object.entries(out.pages).map(([k,v])=>[k,v.length])));
+await b.close();

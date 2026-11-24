@@ -18,6 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/faq",
     "/blog",
     "/track-order",
+    "/start",
     "/legal/privacy",
     "/legal/terms",
     "/legal/refund",
@@ -34,12 +35,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly" as const,
       priority: 0.6,
     })),
-    ...blogPosts
-      .filter((post) => post.slug === "choosing-a-state")
-      .map((post) => ({
-        url: `${siteUrl}/blog/${post.slug}`,
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
-      })),
+    ...blogPosts.map((post) => ({
+      url: `${siteUrl}/blog/${post.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.6,
+    })),
   ];
 }

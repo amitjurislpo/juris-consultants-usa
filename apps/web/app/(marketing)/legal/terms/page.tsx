@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="subpage legal-page">
+    <main id="app" data-page="misc" className="subpage legal-page">
       <div className="page-container">
         <PageIntro
           description="Draft placeholder · These are not terms of service."

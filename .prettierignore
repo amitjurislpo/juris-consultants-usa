@@ -1,2 +1,6 @@
 apps/*/next-env.d.ts
 pnpm-lock.yaml
+
+apps/web/public/final-runtime.js
+apps/web/public/final.css
+apps/web/components/marketing/final/generated.ts

@@ -1,35 +1,13 @@
 import type { Metadata } from "next";
-import { PricingCards } from "../../../components/marketing/PricingCards";
-import { PageIntro } from "../../../components/marketing/PageIntro";
+import { FinalPage } from "../../../components/marketing/final/Shell";
+import { FINAL_PAGES } from "../../../components/marketing/final/generated";
 
 export const metadata: Metadata = {
   title: "Pricing | Juris Consultants USA",
   description:
-    "Preview the pricing experience. Final service prices are still being confirmed.",
+    "Simple, transparent pricing. See your full total, including the state fee, before you pay.",
 };
 
-export default function PricingPage() {
-  return (
-    <main className="subpage pricing-page">
-      <div className="page-container">
-        <PageIntro
-          description="Compare illustrative service options. Final prices, service scope, and availability are still being confirmed."
-          eyebrow="PICK A CARD · SEE THE PRICE"
-          title="Simple, transparent pricing."
-        />
-        <PricingCards />
-        <div className="pricing-notes">
-          <p className="placeholder-pill">
-            Placeholder pricing · not an offer or quote
-          </p>
-          <h2>What will be included in the final price?</h2>
-          <p>
-            The final pricing page will explain service fees, state fees, and
-            any recurring costs separately. Values will be added after they are
-            confirmed.
-          </p>
-        </div>
-      </div>
-    </main>
-  );
+export default function Page() {
+  return <FinalPage html={FINAL_PAGES.pricing} page="pricing" />;
 }
