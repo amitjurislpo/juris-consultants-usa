@@ -1,10 +1,15 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { isUserRole } from "@juris/core";
 import { prisma } from "@juris/db";
-import bcrypt from "bcryptjs";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { authenticator } from "otplib";
+import {
+  clearFailures,
+  isEmailLockedOut,
+  recordAttempt,
+  registerFailure,
+  verifySecrets,
+} from "./src/lib/credentials";
 import { z } from "zod";
 
 const adminCredentials = z.object({
@@ -13,11 +18,41 @@ const adminCredentials = z.object({
     .email()
     .transform((email) => email.trim().toLowerCase()),
   password: z.string().min(1),
-  totpCode: z.string().regex(/^\d{6}$/),
+  otpCode: z.string().regex(/^\d{6}$/),
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  // Own cookie names so a customer cookie and an admin cookie can never be mixed up, even on one
+  // host (localhost in development). Each app also uses its own AUTH_SECRET.
+  cookies: {
+    sessionToken: {
+      name: "juris-admin.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    callbackUrl: {
+      name: "juris-admin.callback-url",
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    csrfToken: {
+      name: "juris-admin.csrf-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   session: { strategy: "jwt", maxAge: 30 * 60 },
   providers: [
     Credentials({
@@ -26,32 +61,33 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
-        totpCode: { label: "Authenticator code", type: "text" },
+        otpCode: { label: "Email code", type: "text" },
       },
       async authorize(credentials) {
         const parsed = adminCredentials.safeParse(credentials);
         if (!parsed.success) return null;
 
-        const user = await prisma.user.findUnique({
-          where: { email: parsed.data.email },
-        });
-        if (
-          !user ||
-          user.status !== "ACTIVE" ||
-          (user.role !== "SUPER_ADMIN" && user.role !== "STAFF") ||
-          !user.passwordHash ||
-          !user.mfaSecret
-        ) {
+        const { email, password, otpCode } = parsed.data;
+
+        const user = await prisma.user.findUnique({ where: { email } });
+        const isAdmin =
+          user !== null &&
+          user.status === "ACTIVE" &&
+          (user.role === "SUPER_ADMIN" || user.role === "STAFF");
+        if (!isAdmin) {
+          await recordAttempt(email, null, false);
           return null;
         }
+        // Strict block: while it runs, nothing is accepted and nothing is counted.
+        if (await isEmailLockedOut(email)) return null;
 
-        const [passwordMatches, totpMatches] = await Promise.all([
-          bcrypt.compare(parsed.data.password, user.passwordHash),
-          Promise.resolve(
-            authenticator.check(parsed.data.totpCode, user.mfaSecret),
-          ),
-        ]);
-        if (!passwordMatches || !totpMatches) return null;
+        const allowed = await verifySecrets(user, password, otpCode, "login");
+        await recordAttempt(email, allowed ? user.id : null, allowed);
+        if (!allowed) {
+          await registerFailure(email);
+          return null;
+        }
+        await clearFailures(email);
 
         return {
           id: user.id,

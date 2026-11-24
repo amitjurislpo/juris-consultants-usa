@@ -205,40 +205,6 @@ export const faqs = [
   {
     question: "Can I start an order or log in?",
     answer:
-      "Not yet. Order flows and login are not available in this preview. Their buttons lead to a Coming soon page.",
+      "Yes. Choose Start your business, Manage your business or Talk to an Expert on the home page, or log in from the top right to see your orders.",
   },
 ];
-
-export const blogPosts = [
-  {
-    slug: "choosing-a-state",
-    category: "Company formation",
-    title: "Choosing a US state for your company",
-    excerpt:
-      "A draft overview of questions founders can consider when comparing states.",
-  },
-  {
-    slug: "ein-without-ssn",
-    category: "EIN & tax registration",
-    title: "Understanding the EIN application process",
-    excerpt:
-      "An illustrative introduction to the information companies may need to prepare.",
-  },
-  {
-    slug: "formation-costs",
-    category: "Planning",
-    title: "Planning for the costs of a US company",
-    excerpt:
-      "A draft checklist of one-time and recurring costs to discuss with an advisor.",
-  },
-  {
-    slug: "business-banking",
-    category: "Business banking",
-    title: "Preparing to explore US business banking",
-    excerpt:
-      "A draft guide to getting organized before researching account options.",
-  },
-];
-
-export const placeholderNotice =
-  "Preview content: copy and prices are illustrative placeholders and must be confirmed before launch.";

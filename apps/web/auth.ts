@@ -5,6 +5,7 @@ import { timingSafeEqual } from "node:crypto";
 import { Buffer } from "node:buffer";
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import { z } from "zod";
 import { hashEmailOtp } from "./src/lib/otp";
 
@@ -13,13 +14,54 @@ const otpCredentials = z.object({
     .string()
     .email()
     .transform((email) => email.trim().toLowerCase()),
-  code: z.string().regex(/^\d{8}$/),
+  code: z.string().regex(/^\d{6}$/),
 });
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
+  // Own cookie names so a customer cookie and an admin cookie can never be mixed up, even on one
+  // host (localhost in development). Each app also uses its own AUTH_SECRET.
+  cookies: {
+    sessionToken: {
+      name: "juris-customer.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    callbackUrl: {
+      name: "juris-customer.callback-url",
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+    csrfToken: {
+      name: "juris-customer.csrf-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+      },
+    },
+  },
   session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
   providers: [
+    // Google sign-in is switched on by setting AUTH_GOOGLE_ID and AUTH_GOOGLE_SECRET.
+    ...(process.env.AUTH_GOOGLE_ID && process.env.AUTH_GOOGLE_SECRET
+      ? [
+          Google({
+            clientId: process.env.AUTH_GOOGLE_ID,
+            clientSecret: process.env.AUTH_GOOGLE_SECRET,
+            // Google verifies the email, so it may join an existing email-code account.
+            allowDangerousEmailAccountLinking: true,
+          }),
+        ]
+      : []),
     Credentials({
       id: "email-otp",
       name: "Email OTP",
@@ -100,7 +142,50 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+  events: {
+    // A login is a possible lead: the team can contact people who start but do not pay.
+    async signIn({ user, account }) {
+      if (!user.id || !user.email) return;
+      try {
+        const recent = await prisma.lead.findFirst({
+          where: {
+            userId: user.id,
+            createdAt: { gt: new Date(Date.now() - 24 * 60 * 60 * 1000) },
+          },
+          select: { id: true },
+        });
+        if (recent) return;
+        await prisma.lead.create({
+          data: {
+            userId: user.id,
+            flow: "START",
+            stepReached: 0,
+            source: "login",
+            contactInfo: {
+              email: user.email,
+              name: user.name ?? null,
+              provider: account?.provider ?? null,
+            },
+          },
+        });
+      } catch {
+        // A failed lead record must never block a login.
+      }
+    },
+  },
   callbacks: {
+    async signIn({ account, user }) {
+      if (account?.provider !== "google" || !user.email) return true;
+      // Staff and admin accounts never sign in through the customer site.
+      const existing = await prisma.user.findUnique({
+        where: { email: user.email.toLowerCase() },
+        select: { role: true, status: true },
+      });
+      return (
+        !existing ||
+        (existing.role === "CUSTOMER" && existing.status === "ACTIVE")
+      );
+    },
     jwt({ token, user }) {
       if (user) token.role = user.role;
       return token;

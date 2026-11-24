@@ -10,3 +10,11 @@ coverage/
 apps/*/next-env.d.ts
 playwright-report/
 test-results/
+
+# local test file storage
+.local-uploads/
+
+# scratch files (dev logs, upgrade backups, temp tsconfig)
+tmp/
+.tsupgrader/
+tsconfig.tmpcheck.json
