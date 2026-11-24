@@ -6,6 +6,7 @@ describe("navFor", () => {
     expect(navFor("SUPER_ADMIN").map((i) => i.href)).toEqual([
       "/",
       "/leads",
+      "/enquiries",
       "/customers",
       "/orders",
       "/payments",

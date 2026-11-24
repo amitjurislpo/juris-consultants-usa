@@ -20,12 +20,16 @@ export default async function Page({
   );
   return (
     <main data-page="auth" id="app">
-      <section className="sec soft" style={{ minHeight: "70vh" }}>
-        <div className="auth-wrap">
-          <h1>Log in or create your account</h1>
+      <section
+        className="sec soft"
+        style={{ minHeight: "70vh", paddingTop: 0 }}
+      >
+        <div className="auth-wrap" style={{ paddingTop: 28 }}>
+          <h1>Your Juris account</h1>
           <p className="muted" style={{ marginBottom: 20 }}>
-            No password needed. Continue with Google, or we email you a one-time
-            code. New here? The same step creates your account.
+            Track your US company, upload documents and see every payment in one
+            place. No password to remember. New here? We create your account in
+            the same step.
           </p>
           <form action={googleSignIn}>
             <input name="next" type="hidden" value={next} />
@@ -73,15 +77,9 @@ export default async function Page({
               Continue with Google
             </button>
           </form>
-          {googleOn ? null : (
-            <p className="muted" style={{ fontSize: 13, marginTop: 8 }}>
-              Google sign-in will be switched on once the Google client is
-              connected. Use the email code for now.
-            </p>
-          )}
           <p
             className="muted"
-            style={{ textAlign: "center", margin: "14px 0", fontSize: 14 }}
+            style={{ textAlign: "center", margin: "10px 0", fontSize: 14 }}
           >
             or use your email
           </p>

@@ -901,7 +901,7 @@ let lbSeq=100+Math.floor(Math.random()*400);
 const lbNew=(st)=>{const f=lbPick(LB_FROM),co=lbPick(LB_CO);return {fl:'JC-'+(lbSeq++),from:f[0]+' · '+f[1],to:lbPick(LB_TO),co:co+(Math.random()<.7?' LLC':' Inc.'),st:st};};
 function liveBoardHTML(){return `<section class="lboard-sec" id="lboard" data-ghost="LIVE"><div class="container">
  <div class="sec-head" style="margin-bottom:26px"><span class="eyebrow">Live from around the world</span><h2>Founders everywhere are landing in the USA</h2></div>
- <div class="fboard lboard"><div class="fb-head"><span>✈ DEPARTURES · WORLD → USA</span><span id="lbClock">--:-- IST</span></div>
+ <div class="fboard lboard"><div class="fb-head"><span>✈ DEPARTURES · WORLD → USA</span><span id="lbClock">--:-- ET</span></div>
  <div class="fb-row fb-th"><span>FLIGHT</span><span>FROM</span><span>TO</span><span>COMPANY</span><span>STATUS</span></div>
  ${Array.from({length:6},(_,i)=>`<div class="fb-row" data-r="${i}"><span data-k="fl"></span><span data-k="from"></span><span data-k="to"></span><span data-k="co"></span><span data-k="st" class="fb-st"></span></div>`).join('')}
  <div class="lb-foot"><small>LANDED ✓ = company formed · Illustrative example names, not real clients</small><small id="lbCount"></small></div></div></div></section>`;}
@@ -912,7 +912,7 @@ function flapTo(el,text,fast){if(el._t)clearInterval(el._t);const from=el.textCo
 function startLiveBoard(sec){if(sec.dataset.on)return;sec.dataset.on=1;const rows=$$('.fb-row[data-r]',sec);const data=rows.map(()=>lbNew(Math.floor(Math.random()*4)));let landed=0;
  const paint=(i,keys)=>{const r=rows[i],d=data[i];(keys||['fl','from','to','co','st']).forEach(k=>{const el=$(`[data-k="${k}"]`,r);flapTo(el,k==='st'?LB_ST[d.st]:d[k],!keys);if(k==='st'){el.classList.toggle('ok',d.st===3);el.classList.toggle('st-fly',d.st===2);el.classList.toggle('st-brd',d.st===1);}});};
  rows.forEach((_,i)=>paint(i));
- const clock=()=>{const c=$('#lbClock',sec);if(c)c.textContent=new Date().toLocaleTimeString('en-GB',{timeZone:'Asia/Kolkata',hour:'2-digit',minute:'2-digit',second:'2-digit'})+' IST';const n=$('#lbCount',sec);if(n)n.textContent=landed?`${landed} landed while you were here`:'';};
+ const clock=()=>{const c=$('#lbClock',sec);if(c)c.textContent=new Date().toLocaleTimeString('en-GB',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',second:'2-digit'})+' '+(new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',timeZoneName:'short'}).formatToParts(new Date()).find(x=>x.type==='timeZoneName')||{value:'ET'}).value;const n=$('#lbCount',sec);if(n)n.textContent=landed?`${landed} landed while you were here`:'';};
  const tick=()=>{if(!sec.isConnected)return;const r=sec.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){const i=Math.floor(Math.random()*rows.length),d=data[i];
    if(d.st===3){data[i]=lbNew(0);paint(i,['fl','from','to','co','st']);}else{d.st++;if(d.st===3)landed++;paint(i,['st']);}}
   setTimeout(tick,1600+Math.random()*1800);};
@@ -1061,7 +1061,7 @@ PAGES.contact=()=>`<section class="sec" style="padding-top:48px"><div class="con
   <div class="field"><label for="cfEmail">Email</label><input id="cfEmail" type="email" placeholder="you@company.com"><span class="msg"></span></div>
   <div class="field"><label for="cfPhone">Phone</label><div class="phone-row"><select id="cfCc" aria-label="Country code"><option>+91</option><option>+1</option><option>+44</option><option>+971</option></select><input id="cfPhone" type="tel" placeholder="98765 43210"></div><span class="msg"></span></div>
   <div class="field"><label for="cfMsg">How can we help?</label><textarea id="cfMsg" rows="4" placeholder="e.g. I sell on Amazon US and need an LLC"></textarea><span class="msg"></span></div>
-  <button class="btn btn-primary" type="submit">Send message</button><div class="ok-msg hide" id="cfOk">✓ Thanks! Our team will reply by email. (demo)</div></form>
+  <button class="btn btn-primary" type="submit">Send message</button><div class="ok-msg hide" id="cfOk">✓ Thanks! Our team will reply by email.</div></form>
 </div></div></section>`;
 PAGES.start=()=>`<section class="sec soft" style="padding-top:40px;min-height:70vh" id="obtop" data-chg="15"><div class="container" id="ob"></div></section>`;
 PAGES.track=()=>`<section class="sec soft" style="padding-top:40px" id="tracktop" data-chg="17"><div class="container" style="max-width:1060px">
@@ -1291,7 +1291,8 @@ function bindPage(page,arg){
  const cf=$('#contactForm');if(cf){markReq();const cc0=$('#cfCc');cc0.innerHTML=ccOptions('+91');bindPhone($('#cfPhone'),cc0);}if(cf)cf.onsubmit=e=>{e.preventDefault();let ok=true;const n=$('#cfName'),em=$('#cfEmail'),ph=$('#cfPhone'),cc=$('#cfCc').value,m=$('#cfMsg');
   ok=setErr(n,n.value.trim().length<2||/\d/.test(n.value)?'Please enter your full name (letters only).':'')&&ok;ok=setErr(em,EMAIL_RE.test(em.value.trim())?'':'Please enter a valid email, e.g. name@company.com.')&&ok;
   ok=setErr(ph,phoneOk(cc,ph.value.replace(/\D/g,''))?'':PHONE_RULES[cc].msg)&&ok;ok=setErr(m,m.value.trim().length<10?'Tell us a little more (at least 10 characters).':'')&&ok;
-  if(ok){cf.querySelector('button').classList.add('hide');$('#cfOk').classList.remove('hide');}};
+  if(ok){const btn=cf.querySelector('button');btn.disabled=true;const okm=$('#cfOk');
+   fetch('/api/enquiries',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:n.value.trim(),email:em.value.trim(),phone:cc+' '+ph.value.trim(),message:m.value.trim()})}).then(r=>{if(!r.ok)throw 0;btn.classList.add('hide');okm.textContent='✓ Thanks! Our team will reply by email.';okm.classList.remove('hide');}).catch(()=>{btn.disabled=false;okm.textContent='Sorry, we could not send that. Please try again or email us.';okm.classList.remove('hide');});}};
  const ds=$('#dState');if(ds){const s=SERVICES[arg]||SERVICES.llc;const upd=()=>{$('#dGo').href=`/start?flow=start&plan=${s.plan}&state=${encodeURIComponent(STATES[ds.selectedIndex].n)}`;};ds.onchange=upd;upd();}
  bindAddr($('#addrForm'));markReq();
  $$('#app [data-jump]').forEach(a=>a.addEventListener('click',e=>{const id=a.dataset.jump,t=a.getAttribute('href');if(t===location.hash||(t==='#/home'&&parseHash().page==='home')){e.preventDefault();const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth'});}else pendingJump=id;}));

@@ -9,6 +9,7 @@ export interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Dashboard" },
   { href: "/leads", label: "Leads", permission: "VIEW_CUSTOMERS" },
+  { href: "/enquiries", label: "Enquiries", permission: "VIEW_CUSTOMERS" },
   { href: "/customers", label: "Customers", permission: "VIEW_CUSTOMERS" },
   { href: "/orders", label: "Orders", permission: "VIEW_ORDERS" },
   { href: "/payments", label: "Payments", permission: "VIEW_ORDERS" },

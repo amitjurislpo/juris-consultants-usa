@@ -481,3 +481,23 @@ model AdminLoginLock {
   lastFailedAt DateTime?
   updatedAt    DateTime  @updatedAt
 }
+
+enum EnquiryStatus {
+  NEW
+  HANDLED
+}
+
+/// A message sent from the public "Send us a message" contact form.
+model Enquiry {
+  id          String        @id @default(cuid())
+  name        String
+  email       String
+  phone       String?
+  message     String
+  status      EnquiryStatus @default(NEW)
+  handledById String?
+  handledAt   DateTime?
+  createdAt   DateTime      @default(now())
+
+  @@index([status, createdAt])
+}

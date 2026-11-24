@@ -445,7 +445,8 @@ textarea.ui-input {
   }
   .filters > .ui-field,
   .kyc-filters > .ui-field,
-  .mg-filters > .ui-field {
+  .mg-filters > .ui-field,
+  .filters > .ui-field:first-child {
     flex: 0 0 auto;
     max-width: none;
   }

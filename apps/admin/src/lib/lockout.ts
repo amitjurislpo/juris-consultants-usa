@@ -60,7 +60,7 @@ export function lockMessage(state: LockState, now: Date): string {
         : minutes >= 60
           ? "1 hour"
           : `${minutes} minute${minutes === 1 ? "" : "s"}`;
-    return `Too many wrong attempts. Sign-in is blocked for another ${wait}. A super admin can unlock you sooner.`;
+    return `Too many wrong attempts. Sign-in is blocked for another ${wait}.`;
   }
   const left = attemptsLeft(state.failures);
   return left > 0
