@@ -1073,3 +1073,65 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
 .sticky-cta{background:linear-gradient(135deg,rgba(20,32,64,.96),rgba(10,40,58,.96));border:1px solid rgba(34,211,238,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(59,130,246,.25),0 14px 40px rgba(0,0,0,.55),0 0 36px rgba(34,211,238,.22)}
 .sticky-cta b{color:#fff}
 .sticky-cta .btn-primary{box-shadow:0 0 0 1px rgba(255,255,255,.18),0 8px 22px rgba(37,99,235,.55),0 0 22px rgba(34,211,238,.35)}
+
+/* ===== Hover and motion effects ===== */
+/* Services dropdown */
+@keyframes mega-open{from{opacity:0;transform:translateY(10px) scale(.98)}}
+@keyframes mega-item{from{opacity:0;transform:translateX(-10px)}}
+.dd:hover .mega,.dd:focus-within .mega{animation:mega-open .28s cubic-bezier(.2,.8,.2,1)}
+.dd:hover .mega a,.dd:focus-within .mega a{animation:mega-item .4s cubic-bezier(.2,.8,.2,1) backwards}
+.mega a:nth-of-type(2){animation-delay:.04s!important}.mega a:nth-of-type(3){animation-delay:.08s!important}.mega a:nth-of-type(4){animation-delay:.12s!important}
+.mega a{position:relative;transition:transform .25s cubic-bezier(.2,.8,.2,1),background .25s,color .25s,box-shadow .25s}
+.mega a::before{content:"";position:absolute;left:0;top:50%;width:3px;height:0;border-radius:3px;background:linear-gradient(180deg,#3b82f6,#22d3ee);transform:translateY(-50%);transition:height .25s cubic-bezier(.2,.8,.2,1)}
+.mega a::after{content:"\2192";position:absolute;right:10px;top:50%;transform:translate(-8px,-50%);opacity:0;color:#22d3ee;transition:transform .25s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.mega a:hover{background:linear-gradient(90deg,rgba(59,130,246,.2),rgba(34,211,238,.05));transform:translateX(5px);color:#fff;box-shadow:0 6px 18px rgba(34,211,238,.1)}
+.mega a:hover::before{height:62%}
+.mega a:hover::after{opacity:1;transform:translate(0,-50%)}
+.mega .foot a::after{display:none}
+
+/* "Who is this for?" and the service filter tabs */
+@keyframes who-in{from{opacity:0;transform:translateY(12px)}}
+.tabs .tab{transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s,border-color .25s,background .25s,color .25s}
+.tabs .tab:hover{transform:translateY(-3px);border-color:rgba(34,211,238,.6);box-shadow:0 10px 24px rgba(34,211,238,.18)}
+.tabs .tab:active{transform:translateY(0) scale(.97)}
+.tabs .tab.on{box-shadow:0 8px 22px rgba(37,99,235,.4)}
+.who-item{position:relative;overflow:hidden;transition:transform .3s cubic-bezier(.2,.8,.2,1),border-color .3s,box-shadow .3s,background .3s}
+.who-item::before{content:"";position:absolute;top:0;bottom:0;left:-60%;width:40%;background:linear-gradient(90deg,transparent,rgba(125,211,252,.16),transparent);transform:skewX(-18deg);pointer-events:none}
+.who-item:hover{transform:translateX(8px);border-color:rgba(34,211,238,.55);box-shadow:0 12px 28px rgba(34,211,238,.14);background:rgba(34,211,238,.06)}
+.who-item:hover::before{animation:jfaq-shine .8s ease}
+#whoPanel .who-item{animation:who-in .5s cubic-bezier(.2,.8,.2,1) backwards}
+#whoPanel .who-item:nth-of-type(2){animation-delay:.06s}#whoPanel .who-item:nth-of-type(3){animation-delay:.12s}#whoPanel .who-item:nth-of-type(4){animation-delay:.18s}#whoPanel .who-item:nth-of-type(5){animation-delay:.24s}
+#whoPanel h3{animation:who-in .5s cubic-bezier(.2,.8,.2,1) backwards}
+
+/* Our services cards */
+body .svc.card{position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+body .svc.card::before{content:"";position:absolute;inset:0;background:radial-gradient(420px 170px at 50% -25%,rgba(34,211,238,.2),transparent 62%);opacity:0;transition:opacity .35s;pointer-events:none}
+body .svc.card:hover{transform:translateY(-7px);border-color:rgba(34,211,238,.5);box-shadow:0 20px 46px rgba(34,211,238,.16),0 0 0 1px rgba(34,211,238,.25)}
+body .svc.card:hover::before{opacity:1}
+.svc h3{transition:color .3s}
+.svc:hover h3{color:#7dd3fc}
+.svc .pill{transition:box-shadow .3s,transform .3s}
+.svc:hover .pill{box-shadow:0 0 16px rgba(59,130,246,.55);transform:translateY(-1px)}
+.svc .bottom svg{transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+.svc:hover .bottom svg{transform:translateX(7px)}
+
+/* Live departures board */
+@keyframes lb-scan{0%{top:-110px}100%{top:100%}}
+@keyframes lb-in{from{opacity:0;transform:translateY(14px)}}
+@keyframes lb-glow{50%{text-shadow:0 0 14px rgba(251,191,36,.9)}}
+@keyframes lb-blink{50%{opacity:.55}}
+.lboard{overflow:hidden}
+.lboard::after{content:"";position:absolute;left:0;right:0;top:-110px;height:110px;background:linear-gradient(180deg,transparent,rgba(34,211,238,.09),transparent);pointer-events:none;animation:lb-scan 7s linear infinite}
+.lboard .fb-row{position:relative;transition:transform .3s cubic-bezier(.2,.8,.2,1);animation:lb-in .6s cubic-bezier(.2,.8,.2,1) backwards}
+.lboard .fb-row[data-r="1"]{animation-delay:.07s}.lboard .fb-row[data-r="2"]{animation-delay:.14s}.lboard .fb-row[data-r="3"]{animation-delay:.21s}.lboard .fb-row[data-r="4"]{animation-delay:.28s}.lboard .fb-row[data-r="5"]{animation-delay:.35s}
+.lboard .fb-row span{transition:background .3s,box-shadow .3s,color .3s}
+.lboard .fb-row:hover{transform:translateX(5px)}
+.lboard .fb-row:hover span{background:#1c2638;box-shadow:inset 0 0 0 1px rgba(251,191,36,.35)}
+.lboard .fb-row:hover span:first-child{box-shadow:inset 3px 0 0 #fbbf24}
+.lboard .fb-st.st-fly{animation:lb-glow 1.8s ease-in-out infinite}
+.lboard .fb-st.st-brd{animation:lb-blink 1.4s ease-in-out infinite}
+.lboard .fb-st.ok{text-shadow:0 0 12px rgba(74,222,128,.55)}
+@media (prefers-reduced-motion:reduce){
+  .dd:hover .mega,.dd:focus-within .mega,.dd:hover .mega a,.dd:focus-within .mega a,.who-item:hover::before,#whoPanel .who-item,#whoPanel h3,.lboard::after,.lboard .fb-row,.lboard .fb-st.st-fly,.lboard .fb-st.st-brd{animation:none}
+  .mega a:hover,.who-item:hover,body .svc.card:hover,.tabs .tab:hover,.lboard .fb-row:hover{transform:none}
+}
