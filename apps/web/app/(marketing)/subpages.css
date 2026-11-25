@@ -4,42 +4,21 @@
   padding: 72px 0 88px;
   background: var(--soft);
 }
+/* Same left edge as every other page (the site container); long text keeps a readable line length. */
 .subpage .page-container {
-  max-width: 860px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
 }
-.faq-page-list {
-  display: flex;
-  flex-direction: column;
-  border-top: 1px solid var(--line);
+@media (min-width: 1001px) {
+  .subpage .page-container {
+    max-width: 1334px;
+  }
 }
-.faq-item {
-  border-bottom: 1px solid var(--line);
-  padding: 18px 0;
-}
-.faq-item summary {
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 17px;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  color: var(--text);
-}
-.faq-item summary::-webkit-details-marker {
-  display: none;
-}
-.faq-item summary > span:last-child {
-  color: var(--blue);
-}
-.faq-item p {
-  margin-top: 10px;
-  color: var(--muted);
-}
-.faq-index {
-  display: none;
+.subpage .page-container > .sec-head,
+.subpage .legal-doc,
+.subpage .legal-placeholder {
+  max-width: 860px;
 }
 .small-note {
   font-size: 13px;

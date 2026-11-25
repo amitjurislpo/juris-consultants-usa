@@ -12,3 +12,4 @@ export * from "./components/Toast";
 export * from "./components/Table";
 export * from "./components/OtpInput";
 export * from "./components/ResendCodeButton";
+export * from "./breadcrumbs/path-breadcrumbs";

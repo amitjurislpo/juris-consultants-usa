@@ -5,7 +5,7 @@ import { FINAL_PAGES } from "../../../components/marketing/final/generated";
 export const metadata: Metadata = {
   title: "How it works | Juris Consultants USA",
   description:
-    "From India to a US company, step by step, with honest timelines.",
+    "From anywhere to a US company, step by step, with honest timelines.",
 };
 
 export default function Page() {

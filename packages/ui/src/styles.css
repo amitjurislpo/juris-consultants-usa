@@ -407,3 +407,41 @@
     transform: none;
   }
 }
+
+/* Path breadcrumbs (PathBreadcrumbs): the same look on the website, customer portal and admin panel. */
+.jbc {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--d-mu, var(--muted, #94a3b8));
+  min-width: 0;
+}
+.jbc ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.jbc li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.jbc li:not(:last-child)::after {
+  content: "\203A";
+  opacity: 0.6;
+}
+.jbc a {
+  color: inherit;
+  text-decoration: none;
+}
+.jbc a:hover {
+  color: var(--d-tx, var(--text, #f1f5f9));
+  text-decoration: underline;
+}
+.jbc [aria-current="page"] {
+  color: var(--d-tx, var(--text, #f1f5f9));
+  font-weight: 600;
+}

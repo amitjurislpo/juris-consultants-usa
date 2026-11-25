@@ -1,4 +1,5 @@
 import { prisma } from "@juris/db";
+import { PathBreadcrumbs } from "@juris/ui";
 import {
   DashShell,
   DashSystemOk,
@@ -6,6 +7,7 @@ import {
 } from "@juris/ui/dashboard";
 import type { ReactNode } from "react";
 import { requireAdmin } from "../../src/lib/guard";
+import { ADMIN_CRUMBS } from "../../src/lib/breadcrumbs";
 import { loadNavBadges } from "../../src/lib/dashboard-data";
 import { navGroupsFor } from "../../src/lib/nav";
 import { getAdminTimeZone } from "../../src/lib/timezone";
@@ -45,11 +47,7 @@ export default async function PanelLayout({
   return (
     <DashShell
       brandSub="Admin panel"
-      crumb={
-        <>
-          Admin panel / <b>Juris Consultants USA</b>
-        </>
-      }
+      crumb={<PathBreadcrumbs {...ADMIN_CRUMBS} />}
       groups={groups}
       sideFooter={<DashSystemOk />}
       topRight={
