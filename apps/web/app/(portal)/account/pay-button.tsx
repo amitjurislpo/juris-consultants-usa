@@ -26,7 +26,7 @@ export function PayButton({
           start(async () => {
             const result = await payOrderAction(orderId);
             setMessage(result.error);
-            if (!result.error) router.refresh();
+            if (!result.error) router.push("/account/dashboard");
           })
         }
         type="button"

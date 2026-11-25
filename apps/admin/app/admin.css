@@ -1027,3 +1027,57 @@ iframe.kyc-preview {
 .user-menu-button .avatar {
   display: block;
 }
+
+/* ---------- new dashboard shell (packages/ui dashboard kit) ---------- */
+/* Long menu: the list scrolls, the user card stays at the bottom of the sidebar. */
+.jd .d-side {
+  overflow: hidden;
+}
+.jd .d-side .d-nav {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.jd .d-side .d-grow {
+  display: none;
+}
+.jd .d-side .d-ucard,
+.jd .d-side .d-sysok {
+  flex: none;
+}
+.jd .d-top .tz-switcher,
+.jd .d-top .user-menu {
+  flex: none;
+}
+.jd .d-view h1 {
+  margin-bottom: 16px;
+}
+@media (max-width: 900px) {
+  /* Many menu items: the bottom bar scrolls sideways instead of squeezing them. */
+  .jd .d-side .d-nav {
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
+    scrollbar-width: none;
+  }
+  .jd .d-nav a {
+    flex: 0 0 auto;
+    min-width: 68px;
+  }
+}
+.jd .d-hello .d-row {
+  flex-wrap: wrap;
+}
+.jd .d-scroll-list {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-right: 4px;
+}
+@media (max-width: 520px) {
+  .jd .d-hello .d-btn {
+    padding: 9px 12px;
+    font-size: 13px;
+  }
+}

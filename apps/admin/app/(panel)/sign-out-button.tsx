@@ -1,23 +1,43 @@
 "use client";
 
 import { Button, Modal } from "@juris/ui";
+import { DashIcon } from "@juris/ui/dashboard";
 import { useState, useTransition } from "react";
 
 /** Sign-out button that asks "are you sure?" first, so a stray click does not end the session. */
-export function SignOutButton({ action }: { action: () => Promise<void> }) {
+export function SignOutButton({
+  action,
+  iconOnly = false,
+}: {
+  action: () => Promise<void>;
+  /** Small round icon button for the sidebar user card. */
+  iconOnly?: boolean;
+}) {
   const [open, setOpen] = useState(false);
   const [pending, start] = useTransition();
 
   return (
     <>
-      <Button
-        className="user-menu-signout-button"
-        onClick={() => setOpen(true)}
-        type="button"
-        variant="outline"
-      >
-        Sign out
-      </Button>
+      {iconOnly ? (
+        <button
+          aria-label="Sign out"
+          className="d-lo"
+          onClick={() => setOpen(true)}
+          title="Sign out"
+          type="button"
+        >
+          <DashIcon name="logout" />
+        </button>
+      ) : (
+        <Button
+          className="user-menu-signout-button"
+          onClick={() => setOpen(true)}
+          type="button"
+          variant="outline"
+        >
+          Sign out
+        </Button>
+      )}
       <Modal
         footer={
           <>
