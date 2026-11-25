@@ -20,6 +20,7 @@ describe("parseOrderFilters", () => {
       status: "PAID",
       kind: "",
       paid: "unpaid",
+      stale: "",
       from: "",
       to: "2026-11-24",
     });

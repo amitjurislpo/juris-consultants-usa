@@ -15,6 +15,8 @@
     "db:validate": "prisma validate",
     "db:seed": "prisma db seed",
     "db:bootstrap": "tsx scripts/bootstrap.ts",
+    "db:seed-sample": "tsx scripts/seed-sample.ts",
+    "db:seed-sample-admin": "tsx scripts/seed-sample-admin.ts",
     "db:migrate:deploy": "prisma migrate deploy",
     "db:migrate:dev": "prisma migrate dev"
   },

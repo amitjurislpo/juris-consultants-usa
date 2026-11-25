@@ -3,6 +3,7 @@ import { BLOG_ORIGIN, OLD_SITE } from "./src/lib/links";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@juris/core", "@juris/db", "@juris/ui"],
+  devIndicators: false, // hides the round "N" badge that covers the sidebar in dev
   async redirects() {
     return [
       // Same URLs as the old website, so search engines keep what they indexed.
