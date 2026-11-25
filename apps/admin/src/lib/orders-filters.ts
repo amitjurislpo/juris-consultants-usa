@@ -9,6 +9,8 @@ export interface OrderFilters {
   status: string;
   kind: string;
   paid: "paid" | "unpaid" | "";
+  /** Only orders not touched for this many days (dashboard "needs attention" links). */
+  stale: "3" | "7" | "";
   from: string;
   to: string;
 }
@@ -30,10 +32,12 @@ export function parseOrderFilters(params: SearchParams): OrderFilters {
   const status = first(params.status);
   const kind = first(params.kind);
   const paid = first(params.paid);
+  const stale = first(params.stale);
   return {
     status: isOrderStatus(status) ? status : "",
     kind: isOrderKind(kind) ? kind : "",
     paid: paid === "paid" || paid === "unpaid" ? paid : "",
+    stale: stale === "3" || stale === "7" ? stale : "",
     from: validDate(first(params.from)),
     to: validDate(first(params.to)),
   };
@@ -50,6 +54,11 @@ export function buildOrderWhere(
   if (isOrderKind(filters.kind)) where.kind = filters.kind;
   if (filters.paid === "paid") where.paidAt = { not: null };
   if (filters.paid === "unpaid") where.paidAt = null;
+  if (filters.stale) {
+    where.updatedAt = {
+      lt: new Date(Date.now() - Number(filters.stale) * 24 * 60 * 60 * 1000),
+    };
+  }
 
   const createdAt: Prisma.DateTimeFilter = {};
   const from = filters.from ? startOfDayInZone(filters.from, timeZone) : null;

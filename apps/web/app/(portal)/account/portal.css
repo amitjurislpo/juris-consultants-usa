@@ -4,113 +4,17 @@
 .pt-shell *::after {
   box-sizing: border-box;
 }
-body:has(.pt-shell) {
-  margin: 0;
-  background: var(--color-page-bg);
+.jd .pt-content a {
+  color: var(--color-primary-light);
+}
+.jd .pt-content {
   color: var(--color-body);
   font-family: var(--font-body);
-  line-height: 1.5;
-}
-.pt-shell {
-  display: grid;
-  grid-template-columns: 250px minmax(0, 1fr);
-  min-height: 100vh;
-  color: var(--color-body);
-}
-.pt-shell a {
-  color: var(--color-primary-light);
 }
 
-/* ---------- left menu ---------- */
-.pt-side {
-  position: sticky;
-  top: 0;
-  align-self: start;
-  display: flex;
-  height: 100vh;
-  flex-direction: column;
-  gap: 18px;
-  overflow-y: auto;
-  padding: 22px 14px;
-  border-right: 1px solid var(--color-line);
-  background: var(--color-soft);
-}
-.pt-brand,
-.pt-top-brand {
-  color: var(--color-text) !important;
-  font-family: var(--font-heading);
-  font-size: var(--font-size-lg);
-  font-weight: 700;
-  text-decoration: none;
-}
-.pt-brand {
-  padding: 0 12px;
-}
-.pt-brand span,
-.pt-top-brand span {
-  color: #3b82f6;
-}
-.pt-nav {
-  display: grid;
-  gap: 4px;
-}
-.pt-nav a {
-  display: flex;
-  align-items: center;
-  min-height: 46px;
-  padding: 8px 14px;
-  border-radius: var(--radius-md);
-  color: var(--color-body);
-  text-decoration: none;
-}
-.pt-nav a:hover {
-  background: var(--color-card);
-}
-.pt-nav a[aria-current="page"] {
-  background: var(--color-primary-50);
-  color: var(--color-primary-light);
-  font-weight: 600;
-}
-.pt-nav-extra {
-  margin-top: auto;
-  padding: 12px 14px;
-  border: 1px dashed var(--color-line-strong);
-  border-radius: var(--radius-md);
-  text-align: center;
-  text-decoration: none;
-}
-
-/* ---------- top bar ---------- */
-.pt-main {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-}
-.pt-top {
-  position: sticky;
-  top: 0;
-  z-index: 20;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 28px;
-  border-bottom: 1px solid var(--color-line);
-  background: rgba(5, 7, 13, 0.92);
-  backdrop-filter: blur(8px);
-}
-.pt-top-brand,
-.pt-menu-toggle,
-.pt-scrim {
-  display: none;
-}
-.pt-spacer {
-  flex: 1;
-}
 .pt-content {
   width: 100%;
   min-width: 0;
-  max-width: 1180px;
-  padding: 28px;
 }
 
 /* ---------- user dropdown ---------- */

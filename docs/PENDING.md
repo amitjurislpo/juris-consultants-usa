@@ -105,3 +105,10 @@ For active public website progress and handoff details, see [WORK_MEMORY.md](./W
 - TOMORROW (2026-11-27): (1) email integration (Resend / SES, real delivery of OTPs, receipts, enquiry notices); (2) Google login client ID/secret; (3) admin Dockerfile and AWS deploy.
 - Open questions: is "Total today" meant to include the first month of monthly add-ons (current behaviour)? Price of Registered agent (inactive for now). Static prices written in page text (home, pricing cards, service pages) are not read from the database yet; the compliance and tax prices still show "[Price]" in places.
 - Before go-live (unchanged): remove FIXED_TEST_OTP, change the temporary admin passwords, distinct AUTH_SECRETs, drop `User.mfaSecret` / `otplib`.
+
+## 2026-11-26 — admin dashboard (admin fork)
+- Done: new admin shell (dashboard design kit in packages/ui/src/dashboard) and Dashboard at `/` with all widgets (revenue, paid orders, details pending, KYC, revenue chart, status donut, pipeline, needs attention, orders by state/service, States on/off switches, latest orders), 7/30/90 day range and Export CSV (`/export/dashboard`, super admin only). Orders list accepts `stale=3|7` (used by the "needs attention" buttons). New pages: States on/off, and "Coming soon" for Reports, Documents, Invoices, Email templates.
+- To confirm with Gopal: STAFF currently does NOT see revenue widgets (Revenue KPI, Revenue by week, Amount column). The list is one constant `STAFF_HIDDEN_WIDGETS` in `apps/admin/src/lib/dashboard.ts`.
+- "Assigned" column in Latest orders always shows "Unassigned": orders have no assigned-staff field yet (needs a schema change by Foundation).
+- "Details pending over 3 days" / "waiting on state over 7 days" use the order's last-updated time, because status changes are not stored with their own dates.
+- Local sample data: `pnpm --filter @juris/db db:seed-sample-admin` (dev only, never in production). Local staff test user: sample-staff@example.com.
