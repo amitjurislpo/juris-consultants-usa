@@ -139,8 +139,9 @@ export function FinalShell({ children }: { children: ReactNode }) {
                 style={{
                   marginTop: 16,
                   display: "inline-flex",
-                  gap: 8,
-                  alignItems: "center",
+                  flexDirection: "column",
+                  gap: 6,
+                  alignItems: "flex-start",
                   background: "rgba(245,158,11,.15)",
                   color: "#FCD34D",
                   padding: "8px 12px",
@@ -156,6 +157,9 @@ export function FinalShell({ children }: { children: ReactNode }) {
                       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee',
                   }}
                 />
+                <span style={{ fontSize: 12, fontWeight: 500, opacity: 0.9 }}>
+                  If filing fails due to our error.
+                </span>
               </div>
             </div>
             <div>

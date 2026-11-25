@@ -1060,6 +1060,9 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
 @media (min-width:1001px){.jfaq-wrap{max-width:1334px}.jfaq--embedded .jfaq-wrap{max-width:none}}
 .svc-faq{margin-top:8px}
 
-/* Breadcrumb strip under the header */
-.jbc-bar{padding-top:16px;padding-bottom:0;position:relative;z-index:2}
+/* Breadcrumbs sit on top of each page's own header area (no separate band) */
+.jbc-wrap{position:relative;height:0;z-index:3}
+.jbc-wrap .jbc-bar{position:absolute;left:0;right:0;top:14px;margin:0 auto}
 .jbc-bar:empty{display:none}
+#app > section:first-of-type{padding-top:64px!important}
+@media (max-width:1000px){#app > section:first-of-type{padding-top:58px!important}}

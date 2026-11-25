@@ -907,14 +907,14 @@ function liveBoardHTML(){return `<section class="lboard-sec" id="lboard" data-gh
 const FLAP_CH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-·';
 function flapTo(el,text,fast){if(el._t)clearInterval(el._t);const from=el.textContent||'',L=Math.max(from.length,text.length);let step=0;const maxStep=fast?6:14;
  el._t=setInterval(()=>{step++;let out='';for(let i=0;i<L;i++){const settle=Math.floor(maxStep*.4)+i*.6;const t=text[i]||' ';if(step>=settle||t===' '||t==='·'||t==='✓')out+=t;else out+=FLAP_CH[Math.floor(Math.random()*FLAP_CH.length)];}
-  el.textContent=out.replace(/\s+$/,'');if(step>=maxStep*.4+L*.6+1){el.textContent=text;clearInterval(el._t);el._t=null;}},45);}
+  el.textContent=out.replace(/\s+$/,'');if(step>=maxStep*.4+L*.6+1){el.textContent=text;clearInterval(el._t);el._t=null;}},38);}
 function startLiveBoard(sec){if(sec.dataset.on)return;sec.dataset.on=1;const rows=$$('.fb-row[data-r]',sec);const data=rows.map(()=>lbNew(Math.floor(Math.random()*4)));let landed=0;
  const paint=(i,keys)=>{const r=rows[i],d=data[i];(keys||['fl','from','to','co','st']).forEach(k=>{const el=$(`[data-k="${k}"]`,r);flapTo(el,k==='st'?LB_ST[d.st]:d[k],!keys);if(k==='st'){el.classList.toggle('ok',d.st===3);el.classList.toggle('st-fly',d.st===2);el.classList.toggle('st-brd',d.st===1);}});};
  rows.forEach((_,i)=>paint(i));
  const clock=()=>{const c=$('#lbClock',sec);if(c)c.textContent=new Date().toLocaleTimeString('en-GB',{timeZone:'America/New_York',hour:'2-digit',minute:'2-digit',second:'2-digit'})+' '+(new Intl.DateTimeFormat('en-US',{timeZone:'America/New_York',timeZoneName:'short'}).formatToParts(new Date()).find(x=>x.type==='timeZoneName')||{value:'ET'}).value;const n=$('#lbCount',sec);if(n)n.textContent=landed?`${landed} landed while you were here`:'';};
  const tick=()=>{if(!sec.isConnected)return;const r=sec.getBoundingClientRect();if(r.bottom>0&&r.top<innerHeight){const i=Math.floor(Math.random()*rows.length),d=data[i];
    if(d.st===3){data[i]=lbNew(0);paint(i,['fl','from','to','co','st']);}else{d.st++;if(d.st===3)landed++;paint(i,['st']);}}
-  setTimeout(tick,1600+Math.random()*1800);};
+  setTimeout(tick,1333+Math.random()*1500);};
  clock();const ci=setInterval(()=>{if(!sec.isConnected)return clearInterval(ci);clock();},1000);setTimeout(tick,1200);}
 
 /* ================= MEGA ================= */

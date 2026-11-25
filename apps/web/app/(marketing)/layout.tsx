@@ -11,8 +11,10 @@ export default function MarketingLayout({
 }: Readonly<{ children: ReactNode }>) {
   return (
     <FinalShell>
-      <div className="container jbc-bar">
-        <PathBreadcrumbs {...SITE_CRUMBS} jsonLdOrigin={siteUrl} />
+      <div className="jbc-wrap">
+        <div className="container jbc-bar">
+          <PathBreadcrumbs {...SITE_CRUMBS} jsonLdOrigin={siteUrl} />
+        </div>
       </div>
       {children}
     </FinalShell>
