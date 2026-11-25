@@ -11,7 +11,7 @@ import { FINAL_MEGA } from "./generated";
    sticky CTA). Links use real URLs instead of #/ hashes. */
 
 const bodyClassScript =
-  "document.body.classList.add('dm','L20','L7','L12','hr1','cu5','ck1','no-chg');";
+  "document.body.classList.add('dm','L20','L7','L12','hr1','cu0','ck1','no-chg');";
 
 export function FinalShell({ children }: { children: ReactNode }) {
   return (
