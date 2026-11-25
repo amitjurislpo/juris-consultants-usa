@@ -18,3 +18,6 @@ test-results/
 tmp/
 .tsupgrader/
 tsconfig.tmpcheck.json
+
+# temporary dev server logs
+tmp-*.log

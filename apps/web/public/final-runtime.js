@@ -1060,6 +1060,11 @@ let acctP=null;
 function leadPing(){if(!state.loggedIn)return;const f=({start:'START',manage:'MANAGE',expert:'EXPERT',global:'GLOBAL'})[state.flow]||'START';const ph=state.phone?state.cc+state.phone:'';try{fetch('/api/leads',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({flow:f,stepReached:state.step,plan:isConsult()?undefined:state.plan,state:state.st,add:Object.keys(state.add).filter(k=>state.add[k]),name:state.name||undefined,phone:ph||undefined,company:state.company||undefined,need:state.need||undefined}),keepalive:true}).catch(()=>{});}catch(e){}}
 function needLogin(step){try{sessionStorage.setItem('jc_draft',JSON.stringify({flow:state.flow,plan:state.plan,st:state.st,add:state.add,name:state.name,email:state.email,cc:state.cc,phone:state.phone,company:state.company,need:state.need,resume:step}));}catch(e){}location.href='/login?next='+encodeURIComponent(location.pathname+location.search);}
 function restoreDraft(){try{const d=JSON.parse(sessionStorage.getItem('jc_draft')||'null');if(d&&d.flow===state.flow){const r=d.resume;delete d.resume;Object.assign(state,d);state.resumeStep=r;}}catch(e){}}
+function serverAcct(){let a=null;try{a=JSON.parse(($('#app')&&$('#app').dataset.account)||'null');}catch(e){}
+ if(!a||!a.email)return;obAcctChecked=true;acctP=Promise.resolve();
+ if(!state.email)state.email=a.email;if(!state.name)state.name=a.name||'';state.loggedIn=true;
+ if(state.resumeStep){state.step=state.resumeStep;state.resumeStep=0;try{sessionStorage.removeItem('jc_draft');}catch(e){}}
+ else if(!isConsult()&&state.step===1&&state.name&&state.email)state.step=2;}
 function checkAcct(){if(obAcctChecked)return acctP;obAcctChecked=true;acctP=fetch('/api/auth/session').then(r=>r.ok?r.json():null).then(s=>{if(!s||!s.user)return;if(!state.email)state.email=s.user.email||'';if(!state.name)state.name=s.user.name||'';state.loggedIn=true;if(state.step===1&&state.resumeStep){state.step=state.resumeStep;state.resumeStep=0;try{sessionStorage.removeItem('jc_draft');}catch(e){}}renderOB();}).catch(()=>{});return acctP;}
 function bindOB(){const f1=$('#ob1');checkAcct();if(f1)bindPhone($('#oPhone'),$('#oCc'));
  const acct=$('#obAcct');if(acct&&state.loggedIn)acct.innerHTML='You are logged in. <a href="/account" style="color:var(--blue);font-weight:600">View my account</a>';
@@ -1159,7 +1164,7 @@ function bindPage(page,arg){
  $$('[data-layout]').forEach(c=>{const f=()=>{applyLayout(+c.dataset.layout);location.hash='#/home';};c.onclick=f;c.onkeydown=e=>{if(e.key==='Enter')f();};});
  $$('[data-gcombo]').forEach(b=>b.onclick=()=>{const c=COMBOS[+b.dataset.gcombo];applyTheme(c.t);applyLayout(c.l);cur.hero=c.h;store.set('hero3',c.h);updRanks();location.hash='#/home';});
  $$('[data-usehero]').forEach(b=>b.onclick=()=>{cur.hero=+b.dataset.usehero;store.set('hero',cur.hero);updRanks();location.hash='#/home';});
- if(page==='start'){applyStartParams();renderOB();(checkAcct()||Promise.resolve()).then(()=>{if(!state.loggedIn)needLogin(1);});}}
+ if(page==='start'){applyStartParams();serverAcct();renderOB();(checkAcct()||Promise.resolve()).then(()=>{if(!state.loggedIn)needLogin(1);});}}
 
 /* ================= REVEAL ================= */
 let io;
@@ -1182,7 +1187,7 @@ fetch('/api/catalog',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>n
  const stick=()=>{if(sc)sc.classList.toggle('show',window.scrollY>700&&page==='home');};
  window.addEventListener('scroll',stick,{passive:true});stick();
  const bg=document.querySelector('.burger');if(bg)bg.addEventListener('click',()=>document.getElementById('mm').classList.toggle('open'));
- const ROUTES={"home":"/","services":"/services","pricing":"/pricing","how":"/how-it-works","blogs":"/blog","about":"/about","contact":"/contacts","start":"/start","track":"/track-order"};
+ const ROUTES={"home":"/","services":"/services","pricing":"/pricing","how":"/how-it-works","blogs":"/blogs","about":"/about","contact":"/contacts","start":"/start","track":"/track-order"};
  const SV={"llc":"llc-formation","ccorp":"c-corp-formation","ein":"ein-tax-registration","agent":"registered-agent","bank":"bank-account-assistance","mailbox":"virtual-address-mailbox","office":"physical-office-address","books":"accounting-bookkeeping","warehouse":"warehousing-fulfilment","compliance":"compliance-annual-filings","tax":"us-tax-filing","expert":"talk-to-an-expert"},BL={"states":"choosing-a-state","ein":"ein-without-ssn","cost":"formation-costs","bank":"business-banking"};
  const toPath=h=>{const m=h.replace(/^#\/?/,''),q=m.split('?'),pp=q[0].split('/');let p=ROUTES[pp[0]];if(pp[0]==='service')p='/services/'+(SV[pp[1]]||pp[1]);if(pp[0]==='blog')p='/blog/'+(BL[pp[1]]||pp[1]);return p?p+(q[1]?'?'+q[1]:''):null;};
  document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a[href^="#/"]');if(!a)return;const p=toPath(a.getAttribute('href'));if(!p)return;e.preventDefault();const j=a.dataset.jump;
