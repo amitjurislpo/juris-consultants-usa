@@ -1169,3 +1169,15 @@ body .svc.card:hover::before{opacity:1}
 .pk-card,.pk-rec{opacity:1}
 .pk-card:not(.sel){filter:brightness(.96)}
 .pk-card.sel{filter:none}
+
+/* Hover without flicker: the hit area must not move away from the pointer.
+   Cards and tabs that lift get an invisible strip under them; items that used to slide sideways now stay put. */
+body .svc.card{overflow:visible}
+body .svc.card::before{border-radius:inherit}
+body .svc.card::after,.tabs .tab::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:10px}
+body .svc.card:hover{transform:translateY(-5px)}
+.tabs .tab{position:relative}
+.who-item:hover{transform:none}
+.lboard .fb-row:hover{transform:none}
+.mega a{padding-left:8px}
+.mega a:hover{transform:none;padding-left:14px}

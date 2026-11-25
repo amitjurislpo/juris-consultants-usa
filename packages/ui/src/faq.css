@@ -150,6 +150,17 @@
 .jfaq-fc:not(.jfaq-open):hover {
   transform: translateY(-4px);
 }
+.jfaq-fc {
+  position: relative;
+}
+.jfaq-fc::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 8px;
+}
 .jfaq-hide {
   display: none;
 }
