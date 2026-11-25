@@ -1071,3 +1071,6 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
 .sticky-cta{background:linear-gradient(135deg,rgba(20,32,64,.96),rgba(10,40,58,.96));border:1px solid rgba(34,211,238,.45);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);box-shadow:0 0 0 1px rgba(59,130,246,.25),0 14px 40px rgba(0,0,0,.55),0 0 36px rgba(34,211,238,.22)}
 .sticky-cta b{color:#fff}
 .sticky-cta .btn-primary{box-shadow:0 0 0 1px rgba(255,255,255,.18),0 8px 22px rgba(37,99,235,.55),0 0 22px rgba(34,211,238,.35)}
+
+/* Pricing builder: the Global plan keeps the same panel size as the other plans (the hidden options keep their space) */
+.pk-panel .pk-opts.hide{display:flex!important;visibility:hidden}
