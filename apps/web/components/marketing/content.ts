@@ -175,36 +175,3 @@ export const services: Service[] = [
   },
 ];
 
-export const faqs = [
-  {
-    question:
-      "Can founders living outside the United States use these services?",
-    answer:
-      "The service is being designed for founders worldwide. Eligibility and requirements depend on the service and your circumstances; discuss your situation with an expert before proceeding.",
-  },
-  {
-    question: "Which US state should I choose?",
-    answer:
-      "The right state depends on your plans, operations, and ongoing obligations. State availability and guidance on this site are illustrative; confirm the details before making a decision.",
-  },
-  {
-    question: "Should I form an LLC or a C-Corporation?",
-    answer:
-      "The choice depends on factors such as ownership, fundraising plans, and tax considerations. The comparison on this site is only a starting point, not legal or tax advice.",
-  },
-  {
-    question: "How long does company formation take?",
-    answer:
-      "Processing times vary by state and circumstances. Any timing shown on this preview is illustrative and will be confirmed before launch.",
-  },
-  {
-    question: "Are the prices on this website final?",
-    answer:
-      "No. Pricing is still being confirmed. Any price shown on this preview is clearly marked as a placeholder and is not an offer to provide services.",
-  },
-  {
-    question: "Can I start an order or log in?",
-    answer:
-      "Yes. Choose Start your business, Manage your business or Talk to an Expert on the home page, or log in from the top right to see your orders.",
-  },
-];

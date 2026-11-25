@@ -13,29 +13,6 @@ export const ACCOUNT_LINKS = [
   { href: "/account/profile", label: "Profile" },
 ] as const;
 
-const TITLES: [string, string][] = [
-  ["/account/dashboard", "Dashboard"],
-  ["/account/orders", "My Orders"],
-  ["/account/documents", "Documents"],
-  ["/account/payments", "Payments"],
-  ["/account/profile", "Profile"],
-  ["/account/coming-soon", "Coming soon"],
-];
-
-/** "Customer portal / Dashboard" for the top bar. */
-export function PortalCrumb() {
-  const pathname = usePathname() ?? "";
-  const title =
-    TITLES.find(
-      ([href]) => pathname === href || pathname.startsWith(`${href}/`),
-    )?.[1] ?? "My account";
-  return (
-    <>
-      Customer portal / <b>{title}</b>
-    </>
-  );
-}
-
 /** Avatar button in the top bar with the account dropdown (pages, photo, log out). */
 export function TopUser({
   name,

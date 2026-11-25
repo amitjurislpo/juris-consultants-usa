@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Juris Consultants USA — FINAL FAQ design (Flip cards)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!--
+ FINAL FAQ DESIGN: "Flip cards" (approved). Use this ONE design for every FAQ on the site.
+ This file shows the component twice:
+   1) Full variant  (3 columns, used on Home and the FAQ page)
+   2) Compact variant (2 columns, max 4 cards + "Show all", used on service pages, pricing, blog posts)
+ The yellow "DEMO" labels are only for this file. Answers marked [Draft: to confirm] are draft content (owner: Vansh).
+ Visual reference only, NOT production code (production: packages/ui/src/faq).
+-->
+<style>
+
+:root{--bg:#05070D;--bg2:#0A0E1A;--solid:#0D1324;--card:rgba(255,255,255,.04);--line:rgba(255,255,255,.10);--line2:rgba(255,255,255,.16);
+--tx:#F1F5F9;--body:#CBD5E1;--mu:#94A3B8;--mu2:#64748B;--blue:#3B82F6;--blue2:#93C5FD;--cyan:#22D3EE;--cyan2:#67E8F9;--acc:#7DD3FC;--ok:#34D399;--warn:#FBBF24;
+--grad:linear-gradient(135deg,#3B82F6,#22D3EE);--btn:linear-gradient(135deg,#2563EB,#0891B2);--h:'Sora',Inter,system-ui,sans-serif;--f:'Inter',system-ui,sans-serif;--m:'JetBrains Mono',ui-monospace,monospace}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--bg);color:var(--body);font:15px/1.6 var(--f);-webkit-font-smoothing:antialiased}
+body{min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;text-align:left}
+h2,h3,h4{font-family:var(--h);color:var(--tx);letter-spacing:-.02em}
+svg{display:block}
+.bgfx{position:fixed;inset:0;pointer-events:none;background:radial-gradient(900px 500px at 85% -10%,rgba(59,130,246,.16),transparent 60%),radial-gradient(700px 500px at -10% 110%,rgba(34,211,238,.10),transparent 60%)}
+.bgfx::after{content:"";position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;mask-image:linear-gradient(180deg,#000,transparent 85%)}
+.sec{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:90px 40px 150px}
+.eyebrow{font:700 12.5px var(--f);letter-spacing:.16em;text-transform:uppercase;color:var(--blue)}
+.ttl{font:800 clamp(34px,4.6vw,58px)/1.05 var(--h);color:var(--tx);letter-spacing:-.035em;margin-top:10px}
+.ttl em{font-style:normal;background:var(--grad);-webkit-background-clip:text;color:transparent}
+.sub{color:var(--mu);margin-top:14px;max-width:560px;font-size:16px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:12px;background:var(--btn);color:#fff;font-weight:600;box-shadow:0 10px 26px rgba(37,99,235,.3);transition:.25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(34,211,238,.35)}
+.btn.gh{background:var(--card);border:1px solid var(--line2);box-shadow:none;color:var(--tx)}
+.btn svg{width:16px;height:16px}
+.wa{color:var(--ok)}
+.note{display:inline-flex;margin-top:22px;padding:6px 12px;border-radius:20px;border:1px dashed rgba(251,191,36,.45);color:var(--warn);font:600 12px var(--f)}
+.rv{opacity:0;transform:translateY(16px);animation:rv .7s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes rv{to{opacity:1;transform:none}}
+/* ===== D3 flip cards ===== */
+.d3 .hdr{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:40px;flex-wrap:wrap}
+.d3 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.d3 .fc{perspective:1200px;height:250px;cursor:pointer}
+.d3 .fi{position:relative;width:100%;height:100%;transition:transform .8s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d}
+.d3 .fc.open .fi{transform:rotateY(180deg)}
+.d3 .fa,.d3 .fb{position:absolute;inset:0;border-radius:20px;padding:26px;backface-visibility:hidden;display:flex;flex-direction:column;border:1px solid var(--line)}
+.d3 .fa{background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.015))}
+.d3 .fa:hover{border-color:rgba(59,130,246,.5)}
+.d3 .fa .qi{width:42px;height:42px;border-radius:12px;display:grid;place-items:center;background:rgba(59,130,246,.15);color:var(--acc);font:800 18px var(--h);margin-bottom:auto}
+.d3 .fa b{font:700 18px/1.35 var(--h);color:var(--tx)}
+.d3 .fa small{color:var(--mu2);font-size:12.5px;margin-top:10px}
+.d3 .fb{transform:rotateY(180deg);background:linear-gradient(160deg,#1D4ED8,#0E7490);border-color:transparent;color:#E0F2FE;box-shadow:0 20px 50px rgba(34,211,238,.25)}
+.d3 .fb b{font:700 15px var(--h);color:#fff;margin-bottom:10px}
+.d3 .fb p{font-size:14.5px;color:#E0F2FE}
+.d3 .fb small{margin-top:auto;font-size:12px;opacity:.75}
+
+/* ===== final FAQ flip-card component additions ===== */
+.measuring .fc{min-height:0!important}.measuring .fi{transform:none!important}.measuring .fa,.measuring .fb{position:relative!important;inset:auto!important;height:auto!important;transform:none!important;min-height:0}.measuring .fa .qi{margin-bottom:24px}
+.d3 .fc{height:auto;min-height:250px}
+.d3 .fi{min-height:inherit;height:100%}
+.d3 .fc{display:block;width:100%;text-align:left;border-radius:20px;outline:none}
+.d3 .fc:focus-visible .fa,.d3 .fc:focus-visible .fb{box-shadow:0 0 0 3px rgba(34,211,238,.6)}
+.d3 .fb{overflow:auto}
+.d3 .fa .qi{transition:.35s}
+.d3 .fc:hover .fa .qi{background:var(--grad);color:#fff;transform:rotate(-8deg) scale(1.06);box-shadow:0 0 20px rgba(34,211,238,.5)}
+.d3 .fa small,.d3 .fb small{display:flex;align-items:center;gap:6px}
+.d3 .more{display:flex;justify-content:center;margin-top:28px}
+.d3 .fc.hide{display:none}
+.d3.compact .grid{grid-template-columns:repeat(2,1fr)}
+@media(max-width:1100px){.d3 .grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.sec{padding:60px 18px 90px}.d3 .grid,.d3.compact .grid{grid-template-columns:1fr}.d3 .fc{min-height:200px}}
+@media(prefers-reduced-motion:reduce){.d3 .fi{transition:none}.d3 .fc.open .fa{visibility:hidden}.d3 .fc .fb{transform:none;visibility:hidden}.d3 .fc.open .fb{visibility:visible}.rv{animation:none;opacity:1;transform:none}}
+.demo-label{position:relative;z-index:1;max-width:1240px;margin:0 auto;padding:30px 40px 0;font:700 11px var(--f);letter-spacing:.16em;text-transform:uppercase;color:var(--warn)}
+
+</style>
+</head>
+<body>
+<div class="bgfx"></div>
+
+<div class="demo-label">DEMO · Variant 1: full (Home, /faq)</div>
+<section class="sec d3" id="faq-full" style="padding-top:40px"></section>
+
+<div class="demo-label">DEMO · Variant 2: compact (service pages, pricing, blog)</div>
+<section class="sec d3 compact" id="faq-compact" style="padding-top:40px"></section>
+
+<script>
+const Q=[
+ {q:'Do I need to be a U.S. citizen to start a business?',s:'No visa or visit needed',a:'No. Founders living anywhere in the world can own a US LLC or C-Corp. You don’t need to visit the US.'},
+ {q:'Which state should I choose as a founder outside the US?',s:'Wyoming or Delaware, usually',a:'Most founders choose Wyoming for a simple, low-cost LLC, or Delaware if they plan to raise money from investors. Our expert will suggest the right state for your plan on a free call. [Draft: to confirm]'},
+ {q:'How long does it take?',s:'~7 business days',a:'Most companies are formed in about 7 business days after we receive your details. Your EIN usually follows a few weeks later. You can track every step in your dashboard. [Draft: to confirm]'},
+ {q:'Do you help with EIN and bank account setup?',s:'Yes, end to end',a:'Yes. We apply for your EIN (US tax ID) and guide you through opening a US business bank account online, so you can start getting paid. [Draft: to confirm]'},
+ {q:'What is your money-back guarantee?',s:'Refile or refund',a:'If the state rejects your filing because of our mistake, we refile for free or refund our service fee. [Draft: exact terms to be confirmed]'},
+ {q:'Can I talk to someone before paying?',s:'WhatsApp, email or a call',a:'Yes. Chat with our CA/CS-led team on WhatsApp or email, or book a 30-minute expert call. We will answer your questions before you pay anything. [Draft: to confirm]'}
+];
+const WA='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2z"/></svg>';
+const FLIP='<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>';
+
+/* ===== FAQ component: renderFAQ(el, items, {title, subtitle, limit}) ===== */
+function renderFAQ(el,items,o={}){
+ const limit=o.limit||items.length;
+ el.innerHTML=`<div class="hdr rv"><div><div class="eyebrow">FAQ</div><h2 class="ttl">${o.title||'Questions founders <em>ask us</em>'}</h2><p class="sub">${o.subtitle||'Tap a card to see the answer.'}</p></div><a class="btn gh" href="#">${WA}<span class="wa">Ask on WhatsApp</span></a></div>
+ <div class="grid">${items.map((x,i)=>`<button type="button" class="fc rv ${i>=limit?'hide':''}" style="animation-delay:${(i%6)*.07}s" aria-pressed="false" aria-label="${x.q.replace(/"/g,'&quot;')}. Show answer">
+  <div class="fi"><div class="fa" aria-hidden="false"><div class="qi">?</div><b>${x.q}</b><small>${FLIP} Tap to see the answer</small></div>
+  <div class="fb" aria-hidden="true"><b>${x.s}</b><p>${x.a}</p><small>${FLIP} Tap to flip back</small></div></div></button>`).join('')}</div>
+ ${limit<items.length?`<div class="more"><button type="button" class="btn gh showall">Show all ${items.length} questions</button></div>`:''}`;
+ const cards=[...el.querySelectorAll('.fc')];
+ const fit=()=>{const mn=innerWidth<700?200:250;el.classList.add('measuring');const hs=cards.map(c=>Math.max(mn,c.querySelector('.fa').offsetHeight,c.querySelector('.fb').offsetHeight));el.classList.remove('measuring');cards.forEach((c,i)=>c.style.minHeight=hs[i]+'px')};
+ cards.forEach(c=>c.addEventListener('click',()=>{const on=c.classList.toggle('open');c.setAttribute('aria-pressed',on);c.querySelector('.fa').setAttribute('aria-hidden',on);c.querySelector('.fb').setAttribute('aria-hidden',!on);c.setAttribute('aria-label',c.getAttribute('aria-label').replace(/(Show|Hide) answer$/,on?'Hide answer':'Show answer'))}));
+ const sa=el.querySelector('.showall');if(sa)sa.onclick=()=>{cards.forEach(c=>c.classList.remove('hide'));sa.parentElement.remove();fit()};
+ el.querySelectorAll('a[href="#"]').forEach(a=>a.onclick=e=>e.preventDefault());
+ fit();addEventListener('resize',fit);if(document.fonts)document.fonts.ready.then(fit);
+ /* SEO: FAQPage structured data (one per page) */
+ if(!document.getElementById('faq-ld')){const ld=document.createElement('script');ld.type='application/ld+json';ld.id='faq-ld';ld.textContent=JSON.stringify({'@context':'https://schema.org','@type':'FAQPage',mainEntity:items.map(x=>({'@type':'Question',name:x.q,acceptedAnswer:{'@type':'Answer',text:x.a}}))});document.head.appendChild(ld)}
+}
+renderFAQ(document.getElementById('faq-full'),Q);
+renderFAQ(document.getElementById('faq-compact'),Q,{title:'US LLC Formation: <em>FAQ</em>',subtitle:'Questions about this service. Tap a card to see the answer.',limit:4});
+</script>
+</body>
+</html>

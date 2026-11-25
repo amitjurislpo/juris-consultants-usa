@@ -2,6 +2,8 @@ import Image from "next/image";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { BLOG_URL } from "../../../src/lib/links";
+import { FaqFlipEnhancer } from "@juris/ui/faq";
+import { expandFaqMarker, FAQ_MARKER } from "../../../content/faq";
 import { AuthNav } from "./AuthNav";
 import { FINAL_MEGA } from "./generated";
 
@@ -130,15 +132,16 @@ export function FinalShell({ children }: { children: ReactNode }) {
                 </span>
               </div>
               <p style={{ marginTop: 14, fontSize: 14, maxWidth: 320 }}>
-                US company formation, compliance and support for founders in
-                India, by the team behind Juris Consultants India.
+                US company formation, compliance and support for founders
+                worldwide, by the team behind Juris Consultants India.
               </p>
               <div
                 style={{
                   marginTop: 16,
                   display: "inline-flex",
-                  gap: 8,
-                  alignItems: "center",
+                  flexDirection: "column",
+                  gap: 6,
+                  alignItems: "flex-start",
                   background: "rgba(245,158,11,.15)",
                   color: "#FCD34D",
                   padding: "8px 12px",
@@ -154,6 +157,9 @@ export function FinalShell({ children }: { children: ReactNode }) {
                       '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee',
                   }}
                 />
+                <span style={{ fontSize: 12, fontWeight: 500, opacity: 0.9 }}>
+                  If filing fails due to our error.
+                </span>
               </div>
             </div>
             <div>
@@ -215,13 +221,19 @@ export function FinalPage({
   page: string;
   arg?: string;
 }) {
+  const hasFaq = FAQ_MARKER.test(html);
   return (
-    <main
-      dangerouslySetInnerHTML={{ __html: html }}
-      data-arg={arg}
-      data-calendly={process.env.CALENDLY_EXPERT_URL || undefined}
-      data-page={page}
-      id="app"
-    />
+    <>
+      <main
+        dangerouslySetInnerHTML={{
+          __html: hasFaq ? expandFaqMarker(html) : html,
+        }}
+        data-arg={arg}
+        data-calendly={process.env.CALENDLY_EXPERT_URL || undefined}
+        data-page={page}
+        id="app"
+      />
+      {hasFaq ? <FaqFlipEnhancer /> : null}
+    </>
   );
 }

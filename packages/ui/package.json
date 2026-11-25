@@ -8,7 +8,9 @@
     "./styles.css": "./src/styles.css",
     "./tokens.css": "./src/tokens.css",
     "./dashboard": "./src/dashboard/index.ts",
-    "./dashboard.css": "./src/dashboard.css"
+    "./dashboard.css": "./src/dashboard.css",
+    "./faq": "./src/faq/index.ts",
+    "./faq.css": "./src/faq.css"
   },
   "peerDependencies": {
     "react": ">=18",

@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Illustration of a team working together">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0B1B3A"/><stop offset="1" stop-color="#0E7490"/></linearGradient>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3B82F6"/><stop offset="1" stop-color="#22D3EE"/></linearGradient></defs>
+<rect width="800" height="600" rx="28" fill="url(#bg)"/>
+<g opacity=".15" stroke="#fff"><path d="M0 150H800M0 300H800M0 450H800M200 0V600M400 0V600M600 0V600"/></g>
+<circle cx="400" cy="300" r="190" fill="none" stroke="#22D3EE" stroke-opacity=".35" stroke-width="2"/>
+<ellipse cx="400" cy="300" rx="190" ry="70" fill="none" stroke="#22D3EE" stroke-opacity=".3"/>
+<ellipse cx="400" cy="300" rx="70" ry="190" fill="none" stroke="#22D3EE" stroke-opacity=".3"/>
+<g fill="url(#g)"><circle cx="230" cy="250" r="34"/><path d="M170 360a60 60 0 0 1 120 0v20H170z"/>
+<circle cx="400" cy="215" r="40"/><path d="M330 340a70 70 0 0 1 140 0v40H330z"/>
+<circle cx="570" cy="250" r="34"/><path d="M510 360a60 60 0 0 1 120 0v20H510z"/></g>
+<rect x="130" y="400" width="540" height="22" rx="11" fill="#fff" fill-opacity=".14"/>
+<text x="400" y="500" text-anchor="middle" font-family="Arial,sans-serif" font-size="26" fill="#fff" fill-opacity=".85">Placeholder image · replace with team photo</text>
+</svg>
