@@ -1181,3 +1181,6 @@ body .svc.card:hover{transform:translateY(-5px)}
 .lboard .fb-row:hover{transform:none}
 .mega a{padding-left:8px}
 .mega a:hover{transform:none;padding-left:14px}
+
+/* Services dropdown: hovering an item must never change its size (the whole menu used to grow and shrink) */
+.mega a:hover{padding-left:8px}
