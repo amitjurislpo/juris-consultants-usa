@@ -8,6 +8,7 @@ import { getStorage } from "../../../../src/lib/kyc-services";
 import { ReviewForms } from "./review-form";
 import { formatDateTime } from "../../../../src/lib/datetime";
 import { getAdminTimeZone } from "../../../../src/lib/timezone";
+import { CrumbLabel } from "@juris/ui";
 
 const SIGNED_URL_SECONDS = 120;
 
@@ -54,6 +55,10 @@ export default async function KycReviewPage({
 
   return (
     <>
+      <CrumbLabel
+        href={`/kyc/${doc.id}`}
+        label={requirement?.label ?? doc.docType}
+      />
       <p>
         <Link href="/kyc">Back to queue</Link>
       </p>

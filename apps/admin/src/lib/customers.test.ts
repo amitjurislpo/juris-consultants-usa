@@ -1,14 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { addressLine, noteText } from "./customers";
-
-describe("noteText", () => {
-  it("returns the note or an empty string", () => {
-    expect(noteText({ note: "called" })).toBe("called");
-    expect(noteText({ note: 5 })).toBe("");
-    expect(noteText(null)).toBe("");
-    expect(noteText([])).toBe("");
-  });
-});
+import { addressLine } from "./customers";
 
 describe("addressLine", () => {
   it("joins string parts", () => {

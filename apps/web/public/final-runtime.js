@@ -423,7 +423,7 @@ function fxUpdate(){const vh=innerHeight;
  $$('.ghost-word').forEach(g=>{const r=g.parentElement.getBoundingClientRect(),p=(vh-r.top)/(vh+r.height);g.style.transform=`translateX(${-p*30}%)`;});
  const sc=$('#stickyCta');if(sc)sc.classList.toggle('show',scrollY>700&&parseHash().page==='home');}
 function initStory(){$$('#story .ms').forEach(m=>{const path=$('#stPath');if(!path)return;const L=path.getTotalLength(),pt=path.getPointAtLength(L*(+m.dataset.at));const i=+m.dataset.i;
-  m.style.left=clamp(pt.x/12,9,91)+'%';m.style.top=`calc(${pt.y/7}% + ${i%2?26:-118}px)`;});}
+  const half=((m.offsetWidth||230)/2+10)/innerWidth*100;m.style.left=clamp(pt.x/12,Math.max(9,half),Math.min(91,100-half))+'%';m.style.top=`calc(${pt.y/7}% + ${i%2?26:-118}px)`;});}
 let fxTick=false;addEventListener('scroll',()=>{if(!fxTick){fxTick=true;requestAnimationFrame(()=>{fxTick=false;fxUpdate();});}},{passive:true});
 addEventListener('resize',()=>{initStory();fxUpdate();});
 
@@ -943,128 +943,6 @@ function faqBlock(id,plain){const f=[
  if(plain) return `<div><h3 style="margin-bottom:10px">FAQs</h3>${inner}</div>`;
  return `<section class="sec" id="${id}" data-chg="12" data-ghost="FAQ"><div class="container"><div class="sec-head"><span class="eyebrow">FAQ</span><h2>Questions founders ask us</h2></div>${inner}</div></section>`;}
 
-/* ================= PAGES ================= */
-const PAGES={};
-PAGES.home=()=>`<div id="top"></div><div class="home-wrap">
-${HEROES[cur.hero][2]('id="hero"')}
-<section class="sec" id="trust" data-chg="3" data-ghost="TRUST" style="padding-top:28px"><div class="container">
- <div class="grid g4">
-  <div class="stat reveal"><b class="ph">[X]+</b><span class="muted">US companies formed for our clients</span></div>
-  <div class="stat reveal"><b class="ph">[Y] years</b><span class="muted">of Juris Consultants India in corporate &amp; secretarial work</span></div>
-  <div class="stat reveal"><b class="ph">[4.x] ★</b><span class="muted">average from <span class="ph">[N]</span> Google reviews</span></div>
-  <div class="stat reveal"><b>9</b><span class="muted">US states we form in, incl. Delaware, Wyoming &amp; Texas</span></div></div>
- <div class="guarantee reveal"><div class="g-icon">${ICON.shield}</div><div style="flex:1"><h3 style="font-size:21px">Flawless Filing or Your Money Back</h3><p style="color:#CBD5E1;margin-top:6px">If your company isn’t formed because of our mistake, we refund our service fee. State fees go to the government.</p></div><a class="btn btn-white btn-sm" href="#/home" data-jump="faq">Read the terms</a></div>
-</div></section>
-${storyHTML()}
-<section class="sec soft" id="journey" data-chg="5" data-ghost="JOURNEY"><div class="container">
- <div class="sec-head"><span class="eyebrow">Your journey with us</span><h2>Every step, and how long it takes</h2><p>No surprises. This is exactly what happens after you click “Launch”.</p></div>
- <div class="journey"><div class="line"><i></i></div>${[['5 min','Tell us about you','Name, email, phone. That’s it.'],['2 min','Choose plan &amp; pay','See your full total first.'],['1 business day','Expert review','We check your details with you.'],['~7 business days','Company formed','We file with the state.'],['<span class="ph">[to confirm]</span>','EIN (US tax ID)','We apply to the IRS.'],['After EIN','Bank account','We help you open it.']].map((s,i)=>`<div class="j-step"><div class="j-dot">${i+1}</div><span class="j-time">${s[0]}</span><h4>${s[1]}</h4><p>${s[2]}</p></div>`).join('')}</div>
- <div style="text-align:center;margin-top:36px"><a class="btn btn-primary" href="#/start">Start step 1 now ${ICON.arrow}</a></div>
-</div></section>
-<section class="sec" id="who" data-chg="6" data-ghost="FOR YOU"><div class="container">
- <div class="sec-head"><span class="eyebrow">Who is this for?</span><h2>Pick your business. We’ll show what you need.</h2></div>
- <div class="tabs" id="whoTabs">${['E-Commerce','Import-Export','IT Services','Startups & Founders'].map((t,i)=>`<button type="button" class="tab ${i?'':'on'}" data-who="${i}">${t}</button>`).join('')}</div>
- <div class="who-panel" id="whoPanel"></div></div></section>
-${servicesBlock('services')}
-${flyHTML()}
-${liveBoardHTML()}
-${stackHTML()}
-<section class="sec dark" id="why" data-chg="10" data-ghost="WHY US"><div class="container"><div class="hero-grid" style="gap:44px">
- <div style="display:flex;flex-direction:column;gap:16px"><span class="eyebrow">Why Juris Consultants USA</span><h2 style="font-size:clamp(30px,3.6vw,44px)">The US formation team that works in your time zone</h2>
- <p style="color:#CBD5E1;font-size:17px">Other platforms give you a form. We give you CA / CS experts who answer your questions, explain in plain words, and stay with you after formation.</p>
- <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-white" href="#/contact">Talk to an Expert</a></div></div>
- <div class="grid g2"><div class="why-card reveal"><h4>IST working hours</h4><p>Calls and replies during your day, not at 2 AM.</p></div><div class="why-card reveal"><h4>CA / CS experts</h4><p>Backed by Juris Consultants India’s corporate team.</p></div><div class="why-card reveal"><h4>Hindi &amp; English</h4><p>Ask in the language you’re comfortable with.</p></div><div class="why-card reveal"><h4>India + US phone lines</h4><p>+91 99996 30777 · +1 (646) 233-8454</p></div></div>
-</div></div></section>
-<section class="sec" id="clients" data-chg="4" data-ghost="CLIENTS"><div class="container">
- <div class="sec-head"><span class="eyebrow">Client stories</span><h2>Founders who started with us</h2><p>Real clients only — logos and quotes added with their permission.</p></div>
- <div class="grid g3">${[1,2,3].map(()=>`<div class="card quote reveal"><span class="stars">★★★★★</span><p style="font-size:16px"><span class="ph">[Short quote from a real client about their experience]</span></p><div style="display:flex;gap:12px;align-items:center"><span class="avatar"></span><div><b class="ph">[Name]</b><div class="muted" style="font-size:13px"><span class="ph">[Company · City]</span></div></div></div></div>`).join('')}</div>
- <div class="logos">${[1,2,3,4,5,6].map(()=>`<div class="logo-ph">[Client logo]</div>`).join('')}</div></div></section>
-<section class="sec" id="magnet" data-chg="11" style="padding-top:20px"><div class="container"><div class="magnet reveal">
- <div style="display:flex;flex-direction:column;gap:14px"><span class="pill" style="align-self:flex-start;background:var(--amber-50);color:var(--amber-d)">Free guide</span><h2 style="font-size:clamp(26px,3vw,36px)">Starting a US company from anywhere: the complete checklist</h2><p class="muted">States compared, real costs, EIN without SSN, and opening a US bank account — in one PDF.</p>
- <form class="form" id="magnetForm" novalidate style="flex-direction:row;flex-wrap:wrap;align-items:flex-start"><div class="field" style="flex:1;min-width:220px"><input type="email" id="mEmail" placeholder="Your email" aria-label="Your email"><span class="msg"></span></div><button class="btn btn-primary" type="submit">Send me the guide</button></form>
- <div class="ok-msg hide" id="magnetOk">✓ Thanks! The guide is on its way to your inbox. (demo)</div></div>
- <div class="guide-mock" aria-hidden="true"><div style="font-family:var(--head);font-weight:700;font-size:18px">US Company from Anywhere</div><div style="font-size:13px;color:#475569">Checklist 2026 · Juris Consultants USA</div><div class="bar" style="width:90%"></div><div class="bar" style="width:75%"></div><div class="bar" style="width:82%"></div><div class="bar" style="width:60%"></div><div class="bar" style="width:70%"></div></div>
-</div></div></section>
-${faqBlock('faq')}
-<section class="sec" id="final" data-chg="13" style="padding-top:20px"><div class="container"><div class="final reveal"><div><h2>Ready to launch your US company?</h2><p style="color:var(--on-primary-muted);margin-top:8px">Most founders finish step 1 in under 5 minutes.</p></div>
- <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-white btn-lg" href="#/start">Launch Your Company</a><a class="btn btn-ghost-w btn-lg" href="#/contact">Talk to an Expert</a></div></div></div></section>
-</div>`;
-
-PAGES.gallery=()=>{const rib=(cat,i)=>{const k=rankOf(cat,i);return k?`<span class="rec-ribbon">★ Recommended #${k}</span>`:'';};return `
-<section class="sec soft" style="padding:50px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">Design gallery</span><h1 style="font-size:clamp(32px,4vw,48px)">20 themes · 20 hero designs · 20 home layouts</h1><p>Click a theme or layout to apply it to the whole site. ★ marks our top 3 in each category. Every hero below uses the current theme.</p>
-<div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px">${COMBOS.map((c,i)=>`<button type="button" class="btn ${i?'btn-outline':'btn-primary'}" data-gcombo="${i}">${c.n}</button>`).join('')}</div></div></div></section>
-<section class="sec" id="gThemes" data-chg="19" style="padding-top:50px"><div class="container"><h2 style="margin-bottom:8px">Colour &amp; font themes</h2><p class="muted" style="margin-bottom:22px">1–10 light · 11–20 dark &amp; futuristic</p>
- <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">${THEMES.map((t,i)=>`<div class="theme-card ${t.dark?'dk':''} ${i===cur.theme?'sel':''}" data-theme="${i}" role="button" tabindex="0">${rib('theme',i)}<div class="sw"><i style="background:${t.v.navy}"></i><i style="background:${t.v.blue}"></i><i style="background:${t.v.amber}"></i><i style="background:${t.v.soft}"></i></div><div class="tc"><span style="font-size:12px;color:#64748B">Theme ${i+1}${t.dark?' · dark':''}</span><b style="font-family:${t.v.head};font-weight:${t.v.hw}">${t.n}</b><span style="font-size:13px;color:#475569">${t.d}</span></div></div>`).join('')}</div></div></section>
-<section class="sec" id="gLayouts" data-chg="20" style="padding-top:20px"><div class="container"><h2 style="margin-bottom:22px">Home page layouts</h2>
- <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">${LAYOUTS.map((l,i)=>`<div class="layout-card ${i===cur.layout?'sel':''}" data-layout="${i}" role="button" tabindex="0">${rib('layout',i)}<span style="font-size:12px;color:#64748B">Layout ${i+1}</span><b style="display:block;font-size:17px">${l.n}</b><span style="font-size:13px;color:#475569">${l.d}</span><div style="margin-top:10px;font-size:13px;font-weight:600;color:#7C3AED">Apply &amp; open home →</div></div>`).join('')}</div></div></section>
-<div style="padding:20px 0 0"><div class="container"><h2>Hero designs</h2></div></div>
-${HEROES.map((h,i)=>{const k=rankOf('hero',i);return `<div class="gal-label"><span><b>Hero ${i+1} — ${h[0]}</b> · ${h[1]} ${k?`<span class="rk" style="background:#FBBF24;color:#1F1147;border-radius:999px;padding:3px 8px;font-weight:800;font-size:12px;margin-left:6px">★ Recommended #${k}</span>`:''}</span><button type="button" data-usehero="${i}">Use this hero</button></div><div class="gal-hero">${h[2]('')}</div>`;}).join('')}`;};
-
-PAGES.services=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">Services</span><h1 style="font-size:clamp(32px,4vw,48px)">Everything to start, run and grow your US company</h1><p>Click any service to see details first. Payment comes after.</p></div></div></section>${servicesBlock('services')}${faqBlock('faq')}`;
-PAGES.service=(id)=>{const s=SERVICES[id]||SERVICES.llc,plan=s.plan;return `<section class="sec" style="padding-top:40px"><div class="container"><div class="crumb"><a href="#/services">Services</a> / ${s.group} / ${s.name}</div><div class="detail">
- <div style="display:flex;flex-direction:column;gap:28px">
-  <div><h1 style="font-size:clamp(32px,4vw,48px)">${s.name}</h1><p style="font-size:18px;color:var(--muted);margin-top:12px">${s.desc}</p><p style="margin-top:10px"><b>Best for:</b> ${s.who}</p></div>
-  <div class="grid g2"><div class="card"><h4 style="margin-bottom:12px">What’s included</h4>${s.incl.map(x=>`<div style="padding:4px 0"><span class="check">✓</span> ${x}</div>`).join('')}</div><div class="card"><h4 style="margin-bottom:12px">Good to know</h4>${s.good.map(x=>`<div style="padding:4px 0">• ${x}</div>`).join('')}</div></div>
-  <div><h3 style="margin-bottom:14px">How it works</h3><div class="grid g3"><div class="mini-step"><b>STEP 1 · 5 MIN</b><h4 style="margin:6px 0 4px">Choose &amp; pay</h4><p class="muted" style="font-size:14px">Name, email, phone and plan.</p></div><div class="mini-step"><b>STEP 2 · 1 DAY</b><h4 style="margin:6px 0 4px">Share details</h4><p class="muted" style="font-size:14px">In your dashboard, with our team’s help.</p></div><div class="mini-step"><b>STEP 3 · ${s.time.toUpperCase()}</b><h4 style="margin:6px 0 4px">We deliver</h4><p class="muted" style="font-size:14px">Track status live until it’s done.</p></div></div></div>
-  <div class="card locked"><div style="display:flex;gap:10px;align-items:center;color:var(--muted)">${ICON.lock}<h4 style="color:var(--text)">Unlocked after payment</h4></div><div class="grid g3" style="margin-top:12px;font-size:14px;color:var(--muted)"><span>Document checklist for your case</span><span>Your filing copies &amp; certificates</span><span>Expert review of your details</span></div></div>
-  ${faqBlock('',true)}
- </div>
- <aside class="card buy"><div class="muted" style="font-size:14px">${s.group} · ${s.time}</div><div><span style="font-family:var(--head);font-size:40px;font-weight:var(--hw)">${s.price}</span> <span class="muted">${s.unit}</span></div>
-  ${plan&&plan!=='warehouse'?`<div class="field"><label for="dState">State</label><select id="dState">${stateOpts('Wyoming')}</select></div><div class="trow" style="border-top:1px solid var(--line);padding-top:12px"><span>Total today</span><b id="dTotal"></b></div>`:''}
-  <a class="btn btn-primary" id="dGo" href="${plan?'#/start?plan='+plan:'#/start'}">Get started</a><a class="btn btn-outline" href="#/contact">Talk to an Expert</a>
-  <div style="display:flex;gap:10px;background:var(--amber-50);border-radius:12px;padding:12px;font-size:13px;color:var(--amber-d)">${ICON.shield}<span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span> if filing fails due to our error.</span></div></aside>
-</div></div></section>`;};
-PAGES.pricing=()=>`<section class="sec"><div class="container"><div class="sec-head"><h2>Compare plans in detail</h2></div><div style="overflow-x:auto"><table class="cmp">
- <tr><th>What you get</th><th>Starter · LLC</th><th>Premium · C-Corp</th><th>Warehousing</th></tr><tr><td>Price</td><td>$249 + state fee</td><td>$849 + state fee</td><td>$49</td></tr>
- <tr><td>Name availability check</td><td class="check">✓</td><td class="check">✓</td><td>–</td></tr><tr><td>Company formation &amp; state filing</td><td class="check">✓ LLC</td><td class="check">✓ C-Corp</td><td>–</td></tr>
- <tr><td>Operating agreement / bylaws</td><td class="check">✓ Basic</td><td class="check">✓ Bylaws</td><td>–</td></tr><tr><td>EIN (US tax ID)</td><td>$80 add-on</td><td class="check">✓ Included</td><td>–</td></tr>
- <tr><td>Registered agent</td><td>–</td><td class="check">✓ 1 year</td><td>–</td></tr><tr><td>Warehousing &amp; fulfilment</td><td>–</td><td>–</td><td class="check">✓ NY / TX / CA</td></tr>
- <tr><td>Timeline</td><td>~7 business days</td><td>~7 business days</td><td><span class="ph">[to confirm]</span></td></tr></table></div>
- <div class="sec-head" style="margin-top:56px"><h2>Add-ons</h2></div><div class="grid g3">${ADDONS.map(a=>`<div class="card"><h4>${a.n}</h4><p class="muted" style="margin-top:6px">${a.one?money(a.one)+' one-time':money(a.mo)+' per month'}</p></div>`).join('')}</div></div></section>${faqBlock('faq')}`;
-PAGES.how=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">How it works</span><h1 style="font-size:clamp(32px,4vw,48px)">From anywhere to a US company — step by step</h1><p>Honest timelines for founders outside the US.</p></div></div></section>
-<section class="sec" data-chg="5"><div class="container"><div class="journey in"><div class="line"><i></i></div>${[['5 min','Tell us about you'],['2 min','Choose plan &amp; pay'],['1 business day','Expert review'],['~7 business days','Company formed'],['<span class="ph">[to confirm]</span>','EIN (US tax ID)'],['After EIN','Bank account']].map((s,i)=>`<div class="j-step"><div class="j-dot">${i+1}</div><span class="j-time">${s[0]}</span><h4>${s[1]}</h4></div>`).join('')}</div>
- <div class="grid g2" style="margin-top:56px"><div class="card"><h3 style="margin-bottom:12px">What we need from you</h3><div>• Passport copy <span class="ph">[confirm list]</span></div><div>• Address proof</div><div>• 2–3 company name options</div><div>• Business activity in one line</div></div><div class="card"><h3 style="margin-bottom:12px">What you get</h3><div><span class="check">✓</span> Formation documents &amp; certificate</div><div><span class="check">✓</span> EIN letter (if chosen)</div><div><span class="check">✓</span> Live status in your dashboard</div><div><span class="check">✓</span> Email updates at every step</div></div></div>
- <div style="text-align:center;margin-top:36px"><a class="btn btn-primary btn-lg" href="#/start">Launch Your Company</a> &nbsp; <a class="btn btn-outline btn-lg" href="#/track">See a sample tracker</a></div></div></section>`;
-const BLOGS=[{id:'states',t:'Which US State Should You Choose to Start a Business from India? Texas vs Delaware vs Wyoming vs Florida',tag:'US Company Formation',real:true},{id:'ein',t:'EIN without SSN: how Indian founders get a US tax ID',tag:'EIN & Tax'},{id:'cost',t:'US LLC cost from India: the full breakdown',tag:'Pricing'},{id:'bank',t:'Opening a US business bank account from India',tag:'Banking'}];
-PAGES.blogs=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">Blogs</span><h1 style="font-size:clamp(32px,4vw,48px)">Guides for founders worldwide</h1><p>Each guide links to the service you need next.</p></div></div></section>
-<section class="sec"><div class="container"><div class="grid g2">${BLOGS.map(b=>`<a class="card svc" href="#/blog/${b.id}"><div class="top"><span class="pill">${b.tag}</span>${b.real?'<span class="muted" style="font-size:13px">10 min read</span>':'<span class="pill" style="background:var(--amber-50);color:var(--amber-d)">Suggested topic</span>'}</div><h3 style="font-size:21px">${b.t}</h3><p class="muted" style="font-size:14px">By <span class="ph">[Author], CA</span> · Updated <span class="ph">[date]</span></p><span style="font-weight:600;color:var(--blue)">Read guide →</span></a>`).join('')}</div></div></section>`;
-PAGES.blog=(id)=>{const b=BLOGS.find(x=>x.id===id)||BLOGS[0];return `<section class="sec" style="padding-top:40px" id="blogtop" data-chg="14"><div class="container"><div class="blog-grid">
- <nav class="toc" aria-label="On this page"><b class="muted" style="font-size:12px;letter-spacing:1px">ON THIS PAGE</b><a href="#/blog/${b.id}" data-jump="b1">Quick answer</a><a href="#/blog/${b.id}" data-jump="b2">State fees compared</a><a href="#/blog/${b.id}" data-jump="b3">Which state suits you</a><a href="#/blog/${b.id}" data-jump="b4">FAQs</a></nav>
- <article class="article"><span class="pill">${b.tag}</span><h1 style="font-size:clamp(28px,3.4vw,40px);margin:14px 0">${b.t}</h1>
-  <div class="muted" style="font-size:14px;display:flex;gap:10px;align-items:center"><span class="avatar" style="width:34px;height:34px"></span><span><b class="ph">[Author name], CA</b> · Updated <span class="ph">[date]</span> · 10 min read</span></div>
-  <div id="b1" style="background:var(--soft);border-radius:14px;padding:18px 20px;margin:22px 0"><b>Quick answer:</b> <span class="ph">[2–3 line summary Google can show as a snippet]</span></div>
-  <p><span class="ph">[Existing blog text continues here: filing fees, franchise taxes, sales tax and compliance for each state…]</span></p>
-  <div class="cta-box"><div><h3 style="font-size:20px">Still not sure which state fits you?</h3><p style="color:#CBD5E1;margin-top:6px">Our experts pick the right state and structure with you in a 30-minute call.</p></div><a class="btn btn-white" href="#/service/expert">Talk to an Expert · $49</a></div>
-  <h2 id="b2">State fees compared</h2><div style="overflow-x:auto"><table class="cmp"><tr><th>State</th><th>State filing fee</th><th>Start here</th></tr><tr><td>Wyoming</td><td>$103.75</td><td><a href="#/start?plan=starter&state=Wyoming">Form in Wyoming →</a></td></tr><tr><td>Texas</td><td>$310</td><td><a href="#/start?plan=starter&state=Texas">Form in Texas →</a></td></tr><tr><td>Delaware</td><td><span class="ph">[fee]</span></td><td><a href="#/start?plan=premium&state=Delaware">Form in Delaware →</a></td></tr><tr><td>Florida</td><td><span class="ph">[fee]</span></td><td><a href="#/start?plan=starter&state=Florida">Form in Florida →</a></td></tr></table></div>
-  <h2 id="b3">Which state suits you</h2><p><span class="ph">[Existing content]</span></p><h2 id="b4">FAQs</h2><p><span class="ph">[3–5 FAQs with schema markup for Google]</span></p></article>
- <aside style="display:flex;flex-direction:column;gap:14px;position:sticky;top:96px"><div class="card buy" style="position:static"><h3 style="font-size:19px">Ready to start your US company?</h3><p class="muted" style="font-size:14px">LLC from $249 + state fee. ~7 business days.</p><a class="btn btn-primary" href="#/start">Launch Your Company</a><span class="muted" style="font-size:13px"><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span></span></div>
-  <b class="muted" style="font-size:12px;letter-spacing:1px">RELATED SERVICES</b><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/llc">US LLC Formation →</a><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/ein">EIN &amp; Tax Registration →</a><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/agent">Registered Agent →</a></aside>
-</div></div></section>`;};
-PAGES.about=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">About us</span><h1 style="font-size:clamp(32px,4vw,48px)">The team behind Juris Consultants India — now helping you go global</h1><p>Indian CA / CS experts helping founders start and run US companies.</p></div></div></section>
-<section class="sec"><div class="container"><div class="grid g3">${['Years in corporate &amp; secretarial work','Companies formed in the US','Founders served worldwide'].map((t,i)=>`<div class="stat"><b class="ph">[${['Y','X','N'][i]}]</b><span class="muted">${t}</span></div>`).join('')}</div>
-<div class="sec-head" style="margin-top:60px"><h2>Meet the team</h2><p>Real photos and qualifications build trust.</p></div><div class="grid g4">${[1,2,3,4].map(()=>`<div class="card" style="text-align:center"><div class="avatar" style="width:84px;height:84px;margin:0 auto 12px"></div><b class="ph">[Name]</b><div class="muted" style="font-size:14px"><span class="ph">[Role · CA / CS]</span></div></div>`).join('')}</div></div></section>`;
-PAGES.contact=()=>`<section class="sec" style="padding-top:48px"><div class="container"><div class="hero-grid" style="align-items:start">
- <div style="display:flex;flex-direction:column;gap:18px"><span class="eyebrow">Contact</span><h1 style="font-size:clamp(32px,4vw,48px)">Talk to an expert</h1><p class="lead" style="color:var(--muted)">Call or email us. We reply in Indian working hours.</p>
- <div class="card"><div><b>India:</b> +91 99996 30777</div><div><b>USA:</b> +1 (646) 233-8454</div><div><b>Email:</b> <a href="mailto:contact@jurisconsultantsusa.com">contact@jurisconsultantsusa.com</a></div><div><b>Office:</b> <span class="ph">[office address]</span></div></div>
- <div class="card" style="background:var(--soft)"><b>Prefer a full planning call?</b><p class="muted" style="margin-top:6px">Book a 30-minute expert call for $49 — booked after payment.</p><a href="#/service/expert" style="font-weight:600">Book an expert call →</a></div></div>
- <form class="card form" id="contactForm" novalidate data-chg="15"><h3>Send us a message</h3>
-  <div class="field"><label for="cfName">Full name</label><input id="cfName" placeholder="e.g. Priya Sharma"><span class="msg"></span></div>
-  <div class="field"><label for="cfEmail">Email</label><input id="cfEmail" type="email" placeholder="you@company.com"><span class="msg"></span></div>
-  <div class="field"><label for="cfPhone">Phone</label><div class="phone-row"><select id="cfCc" aria-label="Country code"><option>+91</option><option>+1</option><option>+44</option><option>+971</option></select><input id="cfPhone" type="tel" placeholder="98765 43210"></div><span class="msg"></span></div>
-  <div class="field"><label for="cfMsg">How can we help?</label><textarea id="cfMsg" rows="4" placeholder="e.g. I sell on Amazon US and need an LLC"></textarea><span class="msg"></span></div>
-  <button class="btn btn-primary" type="submit">Send message</button><div class="ok-msg hide" id="cfOk">✓ Thanks! Our team will reply by email.</div></form>
-</div></div></section>`;
-PAGES.start=()=>`<section class="sec soft" style="padding-top:40px;min-height:70vh" id="obtop" data-chg="15"><div class="container" id="ob"></div></section>`;
-PAGES.track=()=>`<section class="sec soft" style="padding-top:40px" id="tracktop" data-chg="17"><div class="container" style="max-width:1060px">
- <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;margin-bottom:24px"><div><span class="eyebrow">Your dashboard</span><h1 style="font-size:36px;margin-top:6px">Your Business LLC · Wyoming</h1><p class="muted">Order #<span class="ph">[ID]</span> · Updates also sent by email</p></div><a class="btn btn-outline btn-sm" href="/contacts">Contact your expert</a></div>
- <div class="ob" style="max-width:none"><div class="card"><h3 style="margin-bottom:18px">Progress</h3><div class="trk">
- ${[['done','Payment received','Receipt emailed','Done'],['done','Details reviewed by our expert','Within 1 business day','Done'],['now','Filed with the state','~7 business days','In progress'],['','EIN application','[timeline to confirm]','Up next'],['','Bank account assistance','After EIN','Up next']].map((r,i,a)=>`<div class="trk-row"><div class="trk-l"><span class="d ${r[0]} ${r[0]==='now'?'pulse':''}"></span>${i<a.length-1?'<span class="ln"></span>':''}</div><div class="trk-c"><div><b>${r[1]}</b><div class="muted" style="font-size:13px">${r[2].startsWith('[')?'<span class="ph">'+r[2]+'</span>':r[2]}</div></div><span class="st ${r[0]==='done'?'done':r[0]==='now'?'now':'next'}">${r[3]}</span></div></div>`).join('')}</div></div>
- <form class="card form summary" id="addrForm" novalidate><h3>Complete your business details</h3><p class="muted" style="font-size:14px">Asked after payment — only what this service needs.</p>
-  <div class="field"><label for="aStreet">Street address</label><input id="aStreet" placeholder="Street and number"><span class="msg"></span></div>
-  <div class="field"><label for="aCity">City</label><input id="aCity" placeholder="e.g. Austin"><span class="msg"></span></div>
-  <div class="grid g2" style="gap:12px"><div class="field"><label for="aState">State</label><select id="aState">${stateOpts('Wyoming')}</select><span class="msg"></span></div><div class="field"><label for="aZip">ZIP code</label><input id="aZip" inputmode="numeric" placeholder="5 digits"><span class="msg"></span></div></div>
-  <button class="btn btn-primary" type="submit">Save details</button><div class="ok-msg hide" id="addrOk">✓ Saved. Your expert will review it. (demo)</div></form></div></div></section>`;
-
 /* ================= ONBOARDING ================= */
 /* Country data: phone digits (national number, no leading 0) and postal-code rules.
    cc = dial code; re = allowed national numbers; zip = postal pattern; zf = characters to strip while typing. */
@@ -1260,12 +1138,8 @@ function applyHero(i){cur.hero=i;store.set('hero3',i);
 /* ================= ROUTER ================= */
 let pendingJump=null;
 function parseHash(){const a=document.getElementById('app');return {page:(a&&a.dataset.page)||'home',arg:a&&a.dataset.arg,params:new URLSearchParams(location.search)};}
-function render(){const {page,arg,params}=parseHash();const fn=PAGES[page]||PAGES.home;
- if(page==='start'){if(params.get('plan')&&PLANS[params.get('plan')])state.plan=params.get('plan');if(params.get('state')&&STATES.some(s=>s.n===params.get('state')))state.st=params.get('state');if(params.get('plan')&&state.step===4)state.step=1;}
- $('#app').innerHTML=fn(arg);
- $$('.menu > a').forEach(a=>a.classList.toggle('active',a.dataset.nav===page));$('#mm').classList.remove('open');
- bindPage(page,arg);addBadges();observe();initStory();fxUpdate();fx2(document);
- if(!pendingJump)window.scrollTo(0,0);else{const el=document.getElementById(pendingJump);pendingJump=null;if(el)setTimeout(()=>{el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1700);},80);}}
+/* Pages are server-rendered now; the old in-browser page renderer was removed. Kept as a no-op for the unused design-gallery panels. */
+function render(){}
 function bindPage(page,arg){
  $$('[data-filter]').forEach(b=>b.onclick=()=>{const sec=b.closest('section');$$('[data-filter]',sec).forEach(x=>x.classList.toggle('on',x===b));$('.svc-grid',sec).innerHTML=svcCards(b.dataset.filter);observe();});
 

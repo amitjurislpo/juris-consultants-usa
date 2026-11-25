@@ -130,7 +130,6 @@ model User {
   country     String?
   role        UserRole    @default(CUSTOMER)
   passwordHash String?
-  mfaSecret   String?
   /// IANA time zone the admin chose as default (e.g. "Asia/Kolkata"). Null = IST.
   timezone    String?
   status      UserStatus  @default(ACTIVE)
@@ -144,7 +143,10 @@ model User {
   leads        Lead[]
   reviewedKyc  KycDocument[] @relation("KycReviewer")
   deliverables Deliverable[]
-  notes        Note[]
+  notes        Note[]          @relation("NoteAuthor")
+  customerNotes Note[]         @relation("NoteCustomer")
+  assignedOrders Order[]       @relation("OrderAssignee")
+  statusChanges OrderStatusChange[]
   auditLogs    AuditLog[]
 }
 
@@ -198,7 +200,8 @@ model Lead {
   source      String?
   createdAt   DateTime @default(now())
 
-  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  user  User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+  notes Note[]
 
   @@index([flow, createdAt])
   @@index([userId])
@@ -250,8 +253,13 @@ model Order {
   createdAt DateTime    @default(now())
   paidAt    DateTime?
   updatedAt DateTime    @updatedAt
+  /// Staff member looking after this order (admin "Assigned").
+  assignedToId String?
+  /// Set when the customer has saved the company details (replaces guessing from members).
+  detailsSubmittedAt DateTime?
 
   user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  assignedTo    User?            @relation("OrderAssignee", fields: [assignedToId], references: [id], onDelete: SetNull)
   company       Company?         @relation(fields: [companyId], references: [id], onDelete: SetNull)
   items         OrderItem[]
   payments      Payment[]
@@ -261,8 +269,10 @@ model Order {
   consultations Consultation[]
   notes         Note[]
   emailLogs     EmailLog[]
+  statusChanges OrderStatusChange[]
 
   @@index([userId, createdAt])
+  @@index([assignedToId])
   @@index([companyId])
   @@index([status])
 }
@@ -424,17 +434,41 @@ model Consultation {
   order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
+/// A staff note. It belongs to an order, a customer (userId) or a lead (leadId).
 model Note {
   id        String   @id @default(cuid())
-  orderId   String
+  orderId   String?
+  userId    String?
+  leadId    String?
   authorId  String
   body      String
   createdAt DateTime @default(now())
 
-  order  Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
-  author User  @relation(fields: [authorId], references: [id], onDelete: Restrict)
+  order    Order? @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  customer User?  @relation("NoteCustomer", fields: [userId], references: [id], onDelete: Cascade)
+  lead     Lead?  @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  author   User   @relation("NoteAuthor", fields: [authorId], references: [id], onDelete: Restrict)
 
   @@index([orderId, createdAt])
+  @@index([userId, createdAt])
+  @@index([leadId, createdAt])
+}
+
+/// One row per order status change, with the date and the reason (for example why details were sent back).
+model OrderStatusChange {
+  id         String       @id @default(cuid())
+  orderId    String
+  fromStatus OrderStatus?
+  toStatus   OrderStatus
+  reason     String?
+  actorId    String?
+  at         DateTime     @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  actor User? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([orderId, at])
+  @@index([toStatus, at])
 }
 
 model AuditLog {

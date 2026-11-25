@@ -18,9 +18,11 @@ import {
 } from "../../../../src/lib/orders-status";
 import { buildTimeline } from "../../../../src/lib/orders-timeline";
 import { NoteForm } from "./note-form";
+import { AssignForm } from "./assign-form";
 import { StatusForm } from "./status-form";
 import { formatDateTime } from "../../../../src/lib/datetime";
 import { getAdminTimeZone } from "../../../../src/lib/timezone";
+import { CrumbLabel } from "@juris/ui";
 
 export const metadata = { title: "Order" };
 
@@ -91,7 +93,7 @@ export default async function OrderDetailPage({
 
   const context = buildStatusContext({
     kind: order.kind,
-    hasCompanyWithMembers: (order.company?.members.length ?? 0) > 0,
+    detailsSubmitted: order.detailsSubmittedAt !== null,
     kycStatuses: order.kycDocuments.map((doc) => doc.status),
     einOrdered: order.items.some((item) => item.catalogItem.slug === "ein"),
   });
@@ -103,6 +105,19 @@ export default async function OrderDetailPage({
       }))
     : null;
   const canNote = hasPermission(user.role, "MANAGE_NOTES");
+  const canAssign = hasPermission(user.role, "CHANGE_ORDER_STATUS");
+  const staff = canAssign
+    ? (
+        await prisma.user.findMany({
+          where: { role: { in: ["SUPER_ADMIN", "STAFF"] }, status: "ACTIVE" },
+          orderBy: { email: "asc" },
+          select: { id: true, name: true, email: true },
+        })
+      ).map((person) => ({
+        id: person.id,
+        label: person.name?.trim() || person.email,
+      }))
+    : [];
 
   const timeline = buildTimeline({
     createdAt: order.createdAt,
@@ -123,6 +138,10 @@ export default async function OrderDetailPage({
 
   return (
     <>
+      <CrumbLabel
+        href={`/orders/${order.id}`}
+        label={`Order ${orderRef(order.id)}`}
+      />
       <div className="detail-head">
         <h1>Order {orderRef(order.id)}</h1>
         <Badge variant={statusTone(order.status)}>
@@ -170,6 +189,17 @@ export default async function OrderDetailPage({
               Orders become paid only when the payment provider confirms the
               payment. It cannot be set here.
             </p>
+          </Card>
+        ) : null}
+
+        {canAssign ? (
+          <Card solid>
+            <h2 className="card-title">Assignment</h2>
+            <AssignForm
+              orderId={order.id}
+              current={order.assignedToId}
+              staff={staff}
+            />
           </Card>
         ) : null}
 

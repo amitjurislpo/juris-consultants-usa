@@ -4,7 +4,6 @@ import { Badge, Button, Input, Select, Table, TableContainer } from "@juris/ui";
 import Link from "next/link";
 import { requirePermission } from "../../../src/lib/guard";
 import {
-  LEAD_CONTACTED_ACTION,
   LEAD_FLOWS,
   parseContactInfo,
   parseLeadFilters,
@@ -69,20 +68,15 @@ export default async function LeadsPage({
     }),
   ]);
 
-  const contacts = await prisma.auditLog.findMany({
-    where: {
-      action: LEAD_CONTACTED_ACTION,
-      entity: "Lead",
-      entityId: { in: leads.map((lead) => lead.id) },
-    },
-    orderBy: { at: "desc" },
-    select: { entityId: true, at: true, after: true },
+  const contacts = await prisma.note.findMany({
+    where: { leadId: { in: leads.map((lead) => lead.id) } },
+    orderBy: { createdAt: "desc" },
+    select: { leadId: true, createdAt: true, body: true },
   });
   const lastContact = new Map<string, { at: Date; note: string }>();
   for (const row of contacts) {
-    if (lastContact.has(row.entityId)) continue;
-    const after = row.after as { note?: string } | null;
-    lastContact.set(row.entityId, { at: row.at, note: after?.note ?? "" });
+    if (!row.leadId || lastContact.has(row.leadId)) continue;
+    lastContact.set(row.leadId, { at: row.createdAt, note: row.body });
   }
 
   return (

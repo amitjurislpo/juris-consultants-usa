@@ -96,12 +96,14 @@ async function save<T extends Record<string, unknown>>(
     throw error;
   }
 
+  const changed = changedFields(before, parsed.data);
   await writeAudit({
     actorId: admin.id,
     action: `${spec.auditPrefix}_${existing ? "UPDATED" : "CREATED"}`,
     entity: spec.entity,
     entityId: id,
-    meta: changedFields(before, parsed.data) as Prisma.InputJsonObject,
+    before: changed.before as Prisma.InputJsonObject | null,
+    meta: changed.after as Prisma.InputJsonObject,
   });
   revalidatePath("/settings");
   return { error: null, saved: true };

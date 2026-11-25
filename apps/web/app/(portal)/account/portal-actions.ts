@@ -208,6 +208,25 @@ export async function updateCompanyAddressAction(
   return { error: null, notice: "Address saved." };
 }
 
+/**
+ * The company details count as submitted once the company has at least one member.
+ * Staff use this to decide whether an order can move on or must go back for details.
+ */
+async function syncDetailsSubmitted(companyId: string): Promise<void> {
+  const members = await prisma.member.count({ where: { companyId } });
+  if (members > 0) {
+    await prisma.order.updateMany({
+      where: { companyId, detailsSubmittedAt: null },
+      data: { detailsSubmittedAt: new Date() },
+    });
+  } else {
+    await prisma.order.updateMany({
+      where: { companyId, detailsSubmittedAt: { not: null } },
+      data: { detailsSubmittedAt: null },
+    });
+  }
+}
+
 const memberForm = z.object({
   companyId: z.string().min(1).max(100),
   memberId: z.string().max(100).optional(),
@@ -257,6 +276,7 @@ export async function saveMemberAction(
   } else {
     await prisma.member.create({ data: { ...data, companyId: company.id } });
   }
+  await syncDetailsSubmitted(company.id);
   await audit(
     userId,
     memberId ? "MEMBER_UPDATED" : "MEMBER_ADDED",
@@ -282,6 +302,7 @@ export async function removeMemberAction(
   }
   if (!(await companyIsEditable(company.id))) return LOCKED;
   await prisma.member.delete({ where: { id: memberId } });
+  await syncDetailsSubmitted(company.id);
   await audit(userId, "MEMBER_REMOVED", "Company", company.id);
   revalidatePath("/account");
   return { error: null, notice: "Member removed." };

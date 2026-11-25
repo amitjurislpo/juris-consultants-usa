@@ -13,6 +13,7 @@ import {
 import { formatDate, formatDateTime } from "../../../../../src/lib/datetime";
 import { customerTimeZone } from "../../../../../src/lib/portal-server";
 import { PayButton } from "../../pay-button";
+import { CrumbLabel } from "@juris/ui";
 
 export const metadata = { title: "Order | Juris Consultants USA" };
 
@@ -61,6 +62,10 @@ export default async function OrderPage({
 
   return (
     <div className="pt-stack">
+      <CrumbLabel
+        href={`/account/orders/${order.id}`}
+        label={`Order ${orderRef(order.id)}`}
+      />
       <div className="pt-pagehead">
         <Link className="pt-back" href="/account/orders">
           ← My Orders

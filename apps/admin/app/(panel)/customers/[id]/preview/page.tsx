@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { requirePermission } from "../../../../../src/lib/guard";
 import { formatDateTime } from "../../../../../src/lib/datetime";
 import { getAdminTimeZone } from "../../../../../src/lib/timezone";
+import { CrumbLabel } from "@juris/ui";
 
 /** Read-only copy of what the customer's dashboard shows, built from the shared database. No sign-in as the customer. */
 export default async function CustomerPreviewPage({
@@ -42,6 +43,10 @@ export default async function CustomerPreviewPage({
 
   return (
     <>
+      <CrumbLabel
+        href={`/customers/${customer.id}`}
+        label={customer.name || customer.email}
+      />
       <p>
         <Link href={`/customers/${customer.id}`}>Back to customer</Link>
       </p>

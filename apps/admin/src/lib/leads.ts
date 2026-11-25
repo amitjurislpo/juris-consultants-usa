@@ -3,7 +3,6 @@ import { z } from "zod";
 export const LEAD_FLOWS = ["START", "MANAGE", "EXPERT", "GLOBAL"] as const;
 export type LeadFlowValue = (typeof LEAD_FLOWS)[number];
 
-export const LEAD_CONTACTED_ACTION = "LEAD_CONTACTED";
 export const LEAD_SOURCE_MAX = 40;
 
 export interface LeadContact {
