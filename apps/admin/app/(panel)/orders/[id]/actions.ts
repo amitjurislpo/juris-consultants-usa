@@ -60,7 +60,7 @@ export async function changeStatusAction(
       kind: true,
       status: true,
       user: { select: { email: true, name: true } },
-      company: { select: { members: { select: { id: true }, take: 1 } } },
+      detailsSubmittedAt: true,
       kycDocuments: { select: { status: true } },
       items: { select: { catalogItem: { select: { slug: true } } } },
     },
@@ -69,7 +69,7 @@ export async function changeStatusAction(
 
   const context = buildStatusContext({
     kind: order.kind,
-    hasCompanyWithMembers: (order.company?.members.length ?? 0) > 0,
+    detailsSubmitted: order.detailsSubmittedAt !== null,
     kycStatuses: order.kycDocuments.map((doc) => doc.status),
     einOrdered: order.items.some((item) => item.catalogItem.slug === "ein"),
   });
@@ -97,6 +97,15 @@ export async function changeStatusAction(
     };
   }
 
+  await prisma.orderStatusChange.create({
+    data: {
+      orderId: order.id,
+      fromStatus: order.status,
+      toStatus: to,
+      reason: reason || null,
+      actorId: user.id,
+    },
+  });
   await writeAudit({
     actorId: user.id,
     action: "order.status_changed",
@@ -115,6 +124,59 @@ export async function changeStatusAction(
       reason: reason || null,
     }),
   );
+  refresh(order.id);
+  return { error: null, done: true };
+}
+
+const assignForm = z.object({
+  orderId: z.string().min(1).max(40),
+  /** Empty string = unassign. */
+  assigneeId: z.string().max(40),
+});
+
+/** Assigns the order to a staff member (or clears the assignment). */
+export async function assignOrderAction(
+  _previous: OrderFormState,
+  formData: FormData,
+): Promise<OrderFormState> {
+  const user = await requirePermission("CHANGE_ORDER_STATUS");
+  const parsed = assignForm.safeParse({
+    orderId: formData.get("orderId"),
+    assigneeId: formData.get("assigneeId") ?? "",
+  });
+  if (!parsed.success) return { error: "Choose a person.", done: false };
+  const { orderId, assigneeId } = parsed.data;
+
+  const order = await prisma.order.findUnique({
+    where: { id: orderId },
+    select: { id: true, assignedToId: true },
+  });
+  if (!order) return { error: "Order not found.", done: false };
+
+  if (assigneeId) {
+    const assignee = await prisma.user.findFirst({
+      where: {
+        id: assigneeId,
+        role: { in: ["SUPER_ADMIN", "STAFF"] },
+        status: "ACTIVE",
+      },
+      select: { id: true },
+    });
+    if (!assignee)
+      return { error: "That person cannot be assigned.", done: false };
+  }
+
+  await prisma.order.update({
+    where: { id: order.id },
+    data: { assignedToId: assigneeId || null },
+  });
+  await writeAudit({
+    actorId: user.id,
+    action: "order.assigned",
+    entity: "Order",
+    entityId: order.id,
+    meta: { from: order.assignedToId, to: assigneeId || null },
+  });
   refresh(order.id);
   return { error: null, done: true };
 }

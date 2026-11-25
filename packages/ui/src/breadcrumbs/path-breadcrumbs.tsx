@@ -1,6 +1,61 @@
 "use client";
 
 import { usePathname } from "next/navigation";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+
+type LabelOverrides = {
+  labels: Record<string, string>;
+  set: (href: string, label: string | null) => void;
+};
+
+const OverrideContext = createContext<LabelOverrides>({
+  labels: {},
+  set: () => undefined,
+});
+
+/**
+ * Wrap a layout in this so detail pages can show a real name in the trail
+ * (for example "Order #2TQS2U4X" instead of "Order details") with <CrumbLabel />.
+ */
+export function CrumbLabelProvider({ children }: { children: ReactNode }) {
+  const [labels, setLabels] = useState<Record<string, string>>({});
+  // Stable setter: pages call it from an effect, so its identity must not change.
+  const set = useCallback((href: string, label: string | null) => {
+    setLabels((current) => {
+      if (label === null) {
+        if (!(href in current)) return current;
+        const next = { ...current };
+        delete next[href];
+        return next;
+      }
+      return current[href] === label ? current : { ...current, [href]: label };
+    });
+  }, []);
+  const value = useMemo<LabelOverrides>(() => ({ labels, set }), [labels, set]);
+  return (
+    <OverrideContext.Provider value={value}>
+      {children}
+    </OverrideContext.Provider>
+  );
+}
+
+/** Put on a detail page: names the crumb for `href` (its own path or a parent path). */
+export function CrumbLabel({ href, label }: { href: string; label: string }) {
+  const { set } = useContext(OverrideContext);
+  useEffect(() => {
+    set(href, label);
+    return () => set(href, null);
+  }, [href, label, set]);
+  return null;
+}
 
 export type PathCrumb = { label: string; href: string };
 
@@ -46,6 +101,7 @@ function titleCase(segment: string): string {
 export function buildPathCrumbs(
   pathname: string,
   { root, labels = {}, skip = [], hideOn = [] }: PathBreadcrumbsProps,
+  overrides: Record<string, string> = {},
 ): { label: string; href: string; current: boolean }[] | null {
   const path = pathname.replace(/\/+$/, "") || "/";
   if (hideOn.includes(path)) return null;
@@ -56,7 +112,7 @@ export function buildPathCrumbs(
     acc += `/${segment}`;
     if (skip.includes(acc)) continue;
     trail.push({
-      label: labelFor(labels, acc) ?? titleCase(segment),
+      label: overrides[acc] ?? labelFor(labels, acc) ?? titleCase(segment),
       href: acc,
     });
   }
@@ -73,7 +129,8 @@ export function buildPathCrumbs(
 /** Breadcrumbs that follow the current URL. One component for the website, customer portal and admin panel. */
 export function PathBreadcrumbs(props: PathBreadcrumbsProps) {
   const pathname = usePathname() ?? "/";
-  const crumbs = buildPathCrumbs(pathname, props);
+  const { labels: overrides } = useContext(OverrideContext);
+  const crumbs = buildPathCrumbs(pathname, props, overrides);
   if (!crumbs || crumbs.length === 0) return null;
   const origin = props.jsonLdOrigin?.replace(/\/$/, "");
   const jsonLd = origin

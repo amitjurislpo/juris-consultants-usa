@@ -59,8 +59,8 @@ export function orderRef(id: string): string {
 
 export interface StatusContextInput {
   kind: OrderKind;
-  /** The order has a company with at least one member. */
-  hasCompanyWithMembers: boolean;
+  /** The customer has submitted the company details (Order.detailsSubmittedAt is set). */
+  detailsSubmitted: boolean;
   kycStatuses: readonly KycDocumentStatus[];
   /** An EIN line item was bought. */
   einOrdered: boolean;
@@ -69,7 +69,7 @@ export interface StatusContextInput {
 export function buildStatusContext(input: StatusContextInput): StatusContext {
   return {
     kind: input.kind,
-    detailsComplete: input.hasCompanyWithMembers,
+    detailsComplete: input.detailsSubmitted,
     kycDocuments: input.kycStatuses.map((status) => ({ status })),
     einOrdered: input.einOrdered,
   };

@@ -65,11 +65,25 @@ export async function loadDashboard(days: RangeDays, now = new Date()) {
     }),
     prisma.order.findMany({
       where: { status: "DETAILS_PENDING" },
-      select: { updatedAt: true },
+      select: {
+        updatedAt: true,
+        statusChanges: {
+          orderBy: { at: "desc" },
+          take: 1,
+          select: { at: true },
+        },
+      },
     }),
     prisma.order.findMany({
       where: { status: "FILING_SUBMITTED" },
-      select: { updatedAt: true },
+      select: {
+        updatedAt: true,
+        statusChanges: {
+          orderBy: { at: "desc" },
+          take: 1,
+          select: { at: true },
+        },
+      },
     }),
     prisma.kycDocument.count({ where: { status: "PENDING" } }),
     prisma.kycDocument.aggregate({
@@ -94,6 +108,7 @@ export async function loadDashboard(days: RangeDays, now = new Date()) {
         kind: true,
         totalUsd: true,
         user: { select: { name: true, email: true, country: true } },
+        assignedTo: { select: { name: true, email: true } },
         company: { select: { state: true } },
         items: {
           take: 1,
@@ -127,7 +142,11 @@ export async function loadDashboard(days: RangeDays, now = new Date()) {
     detailsPending: detailsPending.length,
     kycPending,
     kycOldest: kycOldest._min.createdAt,
-    stale: staleCounts({ now, detailsPending, filingSubmitted }),
+    stale: staleCounts({
+      now,
+      detailsPending: detailsPending.map(sinceStatusChange),
+      filingSubmitted: filingSubmitted.map(sinceStatusChange),
+    }),
     failedPayments,
     byState: ordersByState(stateRows),
     byService: ordersByService(
@@ -155,8 +174,19 @@ export async function loadDashboard(days: RangeDays, now = new Date()) {
       country: o.user.country,
       service: o.items[0]?.nameSnapshot ?? o.kind,
       state: o.company?.state ?? null,
+      assignedTo: o.assignedTo
+        ? o.assignedTo.name?.trim() || o.assignedTo.email
+        : null,
     })),
   };
+}
+
+/** Date the order entered its current status (falls back to last update for older orders). */
+function sinceStatusChange(order: {
+  updatedAt: Date;
+  statusChanges: { at: Date }[];
+}): { updatedAt: Date } {
+  return { updatedAt: order.statusChanges[0]?.at ?? order.updatedAt };
 }
 
 export type DashboardData = Awaited<ReturnType<typeof loadDashboard>>;

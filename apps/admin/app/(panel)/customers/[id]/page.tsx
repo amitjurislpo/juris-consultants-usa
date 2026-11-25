@@ -3,16 +3,13 @@ import { prisma } from "@juris/db";
 import { Badge, Button, Card, Input, Table, TableContainer } from "@juris/ui";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import {
-  addressLine,
-  CUSTOMER_NOTE_ACTION,
-  noteText,
-} from "../../../../src/lib/customers";
+import { addressLine } from "../../../../src/lib/customers";
 import { requirePermission } from "../../../../src/lib/guard";
 import { parseContactInfo } from "../../../../src/lib/leads";
 import { addCustomerNoteAction } from "../actions";
 import { formatDateTime } from "../../../../src/lib/datetime";
 import { getAdminTimeZone } from "../../../../src/lib/timezone";
+import { CrumbLabel } from "@juris/ui";
 
 export default async function CustomerPage({
   params,
@@ -36,10 +33,10 @@ export default async function CustomerPage({
   });
   if (!customer) notFound();
 
-  const customerNotes = await prisma.auditLog.findMany({
-    where: { action: CUSTOMER_NOTE_ACTION, entity: "User", entityId: id },
-    orderBy: { at: "desc" },
-    include: { actor: { select: { email: true } } },
+  const customerNotes = await prisma.note.findMany({
+    where: { userId: id },
+    orderBy: { createdAt: "desc" },
+    include: { author: { select: { email: true } } },
   });
   const orderNotes = customer.orders.flatMap((order) =>
     order.notes.map((note) => ({ ...note, orderId: order.id })),
@@ -48,6 +45,10 @@ export default async function CustomerPage({
 
   return (
     <>
+      <CrumbLabel
+        href={`/customers/${customer.id}`}
+        label={customer.name || customer.email}
+      />
       <p>
         <Link href="/customers">Back to customers</Link>
       </p>
@@ -186,10 +187,10 @@ export default async function CustomerPage({
             <p className="muted">No notes yet.</p>
           ) : (
             <ul className="plain-list">
-              {customerNotes.map((row) => (
-                <li key={row.id}>
-                  {formatDateTime(row.at, timeZone)} ·{" "}
-                  {row.actor?.email ?? "Unknown"}: {noteText(row.after)}
+              {customerNotes.map((note) => (
+                <li key={note.id}>
+                  {formatDateTime(note.createdAt, timeZone)} ·{" "}
+                  {note.author.email}: {note.body}
                 </li>
               ))}
               {orderNotes.map((note) => (
