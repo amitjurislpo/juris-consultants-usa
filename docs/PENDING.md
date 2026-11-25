@@ -126,3 +126,8 @@ For active public website progress and handoff details, see [WORK_MEMORY.md](./W
 - To confirm with Vansh: the new short lines (every item in `general.ts` is marked draft), the money-back guarantee wording (terms), and the two extra /faq questions. All service pages still share the same 6 questions; per-service content can be added as `content/faq/<service>.ts`.
 - Not changed: the legacy demo templates inside `public/final-runtime.js` still contain old FAQ markup but are not rendered by the site.
 - Dev-only: the portal "help" pages have no FAQ today, nothing to replace there.
+
+## 2026-11-27 — breadcrumbs
+- Done: breadcrumbs on all website pages (not Home), the customer portal and the admin panel (DECISIONS #46). Checked in the browser: website pages, portal pages incl. order details, phone view of the portal. The old static "Services / Start / …" line on service pages is removed.
+- Not checked in the browser: the admin panel trail (the temporary admin password did not match and the strict lockout blocked more tries; the lock was cleared). The code is the same shared component and type-checks.
+- Detail pages show a generic name ("Order details", "Customer details", "KYC details"), not the order number or customer name. Needs a server-side lookup if wanted.

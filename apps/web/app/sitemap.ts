@@ -1,11 +1,7 @@
 import type { MetadataRoute } from "next";
 import { services } from "../components/marketing/content";
 
-const deploymentHost =
-  process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
-const siteUrl = deploymentHost
-  ? `https://${deploymentHost}`
-  : "http://localhost:3000";
+import { siteUrl } from "../src/lib/site-url";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes = [

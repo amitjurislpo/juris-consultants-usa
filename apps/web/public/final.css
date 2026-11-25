@@ -244,7 +244,6 @@ table.cmp td:not(:first-child),table.cmp th:not(:first-child){text-align:center}
 .stp-line{width:46px;height:2px;background:var(--line)}
 .ob{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start;max-width:1060px;margin:0 auto}
 .summary{position:sticky;top:96px}
-.crumb{font-size:14px;color:var(--muted);margin-bottom:16px}
 .detail{display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:start}
 .buy{position:sticky;top:96px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:14px}
 .locked{border-style:dashed}
@@ -1000,7 +999,7 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
 /* Desktop scale: content renders at 90% (like browser zoom 90%) so sizes feel right at 100% zoom.
    Containers are widened by 1/0.9 so the side gaps stay the same. Mobile/tablet (<=1000px) unchanged. */
 @media (min-width:1001px){
-  header.site,#app,footer,#stickyCta{zoom:.9}
+  header.site,#app,footer,#stickyCta,.jbc-bar{zoom:.9}
   .container{max-width:1334px}
   .stack-stage{height:calc(100vh/.9);max-width:1334px}
 }
@@ -1060,3 +1059,7 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
 /* FAQ flip cards: match the site container width when the page is scaled to 90% */
 @media (min-width:1001px){.jfaq-wrap{max-width:1334px}.jfaq--embedded .jfaq-wrap{max-width:none}}
 .svc-faq{margin-top:8px}
+
+/* Breadcrumb strip under the header */
+.jbc-bar{padding-top:16px;padding-bottom:0;position:relative;z-index:2}
+.jbc-bar:empty{display:none}

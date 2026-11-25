@@ -1139,6 +1139,17 @@
     padding: 12px 16px;
   }
   .jd .d-crumb {
+    min-width: 0;
+    flex: 1;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+  }
+  .jd .d-crumb .jbc ol {
+    flex-wrap: nowrap;
+  }
+  /* On phones show only the last two levels */
+  .jd .d-crumb .jbc li:not(:nth-last-child(-n + 2)) {
     display: none;
   }
   .jd .d-view {

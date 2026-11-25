@@ -9,7 +9,9 @@ import { displayName } from "../../../src/lib/portal";
 import { logOutAction } from "./actions";
 import { LogoutButton } from "./logout-button";
 import "./portal.css";
-import { PortalCrumb, TopUser } from "./portal-chrome";
+import { PathBreadcrumbs } from "@juris/ui";
+import { PORTAL_CRUMBS } from "../../../content/breadcrumbs";
+import { TopUser } from "./portal-chrome";
 
 export const metadata: Metadata = {
   title: "My account | Juris Consultants USA",
@@ -102,7 +104,7 @@ export default async function PortalLayout({
   return (
     <DashShell
       brandSub="Customer portal"
-      crumb={<PortalCrumb />}
+      crumb={<PathBreadcrumbs {...PORTAL_CRUMBS} />}
       groups={groups}
       sideFooter={
         <>
