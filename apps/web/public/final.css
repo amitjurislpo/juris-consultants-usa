@@ -1167,5 +1167,5 @@ body .svc.card:hover::before{opacity:1}
 .pk-card{z-index:calc(10 - max(var(--i) - var(--s), var(--s) - var(--i)))}
 .pk-card.sel{z-index:20}
 .pk-card,.pk-rec{opacity:1}
-.pk-card:not(.sel){filter:brightness(.8)}
+.pk-card:not(.sel){filter:brightness(.96)}
 .pk-card.sel{filter:none}
