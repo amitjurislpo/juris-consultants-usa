@@ -1,5 +1,5 @@
 import type { NextConfig } from "next";
-import { BLOG_ORIGIN, OLD_SITE } from "./src/lib/links";
+import { BLOG_ORIGIN } from "./src/lib/links";
 
 const nextConfig: NextConfig = {
   transpilePackages: ["@juris/core", "@juris/db", "@juris/ui"],
@@ -13,32 +13,14 @@ const nextConfig: NextConfig = {
       { source: "/legal/terms", destination: "/terms", permanent: true },
       { source: "/legal/refund", destination: "/refund", permanent: true },
       // Older draft blog paths.
-      {
-        source: "/blog/:path*",
-        destination: BLOG_ORIGIN ? "/blogs" : `${OLD_SITE}/blogs`,
-        permanent: false,
-      },
-      ...(BLOG_ORIGIN
-        ? []
-        : [
-            {
-              source: "/blogs",
-              destination: `${OLD_SITE}/blogs`,
-              permanent: false,
-            },
-            {
-              source: "/blogs/:path*",
-              destination: `${OLD_SITE}/blogs/:path*`,
-              permanent: false,
-            },
-          ]),
+      { source: "/blog/:path*", destination: "/blogs", permanent: false },
     ];
   },
   async rewrites() {
-    return [
-      // The old sign-up address now shows the login / create-account page.
-      { source: "/signup", destination: "/login" },
-      ...(BLOG_ORIGIN
+    return {
+      // Live site: the existing blog is served at /blogs and takes priority over the sample
+      // blog pages in this app (which are only for the test site).
+      beforeFiles: BLOG_ORIGIN
         ? [
             { source: "/blogs", destination: `${BLOG_ORIGIN}/blogs` },
             {
@@ -46,8 +28,11 @@ const nextConfig: NextConfig = {
               destination: `${BLOG_ORIGIN}/blogs/:path*`,
             },
           ]
-        : []),
-    ];
+        : [],
+      // The old sign-up address now shows the login / create-account page.
+      afterFiles: [{ source: "/signup", destination: "/login" }],
+      fallback: [],
+    };
   },
 };
 
