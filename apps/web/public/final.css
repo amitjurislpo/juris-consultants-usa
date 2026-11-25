@@ -1135,3 +1135,6 @@ body .svc.card:hover::before{opacity:1}
   .dd:hover .mega,.dd:focus-within .mega,.dd:hover .mega a,.dd:focus-within .mega a,.who-item:hover::before,#whoPanel .who-item,#whoPanel h3,.lboard::after,.lboard .fb-row,.lboard .fb-st.st-fly,.lboard .fb-st.st-brd{animation:none}
   .mega a:hover,.who-item:hover,body .svc.card:hover,.tabs .tab:hover,.lboard .fb-row:hover{transform:none}
 }
+
+/* Pricing builder: the Global plan keeps the same panel size as the other plans (the hidden options keep their space) */
+.pk-panel .pk-opts.hide{display:flex!important;visibility:hidden}
