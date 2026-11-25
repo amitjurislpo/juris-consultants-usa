@@ -28,8 +28,8 @@ const LAYOUTS_OLD = [
 
 /* ================= DATA (from current website) ================= */
 const SERVICES = {
-  llc:{name:'US LLC Formation',group:'Start',price:'$249',unit:'+ state fee',time:'~7 business days',desc:'LLC in Delaware, Wyoming, Texas and 6 more states. The simplest way to own a US company from India.',who:'E-commerce sellers, IT services, freelancers and consultants billing US clients.',incl:['Name availability check (LLC)','Articles of organization','Basic operating agreement','State filing','Email support'],good:['You don’t need to be a US citizen or visit the US','Owners can live in India','EIN is a separate step ($80)','Not sure LLC is right? Take the quiz or talk to an expert'],plan:'starter'},
-  ccorp:{name:'US C-Corp Formation',group:'Start',price:'$849',unit:'+ state fee',time:'~7 business days',desc:'C-Corporation for startups that plan to raise money from investors.',who:'Startups and founders planning to raise investment or issue shares.',incl:['Name availability check for C-Corp','C-Corp formation','Bylaws & certificates','Articles of incorporation','Registered agent (1 year)','EIN included','State filing'],good:['Investors usually prefer a Delaware C-Corp','You can issue shares to co-founders','Owners can live in India'],plan:'premium'},
+  llc:{name:'US LLC Formation',group:'Start',price:'$249',unit:'+ state fee',time:'~7 business days',desc:'LLC in Delaware, Wyoming, Texas and 6 more states. The simplest way to own a US company from anywhere in the world.',who:'E-commerce sellers, IT services, freelancers and consultants billing US clients.',incl:['Name availability check (LLC)','Articles of organization','Basic operating agreement','State filing','Email support'],good:['You don’t need to be a US citizen or visit the US','Owners can live anywhere','EIN is a separate step ($80)','Not sure LLC is right? Talk to an expert'],plan:'starter'},
+  ccorp:{name:'US C-Corp Formation',group:'Start',price:'$849',unit:'+ state fee',time:'~7 business days',desc:'C-Corporation for startups that plan to raise money from investors.',who:'Startups and founders planning to raise investment or issue shares.',incl:['Name availability check for C-Corp','C-Corp formation','Bylaws & certificates','Articles of incorporation','Registered agent (1 year)','EIN included','State filing'],good:['Investors usually prefer a Delaware C-Corp','You can issue shares to co-founders','Owners can live anywhere'],plan:'premium'},
   ein:{name:'EIN & Tax Registration',group:'Start',price:'$80',unit:'one-time',time:'[timeline to confirm]',desc:'Your US tax ID from the IRS — needed for a bank account, payments and taxes.',who:'Every new US company, and existing companies without an EIN.',incl:['Preparation of IRS Form SS-4','Filing with the IRS','EIN letter shared in your dashboard'],good:['No SSN needed','Required to open a US bank account']},
   agent:{name:'Registered Agent',group:'Start',price:'[Price]',unit:'per year',time:'Yearly',desc:'The official address in your state where legal notices are received.',who:'Every US company (required in each state).',incl:['Registered address in your state','Legal notices scanned & forwarded','Compliance reminders'],good:['Included for 1 year in the Premium plan']},
   bank:{name:'Bank Account Assistance',group:'Run',price:'$100',unit:'one-time',time:'After EIN',desc:'Help opening a US business bank account, step by step.',who:'New companies that have their EIN.',incl:['Document checklist','Application support','Follow-up until approved'],good:['Needs your EIN first']},
@@ -57,7 +57,6 @@ const CHANGES = [
   [6,'“Who is this for?” — pick your business type','home','who','Right setup for e-commerce, import-export, IT, startups.'],
   [7,'Services cards + giant moving “SERVICES” text','home','services','Details first, payment after; outline word slides as you scroll.'],
   [23,'Plane flyover through clouds','home','fly','Scroll-driven plane crossing the screen between sections.'],
-  [8,'1-minute quiz + LLC vs C-Corp vs S-Corp','home','quiz','Helps visitors choose; correct S-Corp info.'],
   [22,'Documents stacking animation','home','stack','Formation documents drop and stack as you scroll (like the containers).'],
   [9,'Pricing: 3 plans + “Recommended” + calculator','home','pricing','Live total with state fee and add-ons.'],
   [10,'Why an Indian team — our edge','home','why','IST hours, CA/CS experts, Hindi & English.'],
@@ -99,9 +98,9 @@ const HEROES=[
  ['Split + live tracker','Promise on the left, animated order progress on the right',(id)=>`
  <section class="hero" ${id} data-chg="2"><div class="blob" style="width:420px;height:420px;background:var(--blue);right:-120px;top:-120px"></div><div class="container hero-grid">
   <div style="display:flex;flex-direction:column;gap:22px">
-    <span class="pill" style="align-self:flex-start">For founders in India starting a US company</span>
+    <span class="pill" style="align-self:flex-start">For founders anywhere starting a US company</span>
     <h1>Everything you need to start and run your U.S. business</h1>
-    <p class="lead">We don’t just handle the paperwork. Our experts guide you on the right structure, state and compliance — from India, in your time zone.</p>
+    <p class="lead">We don’t just handle the paperwork. Our experts guide you on the right structure, state and compliance — from anywhere, in your time zone.</p>
     <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary btn-lg" href="#/start">Launch Your Company ${ICON.arrow}</a><a class="btn btn-outline btn-lg" href="#/contact">Talk to an Expert</a></div>
     <div class="ticks"><span>Plans from $249 + state fee</span><span>~7 business days to form</span><span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span></span></div>
   </div>
@@ -141,16 +140,16 @@ const HEROES=[
   </div></div></section>`],
  ['Spotlight + instant quote','Big centred promise with a live “state → total” quote bar',(id)=>`
  <section class="hero h4" ${id} data-chg="2"><div class="container" style="text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px">
-  <span class="pill">Trusted by founders across India · <span class="ph">[X]</span> companies formed</span>
-  <h1 style="max-width:980px">Your US company, launched from India in <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">~7 business days</span></h1>
-  <p class="lead" style="margin:0 auto;text-align:center">LLC or C-Corp, EIN, bank account and compliance — handled by Indian CA/CS experts who work in your time zone.</p>
+  <span class="pill">Trusted by founders worldwide · <span class="ph">[X]</span> companies formed</span>
+  <h1 style="max-width:980px">Your US company, launched from anywhere in <span style="background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent">~7 business days</span></h1>
+  <p class="lead" style="margin:0 auto;text-align:center">LLC or C-Corp, EIN, bank account and compliance — handled by CA/CS experts who work in your time zone.</p>
   <div class="quote-bar q4">
     <select class="q4-plan" aria-label="Plan"><option value="starter">LLC · Starter</option><option value="premium">C-Corp · Premium</option></select>
     <select class="q4-state" aria-label="State">${stateOpts('Wyoming')}</select>
     <div class="tot"><span class="muted" style="font-size:12px">All-in today</span><b class="q4-tot">$352.75</b></div>
     <a class="btn btn-primary q4-go" href="#/start?plan=starter&state=Wyoming">Launch now ${ICON.arrow}</a>
   </div>
-  <div class="ticks" style="justify-content:center;margin-top:6px"><span>No US visit needed</span><span>Owners can live in India</span><span>Support in IST</span><span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span></span></div>
+  <div class="ticks" style="justify-content:center;margin-top:6px"><span>No US visit needed</span><span>Owners can live anywhere</span><span>Support in IST</span><span><span class="mbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Money-Back Guarantee</span></span></div>
  </div></section>`],
  ['India → USA route','Animated route map from India to the US with key promises',(id)=>`
  <section class="hero" ${id} data-chg="2"><div class="container hero-grid">
@@ -174,7 +173,7 @@ const HEROES=[
   </div></div></section>`],
  ['Bento hero','Headline tile plus price, guarantee, states and support tiles',(id)=>`
  <section class="hero" ${id} data-chg="2" style="padding-top:40px"><div class="container"><div class="bento">
-  <div class="big"><div><span class="pill" style="background:rgba(255,255,255,.12);color:#fff">For Indian founders</span><h1 style="margin-top:18px;font-size:clamp(34px,4vw,52px)">Start and run your US business — from India.</h1></div>
+  <div class="big"><div><span class="pill" style="background:rgba(255,255,255,.12);color:#fff">For founders worldwide</span><h1 style="margin-top:18px;font-size:clamp(34px,4vw,52px)">Start and run your US business — from India.</h1></div>
    <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-white btn-lg" href="#/start">Launch Your Company</a><a class="btn btn-ghost-w btn-lg" href="#/contact">Talk to an Expert</a></div></div>
   <div class="accent"><span style="font-size:14px;opacity:.9">LLC from</span><span class="num">$249</span><span style="font-size:14px;opacity:.9">+ state fee · ~7 business days</span></div>
   <div><span style="color:var(--amber-d)">${ICON.shield}</span><b>Money-back guarantee</b><span class="muted" style="font-size:14px"></span></div>
@@ -196,7 +195,7 @@ const HEROES=[
  <section class="hero h8" ${id} data-chg="2" style="padding:90px 0 60px"><div class="container">
   <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:48px;align-items:end">
    <h1>Go global.<br><em>Stay home.</em></h1>
-   <div style="display:flex;flex-direction:column;gap:18px"><p class="lead" style="font-size:18px">US company formation, EIN, banking and compliance for Indian founders — by the team behind Juris Consultants India.</p>
+   <div style="display:flex;flex-direction:column;gap:18px"><p class="lead" style="font-size:18px">US company formation, EIN, banking and compliance for founders worldwide — by the team behind Juris Consultants India.</p>
    <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-primary btn-lg" href="#/start">Launch Your Company</a><a class="btn btn-outline btn-lg" href="#/pricing">Pricing</a></div></div>
   </div>
   <div class="h8-stats"><div><b>$249</b><span class="muted">LLC + state fee</span></div><div><b>~7 days</b><span class="muted">to form your company</span></div><div><b>9</b><span class="muted">US states</span></div><div><b class="ph">[X]+</b><span class="muted">companies formed</span></div></div>
@@ -313,7 +312,7 @@ HEROES.push(
  <div class="container" style="position:relative;z-index:1;text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px">
   <span class="pill" style="background:rgba(255,255,255,.08);color:#fff">The next step for Indian founders</span>
   <h1 style="max-width:980px">Your business. <span class="grad-text">Now in the USA.</span></h1>
-  <p class="lead" style="margin:0 auto">Form your US company in ~7 business days — from India, with experts beside you.</p>${CTA2(1)}</div></section>`],
+  <p class="lead" style="margin:0 auto">Form your US company in ~7 business days — from anywhere, with experts beside you.</p>${CTA2(1)}</div></section>`],
  ['Command launch','Typing terminal that “launches” a company',(id)=>`
  <section class="hero" ${id} data-chg="2"><div class="container hero-grid">
   <div style="display:flex;flex-direction:column;gap:22px"><span class="eyebrow">Built like software</span><h1>Launch a US company like you ship code.</h1>
@@ -347,7 +346,7 @@ HEROES.push(
   <div class="kin"><div class="row">${(w+w).repeat(2)}</div></div>
   <div class="kin"><div class="row rev o">${(w2+w2).repeat(2)}</div></div>
   <div class="container" style="display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-top:44px">
-   <div style="max-width:640px"><h1 style="font-size:clamp(30px,3.8vw,52px)">Start and run your US business from India.</h1><p class="lead" style="margin-top:12px">Everything above, done by one Indian expert team — from ~7 business days.</p></div>${CTA2(0)}</div></section>`;}],
+   <div style="max-width:640px"><h1 style="font-size:clamp(30px,3.8vw,52px)">Start and run your US business from anywhere.</h1><p class="lead" style="margin-top:12px">Everything above, done by one Indian expert team — from ~7 business days.</p></div>${CTA2(0)}</div></section>`;}],
  ['Glass dashboard','Live futuristic dashboard preview with progress',(id)=>`
  <section class="hero on-dark" ${id} data-chg="2" style="background:radial-gradient(700px 420px at 80% 25%,color-mix(in srgb,var(--blue) 32%,transparent),transparent 70%),var(--navy)"><div class="container hero-grid">
   <div style="display:flex;flex-direction:column;gap:22px"><span class="pill" style="background:rgba(255,255,255,.08);color:#fff">Your company, live</span><h1>Your US company on one <span class="grad-text">live dashboard.</span></h1>
@@ -365,7 +364,7 @@ const MILES=[[.02,'DAY 0 · 5 MIN','Tell us about you','Name, email, phone'],[.2
 const ST_PATH_MAP='M154 257 C 420 470, 780 470, 1018 197';
 const ST_PATH='M90 560 C 300 560, 330 300, 520 330 S 760 600, 900 400 S 1050 190, 1110 170';
 function storyHTML(){const SP=ANIM.s===8?ST_PATH_MAP:ST_PATH;return `<section class="story sm${ANIM.s}" id="story" data-chg="21"><div class="story-stage">
- ${ANIM.s===9?'<div class="ghost" id="stGhost">INDIA → USA · INDIA → USA · INDIA → USA</div>':'<canvas class="cv cv-full st-bg" aria-hidden="true"></canvas>'}
+ ${ANIM.s===9?'<div class="ghost" id="stGhost">WORLD → USA · WORLD → USA · WORLD → USA</div>':'<canvas class="cv cv-full st-bg" aria-hidden="true"></canvas>'}
  <div class="speed">BUSINESS DAY<b id="stDay">00</b>OF ~7 TO FORM</div>
  <div class="head"><span class="eyebrow">Scroll to launch</span><h2 style="margin-top:8px">Watch your company travel from India to the USA</h2></div>
  <svg class="route-svg" viewBox="0 0 1200 700" preserveAspectRatio="none" aria-hidden="true">
@@ -817,11 +816,11 @@ function flyExtrasHTML(){const F=ANIM.f;let h='';
   <div class="bp-route"><div><small>FROM</small><b>DEL</b><span>New Delhi, India</span></div><div class="bp-line"><i id="bpPlane">${PLANE_ICON}</i></div><div style="text-align:right"><small>TO</small><b>USA</b><span>Your US company</span></div></div>
   <div class="bp-info"><div><small>PASSENGER</small><b>Your Company LLC</b></div><div><small>FLIGHT</small><b>JC-001</b></div><div><small>GATE</small><b>WY / DE</b></div><div><small>STATUS</small><b id="bpStatus">BOARDING</b></div></div></div>
   <div class="bp-stub"><small>ARRIVAL</small><b>~7</b><span>business days</span><div class="bp-stamp" id="bpStamp">FORMED ✓</div></div></div>`;
- if(F===9)h=`<div class="fboard"><div class="fb-head"><span>✈ DEPARTURES · INDIA → USA</span><span id="fbClock">00:00 IST</span></div>
+ if(F===9)h=`<div class="fboard"><div class="fb-head"><span>✈ DEPARTURES · WORLD → USA</span><span id="fbClock">00:00 IST</span></div>
   <div class="fb-row fb-th"><span>FLIGHT</span><span>FROM</span><span>TO</span><span>COMPANY</span><span>STATUS</span></div>
   ${BOARD.map((b,i)=>`<div class="fb-row"><span>${b[0]}</span><span>${b[1]}</span><span>${b[2]}</span><span>${b[3]}</span><span class="fb-st" id="fbSt${i}">BOARDING</span></div>`).join('')}
   <small class="fb-note">Sample names for demo only</small></div>`;
- if(![4,8,9].includes(F))h+=`<div class="fly-ends"><span><b>INDIA</b> DEL</span><div class="fe-bar"><i id="feBar"></i><em id="fePlane">${PLANE_ICON}</em></div><span><b>USA</b> ARRIVAL</span></div>`;
+ if(![4,8,9].includes(F))h+=`<div class="fly-ends"><span><b>ANYWHERE</b> ORIGIN</span><div class="fe-bar"><i id="feBar"></i><em id="fePlane">${PLANE_ICON}</em></div><span><b>USA</b> ARRIVAL</span></div>`;
  return h;}
 function flyExtrasUpdate(){const fl=$('#fly');if(!fl)return;const vh=innerHeight,r=fl.getBoundingClientRect(),p=clamp((vh-r.top)/(vh+r.height));
  const fb=$('#feBar');if(fb){fb.style.width=(p*100)+'%';$('#fePlane').style.left=(p*100)+'%';}
@@ -922,7 +921,7 @@ function startLiveBoard(sec){if(sec.dataset.on)return;sec.dataset.on=1;const row
 function buildMega(){
   const g={Start:[],Run:[],Grow:[],Help:[]};
   Object.entries(SERVICES).forEach(([id,s])=>g[s.group].push(`<a href="#/service/${id}">${s.name}<small>${s.price} ${s.unit}</small></a>`));
-  $('#mega').innerHTML=Object.entries(g).map(([k,l])=>`<div><h5>${k}</h5>${l.join('')}</div>`).join('')+`<div class="foot"><span class="muted">Not sure what you need? <a href="#/home" data-jump="quiz">Take the 1-minute quiz</a></span><a class="btn btn-primary btn-sm" href="#/services">See all services</a></div>`;
+  $('#mega').innerHTML=Object.entries(g).map(([k,l])=>`<div><h5>${k}</h5>${l.join('')}</div>`).join('')+`<div class="foot"><span class="muted">Not sure what you need? <a href="/contacts">Talk to an expert</a></span><a class="btn btn-primary btn-sm" href="#/services">See all services</a></div>`;
 }
 
 /* ================= SHARED BLOCKS ================= */
@@ -934,8 +933,8 @@ function servicesBlock(id){return `<section class="sec" id="${id}" data-chg="7" 
  <div class="tabs">${['All','Start','Run','Grow','Help'].map((t,i)=>`<button type="button" class="tab ${i?'':'on'}" data-filter="${t}">${t}</button>`).join('')}</div>
  <div class="grid g3 svc-grid">${svcCards('All')}</div></div></section>`;}
 function faqBlock(id,plain){const f=[
- ['Do I need to be a U.S. citizen to start a business?','No. Founders living in India can own a US LLC or C-Corp. You don’t need to visit the US.'],
- ['Which state should I choose from India?','Most founders pick Wyoming or Delaware. Our quiz and experts help you choose based on your business and plans to raise money.'],
+ ['Do I need to be a U.S. citizen to start a business?','No. Founders living anywhere in the world can own a US LLC or C-Corp. You don’t need to visit the US.'],
+ ['Which state should I choose from India?','Most founders pick Wyoming or Delaware. Our experts help you choose based on your business and plans to raise money.'],
  ['How long does it take?','Company formation takes about 7 business days. The EIN usually takes longer for founders without an SSN — <span class="ph">[timeline to confirm]</span>.'],
  ['Do you help with EIN and bank account setup?','Yes. EIN is included in Premium and available as an $80 add-on with Starter. Bank account assistance is $100.'],
  ['What is your money-back guarantee?','If your company isn’t formed because of our mistake, we refund our service fee in full. State fees are paid to the government and are not refundable. See our <a href="/refund">refund policy</a>.'],
@@ -969,30 +968,22 @@ ${storyHTML()}
 ${servicesBlock('services')}
 ${flyHTML()}
 ${liveBoardHTML()}
-<section class="sec soft" id="quiz" data-chg="8" data-ghost="CHOOSE"><div class="container">
- <div class="sec-head"><span class="eyebrow">1-minute quiz</span><h2>Which company type is right for me?</h2><p>Three quick questions. General guidance, not legal or tax advice.</p></div>
- <div class="quiz" id="quizBox"></div>
- <div class="grid g3" style="margin-top:36px">
-  <div class="card entity reveal"><span class="pill" style="align-self:flex-start">Most Indian founders</span><h3>LLC</h3><ul><li>Owners can live in India</li><li>Simple to run, fewer filings</li><li>No shares — not ideal for raising VC money</li></ul><a href="#/service/llc">LLC Formation from $249 →</a></div>
-  <div class="card entity reveal"><span class="pill" style="align-self:flex-start">Raising investment</span><h3>C-Corp</h3><ul><li>Owners can live in India</li><li>Can issue shares to investors</li><li>Investors usually prefer Delaware</li></ul><a href="#/service/ccorp">C-Corp Formation from $849 →</a></div>
-  <div class="card entity reveal"><span class="pill" style="align-self:flex-start;background:#FEF2F2;color:var(--red)">US owners only</span><h3>S-Corp</h3><ul><li>A tax status, not a separate company type</li><li><b>Only US citizens / residents</b> can be shareholders</li><li>Usually not available to founders in India</li></ul><a href="#/contact">Ask an expert →</a></div></div>
-</div></section>
 ${stackHTML()}
 <section class="sec dark" id="why" data-chg="10" data-ghost="WHY US"><div class="container"><div class="hero-grid" style="gap:44px">
  <div style="display:flex;flex-direction:column;gap:16px"><span class="eyebrow">Why Juris Consultants USA</span><h2 style="font-size:clamp(30px,3.6vw,44px)">The US formation team that works in your time zone</h2>
- <p style="color:#CBD5E1;font-size:17px">Other platforms give you a form. We give you Indian CA / CS experts who answer your questions, explain in plain words, and stay with you after formation.</p>
+ <p style="color:#CBD5E1;font-size:17px">Other platforms give you a form. We give you CA / CS experts who answer your questions, explain in plain words, and stay with you after formation.</p>
  <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn btn-white" href="#/contact">Talk to an Expert</a></div></div>
- <div class="grid g2"><div class="why-card reveal"><h4>IST working hours</h4><p>Calls and replies during your day, not at 2 AM.</p></div><div class="why-card reveal"><h4>CA / CS experts</h4><p>Backed by Juris Consultants India’s corporate team.</p></div><div class="why-card reveal"><h4>Hindi &amp; English</h4><p>Ask in the language you’re comfortable with.</p></div><div class="why-card reveal"><h4>India + US numbers</h4><p>+91 99996 30777 · +1 (646) 233-8454</p></div></div>
+ <div class="grid g2"><div class="why-card reveal"><h4>IST working hours</h4><p>Calls and replies during your day, not at 2 AM.</p></div><div class="why-card reveal"><h4>CA / CS experts</h4><p>Backed by Juris Consultants India’s corporate team.</p></div><div class="why-card reveal"><h4>Hindi &amp; English</h4><p>Ask in the language you’re comfortable with.</p></div><div class="why-card reveal"><h4>India + US phone lines</h4><p>+91 99996 30777 · +1 (646) 233-8454</p></div></div>
 </div></div></section>
 <section class="sec" id="clients" data-chg="4" data-ghost="CLIENTS"><div class="container">
  <div class="sec-head"><span class="eyebrow">Client stories</span><h2>Founders who started with us</h2><p>Real clients only — logos and quotes added with their permission.</p></div>
  <div class="grid g3">${[1,2,3].map(()=>`<div class="card quote reveal"><span class="stars">★★★★★</span><p style="font-size:16px"><span class="ph">[Short quote from a real client about their experience]</span></p><div style="display:flex;gap:12px;align-items:center"><span class="avatar"></span><div><b class="ph">[Name]</b><div class="muted" style="font-size:13px"><span class="ph">[Company · City]</span></div></div></div></div>`).join('')}</div>
  <div class="logos">${[1,2,3,4,5,6].map(()=>`<div class="logo-ph">[Client logo]</div>`).join('')}</div></div></section>
 <section class="sec" id="magnet" data-chg="11" style="padding-top:20px"><div class="container"><div class="magnet reveal">
- <div style="display:flex;flex-direction:column;gap:14px"><span class="pill" style="align-self:flex-start;background:var(--amber-50);color:var(--amber-d)">Free guide</span><h2 style="font-size:clamp(26px,3vw,36px)">Starting a US company from India: the complete checklist</h2><p class="muted">States compared, real costs, EIN without SSN, and opening a US bank account — in one PDF.</p>
+ <div style="display:flex;flex-direction:column;gap:14px"><span class="pill" style="align-self:flex-start;background:var(--amber-50);color:var(--amber-d)">Free guide</span><h2 style="font-size:clamp(26px,3vw,36px)">Starting a US company from anywhere: the complete checklist</h2><p class="muted">States compared, real costs, EIN without SSN, and opening a US bank account — in one PDF.</p>
  <form class="form" id="magnetForm" novalidate style="flex-direction:row;flex-wrap:wrap;align-items:flex-start"><div class="field" style="flex:1;min-width:220px"><input type="email" id="mEmail" placeholder="Your email" aria-label="Your email"><span class="msg"></span></div><button class="btn btn-primary" type="submit">Send me the guide</button></form>
  <div class="ok-msg hide" id="magnetOk">✓ Thanks! The guide is on its way to your inbox. (demo)</div></div>
- <div class="guide-mock" aria-hidden="true"><div style="font-family:var(--head);font-weight:700;font-size:18px">US Company from India</div><div style="font-size:13px;color:#475569">Checklist 2026 · Juris Consultants USA</div><div class="bar" style="width:90%"></div><div class="bar" style="width:75%"></div><div class="bar" style="width:82%"></div><div class="bar" style="width:60%"></div><div class="bar" style="width:70%"></div></div>
+ <div class="guide-mock" aria-hidden="true"><div style="font-family:var(--head);font-weight:700;font-size:18px">US Company from Anywhere</div><div style="font-size:13px;color:#475569">Checklist 2026 · Juris Consultants USA</div><div class="bar" style="width:90%"></div><div class="bar" style="width:75%"></div><div class="bar" style="width:82%"></div><div class="bar" style="width:60%"></div><div class="bar" style="width:70%"></div></div>
 </div></div></section>
 ${faqBlock('faq')}
 <section class="sec" id="final" data-chg="13" style="padding-top:20px"><div class="container"><div class="final reveal"><div><h2>Ready to launch your US company?</h2><p style="color:var(--on-primary-muted);margin-top:8px">Most founders finish step 1 in under 5 minutes.</p></div>
@@ -1030,12 +1021,12 @@ PAGES.pricing=()=>`<section class="sec"><div class="container"><div class="sec-h
  <tr><td>Registered agent</td><td>–</td><td class="check">✓ 1 year</td><td>–</td></tr><tr><td>Warehousing &amp; fulfilment</td><td>–</td><td>–</td><td class="check">✓ NY / TX / CA</td></tr>
  <tr><td>Timeline</td><td>~7 business days</td><td>~7 business days</td><td><span class="ph">[to confirm]</span></td></tr></table></div>
  <div class="sec-head" style="margin-top:56px"><h2>Add-ons</h2></div><div class="grid g3">${ADDONS.map(a=>`<div class="card"><h4>${a.n}</h4><p class="muted" style="margin-top:6px">${a.one?money(a.one)+' one-time':money(a.mo)+' per month'}</p></div>`).join('')}</div></div></section>${faqBlock('faq')}`;
-PAGES.how=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">How it works</span><h1 style="font-size:clamp(32px,4vw,48px)">From India to a US company — step by step</h1><p>Honest timelines for founders outside the US.</p></div></div></section>
+PAGES.how=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">How it works</span><h1 style="font-size:clamp(32px,4vw,48px)">From anywhere to a US company — step by step</h1><p>Honest timelines for founders outside the US.</p></div></div></section>
 <section class="sec" data-chg="5"><div class="container"><div class="journey in"><div class="line"><i></i></div>${[['5 min','Tell us about you'],['2 min','Choose plan &amp; pay'],['1 business day','Expert review'],['~7 business days','Company formed'],['<span class="ph">[to confirm]</span>','EIN (US tax ID)'],['After EIN','Bank account']].map((s,i)=>`<div class="j-step"><div class="j-dot">${i+1}</div><span class="j-time">${s[0]}</span><h4>${s[1]}</h4></div>`).join('')}</div>
  <div class="grid g2" style="margin-top:56px"><div class="card"><h3 style="margin-bottom:12px">What we need from you</h3><div>• Passport copy <span class="ph">[confirm list]</span></div><div>• Address proof</div><div>• 2–3 company name options</div><div>• Business activity in one line</div></div><div class="card"><h3 style="margin-bottom:12px">What you get</h3><div><span class="check">✓</span> Formation documents &amp; certificate</div><div><span class="check">✓</span> EIN letter (if chosen)</div><div><span class="check">✓</span> Live status in your dashboard</div><div><span class="check">✓</span> Email updates at every step</div></div></div>
  <div style="text-align:center;margin-top:36px"><a class="btn btn-primary btn-lg" href="#/start">Launch Your Company</a> &nbsp; <a class="btn btn-outline btn-lg" href="#/track">See a sample tracker</a></div></div></section>`;
 const BLOGS=[{id:'states',t:'Which US State Should You Choose to Start a Business from India? Texas vs Delaware vs Wyoming vs Florida',tag:'US Company Formation',real:true},{id:'ein',t:'EIN without SSN: how Indian founders get a US tax ID',tag:'EIN & Tax'},{id:'cost',t:'US LLC cost from India: the full breakdown',tag:'Pricing'},{id:'bank',t:'Opening a US business bank account from India',tag:'Banking'}];
-PAGES.blogs=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">Blogs</span><h1 style="font-size:clamp(32px,4vw,48px)">Guides for Indian founders</h1><p>Each guide links to the service you need next.</p></div></div></section>
+PAGES.blogs=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">Blogs</span><h1 style="font-size:clamp(32px,4vw,48px)">Guides for founders worldwide</h1><p>Each guide links to the service you need next.</p></div></div></section>
 <section class="sec"><div class="container"><div class="grid g2">${BLOGS.map(b=>`<a class="card svc" href="#/blog/${b.id}"><div class="top"><span class="pill">${b.tag}</span>${b.real?'<span class="muted" style="font-size:13px">10 min read</span>':'<span class="pill" style="background:var(--amber-50);color:var(--amber-d)">Suggested topic</span>'}</div><h3 style="font-size:21px">${b.t}</h3><p class="muted" style="font-size:14px">By <span class="ph">[Author], CA</span> · Updated <span class="ph">[date]</span></p><span style="font-weight:600;color:var(--blue)">Read guide →</span></a>`).join('')}</div></div></section>`;
 PAGES.blog=(id)=>{const b=BLOGS.find(x=>x.id===id)||BLOGS[0];return `<section class="sec" style="padding-top:40px" id="blogtop" data-chg="14"><div class="container"><div class="blog-grid">
  <nav class="toc" aria-label="On this page"><b class="muted" style="font-size:12px;letter-spacing:1px">ON THIS PAGE</b><a href="#/blog/${b.id}" data-jump="b1">Quick answer</a><a href="#/blog/${b.id}" data-jump="b2">State fees compared</a><a href="#/blog/${b.id}" data-jump="b3">Which state suits you</a><a href="#/blog/${b.id}" data-jump="b4">FAQs</a></nav>
@@ -1050,7 +1041,7 @@ PAGES.blog=(id)=>{const b=BLOGS.find(x=>x.id===id)||BLOGS[0];return `<section cl
   <b class="muted" style="font-size:12px;letter-spacing:1px">RELATED SERVICES</b><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/llc">US LLC Formation →</a><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/ein">EIN &amp; Tax Registration →</a><a class="card" style="padding:14px;font-weight:600;color:var(--text)" href="#/service/agent">Registered Agent →</a></aside>
 </div></div></section>`;};
 PAGES.about=()=>`<section class="sec soft" style="padding:56px 0"><div class="container"><div class="sec-head" style="margin-bottom:0"><span class="eyebrow">About us</span><h1 style="font-size:clamp(32px,4vw,48px)">The team behind Juris Consultants India — now helping you go global</h1><p>Indian CA / CS experts helping founders start and run US companies.</p></div></div></section>
-<section class="sec"><div class="container"><div class="grid g3">${['Years in corporate &amp; secretarial work','Companies formed in the US','Founders served across India'].map((t,i)=>`<div class="stat"><b class="ph">[${['Y','X','N'][i]}]</b><span class="muted">${t}</span></div>`).join('')}</div>
+<section class="sec"><div class="container"><div class="grid g3">${['Years in corporate &amp; secretarial work','Companies formed in the US','Founders served worldwide'].map((t,i)=>`<div class="stat"><b class="ph">[${['Y','X','N'][i]}]</b><span class="muted">${t}</span></div>`).join('')}</div>
 <div class="sec-head" style="margin-top:60px"><h2>Meet the team</h2><p>Real photos and qualifications build trust.</p></div><div class="grid g4">${[1,2,3,4].map(()=>`<div class="card" style="text-align:center"><div class="avatar" style="width:84px;height:84px;margin:0 auto 12px"></div><b class="ph">[Name]</b><div class="muted" style="font-size:14px"><span class="ph">[Role · CA / CS]</span></div></div>`).join('')}</div></div></section>`;
 PAGES.contact=()=>`<section class="sec" style="padding-top:48px"><div class="container"><div class="hero-grid" style="align-items:start">
  <div style="display:flex;flex-direction:column;gap:18px"><span class="eyebrow">Contact</span><h1 style="font-size:clamp(32px,4vw,48px)">Talk to an expert</h1><p class="lead" style="color:var(--muted)">Call or email us. We reply in Indian working hours.</p>
@@ -1242,15 +1233,6 @@ function bindPk(){const root=$('#pk');if(!root||root.dataset.on)return;root.data
  root.addEventListener('click',e=>{const c=e.target.closest('[data-pk]'),ch=e.target.closest('[data-chip]');if(c){pk.plan=c.dataset.pk;renderPk();}else if(ch&&!ch.disabled){pk.add[ch.dataset.chip]=!pk.add[ch.dataset.chip];renderPk();}});
  $('#pkState').addEventListener('change',e=>{pk.st=e.target.value;renderPk();});renderPk();}
 
-/* ================= QUIZ & WHO ================= */
-const QUIZ=[{q:'Where do the owners live?',o:['India / outside the US','US citizen or green-card holder']},{q:'Do you plan to raise money from investors (VCs / angels)?',o:['Yes, in the next 1–2 years','No / not sure']},{q:'What will your US company mainly do?',o:['Sell products online / import-export','IT services, consulting or freelancing','Build a startup product','Something else']}];
-let qa=[];
-function renderQuiz(){const box=$('#quizBox');if(!box)return;
- if(qa.length<QUIZ.length){const i=qa.length,q=QUIZ[i];box.innerHTML=`<div class="q-progress"><i style="width:${(i/QUIZ.length)*100}%"></i></div><div class="muted" style="font-size:13px;font-weight:600">QUESTION ${i+1} OF ${QUIZ.length}</div><h3 style="font-size:24px;margin-top:6px">${q.q}</h3><div class="q-opts">${q.o.map((o,j)=>`<button type="button" class="q-opt" data-qa="${j}">${o}</button>`).join('')}</div>`;
-  $$('[data-qa]',box).forEach(b=>b.onclick=()=>{qa.push(+b.dataset.qa);renderQuiz();});}
- else{const raise=qa[1]===0,us=qa[0]===1;const r=raise?{t:'C-Corp (Premium plan)',why:'You plan to raise money, and investors usually prefer a Delaware C-Corp that can issue shares.',href:'#/start?plan=premium&state=Delaware',svc:'ccorp'}:{t:'LLC (Starter plan)',why:'An LLC is the simplest way for founders in India to own a US company, with fewer filings.',href:'#/start?plan=starter&state=Wyoming',svc:'llc'};
-  box.innerHTML=`<div class="q-progress"><i style="width:100%"></i></div><span class="pill" style="background:var(--green-50);color:var(--green)">Our suggestion</span><h3 style="font-size:28px;margin:10px 0 8px">${r.t}</h3><p class="muted">${r.why}${us?' Since you are a US citizen/resident, an S-Corp tax election may also be an option — ask our expert.':''}</p><div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:18px"><a class="btn btn-primary" href="${r.href}">Start with this</a><a class="btn btn-outline" href="#/service/${r.svc}">See details</a><button type="button" class="btn btn-outline" id="qReset">Retake quiz</button></div><p class="muted" style="font-size:12px;margin-top:14px">General guidance, not legal or tax advice.</p>`;
-  $('#qReset').onclick=()=>{qa=[];renderQuiz();};}}
 const WHO=[{t:'E-Commerce sellers',d:'Sell on Amazon US, Shopify or your own store, and ship to US customers.',s:[['US LLC Formation','llc'],['EIN & Tax Registration','ein'],['Warehousing & Fulfilment','warehouse'],['Virtual Address & Mailbox','mailbox']]},{t:'Import-Export businesses',d:'Buy and sell across borders with a US company and bank account.',s:[['US LLC Formation','llc'],['EIN & Tax Registration','ein'],['Bank Account Assistance','bank'],['Physical Office Address','office']]},{t:'IT Services & freelancers',d:'Bill US clients in dollars, through a US company.',s:[['US LLC Formation','llc'],['EIN & Tax Registration','ein'],['Bank Account Assistance','bank'],['Accounting & Bookkeeping','books']]},{t:'Startups & Founders',d:'Raise money from US investors and issue shares.',s:[['US C-Corp Formation','ccorp'],['Registered Agent (1 year incl.)','agent'],['Bank Account Assistance','bank'],['US Tax Filing','tax']]}];
 function renderWho(i){const w=WHO[i],p=$('#whoPanel');if(!p)return;p.innerHTML=`<div style="display:flex;flex-direction:column;gap:14px"><h3 style="font-size:30px">${w.t}</h3><p class="muted" style="font-size:17px">${w.d}</p><a class="btn btn-primary" style="align-self:flex-start" href="#/start?plan=${i===3?'premium':'starter'}">Start my setup</a></div><div class="who-list">${w.s.map(s=>`<a class="who-item" href="#/service/${s[1]}"><span><span class="check">✓</span> ${s[0]}</span><span class="muted" style="font-size:14px">${SERVICES[s[1]].price} ${SERVICES[s[1]].unit}</span></a>`).join('')}</div>`;}
 
@@ -1289,7 +1271,6 @@ function bindPage(page,arg){
 
  renderPk();bindPk();
  if($('#whoTabs')){renderWho(0);$$('[data-who]').forEach(b=>b.onclick=()=>{$$('[data-who]').forEach(x=>x.classList.toggle('on',x===b));renderWho(+b.dataset.who);});}
- if($('#quizBox'))renderQuiz();
  bindHero($('#app'));
  const mf=$('#magnetForm');if(mf)mf.onsubmit=e=>{e.preventDefault();const em=$('#mEmail');if(setErr(em,EMAIL_RE.test(em.value.trim())?'':'Please enter a valid email.')){mf.classList.add('hide');$('#magnetOk').classList.remove('hide');}};
  const cf=$('#contactForm');if(cf){markReq();const cc0=$('#cfCc');cc0.innerHTML=ccOptions('+91');bindPhone($('#cfPhone'),cc0);}if(cf)cf.onsubmit=e=>{e.preventDefault();let ok=true;const n=$('#cfName'),em=$('#cfEmail'),ph=$('#cfPhone'),cc=$('#cfCc').value,m=$('#cfMsg');

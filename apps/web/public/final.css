@@ -186,9 +186,6 @@ header.site{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--
 .svc .bottom{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
 .svc .price{font-size:14px;color:var(--muted)}
 .svc .price b{font-size:18px;color:var(--text)}
-.quiz{max-width:860px;margin:0 auto;background:var(--card-bg);border:1px solid var(--line);border-radius:24px;padding:30px;box-shadow:var(--shadow)}
-.q-progress{height:6px;background:var(--blue-100);border-radius:6px;overflow:hidden;margin-bottom:22px}
-.q-progress i{display:block;height:100%;background:var(--btn-bg);transition:width .35s}
 .q-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:18px}
 .q-opt{background:var(--soft);border:1.5px solid var(--line);border-radius:14px;padding:16px 18px;text-align:left;cursor:pointer;font-weight:600;color:var(--text)}
 .q-opt:hover{border-color:var(--blue)}
@@ -323,7 +320,7 @@ body.L4 .tabs{justify-content:flex-start}
 /* L5 Glass */
 body.L5{--page-bg:transparent;--card-bg:rgba(255,255,255,.62);--line:rgba(255,255,255,.75);--card-shadow:0 10px 30px rgba(11,27,63,.08);--btn-r:999px;--r-card:24px}
 body.L5{background:radial-gradient(800px 600px at 10% 0%,color-mix(in srgb,var(--blue) 34%,transparent),transparent 60%),radial-gradient(700px 500px at 100% 30%,color-mix(in srgb,var(--amber) 32%,transparent),transparent 60%),radial-gradient(800px 600px at 30% 100%,color-mix(in srgb,var(--blue) 14%,transparent),transparent 60%),#F7F8FC;background-attachment:fixed}
-body.L5 .card,body.L5 .stat,body.L5 .quiz,body.L5 .opt,body.L5 .who-item,body.L5 .tab,body.L5 .mini-track{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+body.L5 .card,body.L5 .stat,body.L5 .opt,body.L5 .who-item,body.L5 .tab,body.L5 .mini-track{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 body.L5 .sec.soft,body.L5 .hero{background:transparent!important}
 body.L5 header.site{background:rgba(255,255,255,.55)}
 /* L6 Swiss minimal */
@@ -337,7 +334,6 @@ body.L6 .tabs{justify-content:flex-start}
 /* L7 Conversion-first */
 body.L7 .home-wrap > #pricing{order:-19}
 body.L7 .home-wrap > #trust{order:-18}
-body.L7 .home-wrap > #quiz{order:-17}
 body.L7 .home-wrap > #clients{order:5}
 body.L7 .home-wrap > #magnet{order:6}
 /* L8 Storytelling */
@@ -563,7 +559,7 @@ body.no-fx .cur-ring,body.no-fx .cur-dot{display:none}
 /* ===== LAYOUTS 11–20 ===== */
 body.L11 .home-wrap > .sec .sec-head h2{font-size:clamp(38px,5.2vw,72px);letter-spacing:-1.8px}
 body.L11 .reveal{transform:translateY(50px) scale(.96)}
-body.L12 .card,body.L12 .stat,body.L12 .quiz{border:1px solid transparent;background:linear-gradient(var(--card-solid),var(--card-solid)) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--blue) 75%,transparent),transparent 45%,color-mix(in srgb,var(--amber) 65%,transparent)) border-box}
+body.L12 .card,body.L12 .stat{border:1px solid transparent;background:linear-gradient(var(--card-solid),var(--card-solid)) padding-box,linear-gradient(135deg,color-mix(in srgb,var(--blue) 75%,transparent),transparent 45%,color-mix(in srgb,var(--amber) 65%,transparent)) border-box}
 body.L12 .card:hover,body.L12 .stat:hover{box-shadow:0 0 44px color-mix(in srgb,var(--blue) 30%,transparent)}
 body.L13 .eyebrow{font-family:ui-monospace,Menlo,monospace;letter-spacing:2px}
 body.L13 .eyebrow::before{content:"// "}
@@ -575,9 +571,9 @@ body.L13 .card::before{top:-2px;left:-2px;border-right:0;border-bottom:0}
 body.L13 .card::after{bottom:-2px;right:-2px;border-left:0;border-top:0}
 body.L13 .sec-head h2{font-family:ui-monospace,Menlo,monospace;letter-spacing:-1px}
 @media(min-width:1001px){
-body.L14 :is(#journey,#who,#services,#quiz,#pricing,#clients,#faq) > .container{display:grid;grid-template-columns:340px minmax(0,1fr);gap:48px;align-items:start}
-body.L14 :is(#journey,#who,#services,#quiz,#pricing,#clients,#faq) > .container > .sec-head{position:sticky;top:110px;text-align:left;align-items:flex-start;margin:0;grid-row:1/span 10}
-body.L14 :is(#journey,#who,#services,#quiz,#pricing,#clients,#faq) > .container > :not(.sec-head){grid-column:2}
+body.L14 :is(#journey,#who,#services,#pricing,#clients,#faq) > .container{display:grid;grid-template-columns:340px minmax(0,1fr);gap:48px;align-items:start}
+body.L14 :is(#journey,#who,#services,#pricing,#clients,#faq) > .container > .sec-head{position:sticky;top:110px;text-align:left;align-items:flex-start;margin:0;grid-row:1/span 10}
+body.L14 :is(#journey,#who,#services,#pricing,#clients,#faq) > .container > :not(.sec-head){grid-column:2}
 body.L14 .svc-grid,body.L14 .plans{grid-template-columns:repeat(2,minmax(0,1fr))}
 body.L14 .journey{grid-template-columns:repeat(3,1fr)}body.L14 .journey .line{display:none}
 body.L14 .tabs{justify-content:flex-start}
@@ -1000,3 +996,70 @@ footer .mbg{margin-top:0}
 body.dm .st.done{background:rgba(34,197,94,.16);color:#4ADE80;border:1px solid rgba(74,222,128,.4)}
 body.dm .st.now{background:rgba(59,130,246,.18);color:#93C5FD;border:1px solid rgba(96,165,250,.45)}
 body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
+
+/* tighter gap between the departures board and "What you receive" */
+.lboard-sec{padding-bottom:24px}
+.stack-stage{padding-top:24px;align-items:start}
+.stack-stage>div:first-child{margin-top:clamp(24px,8vh,80px)}
+@media (max-width:900px){.lboard-sec{padding-bottom:12px}}
+@media (max-width:1000px){.stack-stage{padding-top:60px}.stack-stage>div:first-child{margin-top:0}}
+
+/* Desktop scale: content renders at 90% (like browser zoom 90%) so sizes feel right at 100% zoom.
+   Containers are widened by 1/0.9 so the side gaps stay the same. Mobile/tablet (<=1000px) unchanged. */
+@media (min-width:1001px){
+  header.site,#app,footer,#stickyCta{zoom:.9}
+  .container{max-width:1334px}
+  .stack-stage{height:calc(100vh/.9);max-width:1334px}
+}
+
+/* My account dropdown (signed-in customers) */
+.acct-menu{position:relative;display:inline-block}
+.acct-pop{position:absolute;right:0;top:calc(100% + 8px);min-width:170px;background:var(--card-solid);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:6px;z-index:60;display:flex;flex-direction:column}
+.acct-pop a,.acct-pop button{display:block;width:100%;text-align:left;padding:10px 12px;border:0;border-radius:8px;background:none;color:var(--text);font:inherit;font-size:14px;font-weight:600;cursor:pointer;text-decoration:none}
+.acct-pop a:hover,.acct-pop button:hover{background:var(--soft)}
+
+/* Story scene on tablet/phone: counter moves to the bottom-left and the heading to the top, so milestone cards do not cover them */
+@media (max-width:1000px){
+  .story .speed{top:auto;bottom:64px;left:20px}
+  .story .speed b{font-size:44px}
+  .story .head{top:84px;left:20px;right:20px}
+  .story .head h2{font-size:clamp(22px,6vw,30px)}
+  .story .head p{font-size:14px}
+}
+@media (max-width:1000px){
+  .story .speed{bottom:100px}
+  .story .head p{display:none}
+}
+@media (max-width:700px){
+  .sticky-cta{width:calc(100% - 24px);justify-content:space-between;gap:10px;padding:10px 10px 10px 14px;font-size:13px}
+  .sticky-cta .btn{white-space:nowrap;padding:9px 12px;font-size:13px}
+}
+
+/* Inner-page hero headings start from the left edge */
+.sec.soft[style*="padding:56px 0"] .sec-head{text-align:left;align-items:flex-start;margin-left:0;max-width:none}
+
+/* All section headings start from the left edge */
+.sec-head{text-align:left;align-items:flex-start;margin-left:0;margin-right:auto;max-width:780px}
+
+/* Services dropdown: one service per line */
+.mega{width:max-content;max-width:calc(100vw - 32px);grid-template-columns:repeat(4,auto);column-gap:40px}
+.mega a{white-space:nowrap}
+
+/* Section headings use the full width so they stay on one line where they fit */
+.sec-head{max-width:none}
+.sec-head p{max-width:780px}
+.sec-head h1,.sec-head h2{align-self:stretch}
+
+/* "What you receive": stage fits its content and sits centred, so no blank space is left after it */
+@media (min-width:1001px){
+  .stack-stage{height:660px;top:max(72px,calc((100vh/.9 - 660px)/2));align-items:center;padding:0 24px}
+  .stack-stage>div:first-child{margin-top:0}
+}
+
+/* Story scene: "Business day" counter lives bottom-left on every screen size so milestone cards never cover it */
+.story .speed{top:auto;bottom:100px;left:24px}
+.story .speed b{font-size:44px}
+
+/* Services dropdown floats a little below the menu bar (invisible bridge keeps hover working) */
+.mega{top:calc(100% + 30px)}
+.mega::before{content:"";position:absolute;left:0;right:0;top:-32px;height:32px}

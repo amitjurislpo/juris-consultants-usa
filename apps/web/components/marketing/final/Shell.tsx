@@ -130,8 +130,8 @@ export function FinalShell({ children }: { children: ReactNode }) {
                 </span>
               </div>
               <p style={{ marginTop: 14, fontSize: 14, maxWidth: 320 }}>
-                US company formation, compliance and support for founders in
-                India, by the team behind Juris Consultants India.
+                US company formation, compliance and support for founders
+                worldwide, by the team behind Juris Consultants India.
               </p>
               <div
                 style={{

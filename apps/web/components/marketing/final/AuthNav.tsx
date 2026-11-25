@@ -1,13 +1,48 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type SessionUser = { name?: string | null; email?: string | null };
+
+/** Ends the Auth.js session (CSRF-protected POST), then returns to the home page. */
+async function logout() {
+  try {
+    const { csrfToken } = (await fetch("/api/auth/csrf").then((r) =>
+      r.json(),
+    )) as { csrfToken: string };
+    await fetch("/api/auth/signout", {
+      body: new URLSearchParams({ callbackUrl: "/", csrfToken }),
+      credentials: "same-origin",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      method: "POST",
+    });
+  } finally {
+    window.location.href = "/";
+  }
+}
 
 /* Shows "Log in" for visitors and "My account" for signed-in customers.
    Fetches the session in the browser so marketing pages stay static. */
 export function AuthNav({ mobile = false }: { mobile?: boolean }) {
   const [user, setUser] = useState<SessionUser | null>(null);
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: MouseEvent) => {
+      if (!box.current?.contains(e.target as Node)) setOpen(false);
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onDown);
+      document.removeEventListener("keydown", onKey);
+    };
+  }, [open]);
 
   useEffect(() => {
     let alive = true;
@@ -24,7 +59,18 @@ export function AuthNav({ mobile = false }: { mobile?: boolean }) {
 
   if (mobile) {
     return user ? (
-      <a href="/account">My account</a>
+      <>
+        <a href="/account">My account</a>
+        <a
+          href="/"
+          onClick={(e) => {
+            e.preventDefault();
+            void logout();
+          }}
+        >
+          Logout
+        </a>
+      </>
     ) : (
       <a href="/login">Log in</a>
     );
@@ -32,16 +78,31 @@ export function AuthNav({ mobile = false }: { mobile?: boolean }) {
 
   const initial = (user?.name || user?.email || "?").trim()[0]?.toUpperCase();
   return user ? (
-    <a
-      aria-label="My account"
-      className="btn btn-primary btn-sm btn-login"
-      href="/account"
-    >
-      <span aria-hidden="true" className="av">
-        {initial}
-      </span>
-      <span className="lbl">My account</span>
-    </a>
+    <div className="acct-menu" ref={box}>
+      <button
+        aria-expanded={open}
+        aria-haspopup="menu"
+        aria-label="My account"
+        className="btn btn-primary btn-sm btn-login"
+        onClick={() => setOpen((v) => !v)}
+        type="button"
+      >
+        <span aria-hidden="true" className="av">
+          {initial}
+        </span>
+        <span className="lbl">My account</span>
+      </button>
+      {open ? (
+        <div className="acct-pop" role="menu">
+          <a href="/account" role="menuitem">
+            My account
+          </a>
+          <button onClick={() => void logout()} role="menuitem" type="button">
+            Logout
+          </button>
+        </div>
+      ) : null}
+    </div>
   ) : (
     <a className="btn btn-primary btn-sm btn-login" href="/login">
       <svg
