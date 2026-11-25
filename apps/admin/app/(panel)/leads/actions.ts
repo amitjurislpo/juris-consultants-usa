@@ -4,9 +4,9 @@ import { prisma } from "@juris/db";
 import { revalidatePath } from "next/cache";
 import { writeAudit } from "../../../src/lib/audit";
 import { requirePermission } from "../../../src/lib/guard";
-import { LEAD_CONTACTED_ACTION, noteSchema } from "../../../src/lib/leads";
+import { noteSchema } from "../../../src/lib/leads";
 
-/** Records that staff contacted a lead. The Note model needs an order, so this goes to the audit log. */
+/** Records that staff contacted a lead (saved as a note on the lead). */
 export async function markContactedAction(formData: FormData): Promise<void> {
   const user = await requirePermission("MANAGE_NOTES");
   const parsed = noteSchema.safeParse({
@@ -21,12 +21,15 @@ export async function markContactedAction(formData: FormData): Promise<void> {
   });
   if (!lead) return;
 
+  const note = await prisma.note.create({
+    data: { leadId: lead.id, authorId: user.id, body: parsed.data.body },
+  });
   await writeAudit({
     actorId: user.id,
-    action: LEAD_CONTACTED_ACTION,
+    action: "lead.contacted",
     entity: "Lead",
     entityId: lead.id,
-    meta: { note: parsed.data.body },
+    meta: { noteId: note.id },
   });
   revalidatePath("/leads");
 }

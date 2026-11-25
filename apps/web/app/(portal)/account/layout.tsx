@@ -9,7 +9,7 @@ import { displayName } from "../../../src/lib/portal";
 import { logOutAction } from "./actions";
 import { LogoutButton } from "./logout-button";
 import "./portal.css";
-import { PathBreadcrumbs } from "@juris/ui";
+import { CrumbLabelProvider, PathBreadcrumbs } from "@juris/ui";
 import { PORTAL_CRUMBS } from "../../../content/breadcrumbs";
 import { TopUser } from "./portal-chrome";
 
@@ -102,30 +102,32 @@ export default async function PortalLayout({
   ];
 
   return (
-    <DashShell
-      brandSub="Customer portal"
-      crumb={<PathBreadcrumbs {...PORTAL_CRUMBS} />}
-      groups={groups}
-      sideFooter={
-        <>
-          <DashPromo
-            cta="Start now"
-            href="/start?flow=start"
-            text="Form another company, get an EIN or add a service."
-            title="Start a new order"
+    <CrumbLabelProvider>
+      <DashShell
+        brandSub="Customer portal"
+        crumb={<PathBreadcrumbs {...PORTAL_CRUMBS} />}
+        groups={groups}
+        sideFooter={
+          <>
+            <DashPromo
+              cta="Start now"
+              href="/start?flow=start"
+              text="Form another company, get an EIN or add a service."
+              title="Start a new order"
+            />
+          </>
+        }
+        topRight={
+          <TopUser
+            business={user.companies[0]?.name ?? null}
+            image={user.image}
+            logOut={<LogoutButton action={logOutAction} />}
+            name={name}
           />
-        </>
-      }
-      topRight={
-        <TopUser
-          business={user.companies[0]?.name ?? null}
-          image={user.image}
-          logOut={<LogoutButton action={logOutAction} />}
-          name={name}
-        />
-      }
-    >
-      <div className="pt-content">{children}</div>
-    </DashShell>
+        }
+      >
+        <div className="pt-content">{children}</div>
+      </DashShell>
+    </CrumbLabelProvider>
   );
 }

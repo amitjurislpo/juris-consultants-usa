@@ -1,5 +1,5 @@
 import { prisma } from "@juris/db";
-import { PathBreadcrumbs } from "@juris/ui";
+import { CrumbLabelProvider, PathBreadcrumbs } from "@juris/ui";
 import {
   DashShell,
   DashSystemOk,
@@ -45,23 +45,25 @@ export default async function PanelLayout({
   }));
 
   return (
-    <DashShell
-      brandSub="Admin panel"
-      crumb={<PathBreadcrumbs {...ADMIN_CRUMBS} />}
-      groups={groups}
-      sideFooter={<DashSystemOk />}
-      topRight={
-        <>
-          <TimeZoneSwitcher current={timeZone} />
-          <UserMenu
-            image={profile?.image ?? null}
-            name={displayName}
-            signOut={<SignOutButton action={signOutAction} />}
-          />
-        </>
-      }
-    >
-      <TableLabels>{children}</TableLabels>
-    </DashShell>
+    <CrumbLabelProvider>
+      <DashShell
+        brandSub="Admin panel"
+        crumb={<PathBreadcrumbs {...ADMIN_CRUMBS} />}
+        groups={groups}
+        sideFooter={<DashSystemOk />}
+        topRight={
+          <>
+            <TimeZoneSwitcher current={timeZone} />
+            <UserMenu
+              image={profile?.image ?? null}
+              name={displayName}
+              signOut={<SignOutButton action={signOutAction} />}
+            />
+          </>
+        }
+      >
+        <TableLabels>{children}</TableLabels>
+      </DashShell>
+    </CrumbLabelProvider>
   );
 }

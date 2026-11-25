@@ -91,7 +91,7 @@ export function AreaChart({
   prefix?: string;
 }) {
   const id = `ar${safe(useId())}`;
-  const pad = 34;
+  const pad = 46;
   const top = Math.max(...values, 1) * 1.2;
   const n = Math.max(values.length - 1, 1);
   const X = (i: number) => pad + (i * (width - pad - 10)) / n;
@@ -125,7 +125,7 @@ export function AreaChart({
           y={y + 4}
         >
           {prefix}
-          {Math.round((top * k) / 1.2)}
+          {Math.round((top * k) / 1.2).toLocaleString("en-US")}
         </text>
       </g>
     );

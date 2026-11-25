@@ -9,7 +9,7 @@ import {
 
 const ready = buildStatusContext({
   kind: "FORMATION",
-  hasCompanyWithMembers: true,
+  detailsSubmitted: true,
   kycStatuses: ["APPROVED"],
   einOrdered: false,
 });
@@ -26,7 +26,7 @@ describe("selectableStatuses", () => {
   it("blocks filing while a KYC document is not approved", () => {
     const context = buildStatusContext({
       kind: "FORMATION",
-      hasCompanyWithMembers: true,
+      detailsSubmitted: true,
       kycStatuses: ["APPROVED", "PENDING"],
       einOrdered: false,
     });
@@ -35,7 +35,7 @@ describe("selectableStatuses", () => {
   it("allows rejection back to details pending when a document is rejected", () => {
     const context = buildStatusContext({
       kind: "FORMATION",
-      hasCompanyWithMembers: true,
+      detailsSubmitted: true,
       kycStatuses: ["REJECTED"],
       einOrdered: false,
     });
@@ -46,7 +46,7 @@ describe("selectableStatuses", () => {
   it("uses the consultation path for consultation orders", () => {
     const context = buildStatusContext({
       kind: "CONSULTATION",
-      hasCompanyWithMembers: false,
+      detailsSubmitted: false,
       kycStatuses: [],
       einOrdered: false,
     });

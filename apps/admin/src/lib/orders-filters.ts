@@ -55,9 +55,22 @@ export function buildOrderWhere(
   if (filters.paid === "paid") where.paidAt = { not: null };
   if (filters.paid === "unpaid") where.paidAt = null;
   if (filters.stale) {
-    where.updatedAt = {
-      lt: new Date(Date.now() - Number(filters.stale) * 24 * 60 * 60 * 1000),
-    };
+    // "Stale" = the last status change is older than N days (orders with no recorded
+    // status change yet fall back to their last-updated time).
+    const cutoff = new Date(
+      Date.now() - Number(filters.stale) * 24 * 60 * 60 * 1000,
+    );
+    where.AND = [
+      {
+        OR: [
+          {
+            statusChanges: { some: {} },
+            NOT: { statusChanges: { some: { at: { gte: cutoff } } } },
+          },
+          { statusChanges: { none: {} }, updatedAt: { lt: cutoff } },
+        ],
+      },
+    ];
   }
 
   const createdAt: Prisma.DateTimeFilter = {};

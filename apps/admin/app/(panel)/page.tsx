@@ -431,7 +431,9 @@ export default async function DashboardPage({
                       )}
                     </td>
                     <td data-l="Assigned">
-                      <span className="d-sm">Unassigned</span>
+                      <span className="d-sm">
+                        {o.assignedTo ?? "Unassigned"}
+                      </span>
                     </td>
                     {showAmounts ? (
                       <td data-l="Amount" style={{ textAlign: "right" }}>

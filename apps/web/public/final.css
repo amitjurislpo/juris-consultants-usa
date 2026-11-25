@@ -1015,7 +1015,7 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
   .story .speed{top:auto;bottom:64px;left:20px}
   .story .speed b{font-size:44px}
   .story .head{top:84px;left:20px;right:20px}
-  .story .head h2{font-size:clamp(22px,6vw,30px)}
+  .story .head h2{font-size:clamp(20px,5.4vw,28px)}
   .story .head p{font-size:14px}
 }
 @media (max-width:1000px){
@@ -1057,6 +1057,8 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
 .mega::before{content:"";position:absolute;left:0;right:0;top:-32px;height:32px}
 
 /* FAQ flip cards: match the site container width when the page is scaled to 90% */
+.jfaq-wrap{padding:0 24px}
+.jfaq--embedded .jfaq-wrap{padding:0}
 @media (min-width:1001px){.jfaq-wrap{max-width:1334px}.jfaq--embedded .jfaq-wrap{max-width:none}}
 .svc-faq{margin-top:8px}
 
