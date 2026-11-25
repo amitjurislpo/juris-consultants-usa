@@ -4,10 +4,21 @@
   padding: 72px 0 88px;
   background: var(--soft);
 }
+/* Same left edge as every other page (the site container); long text keeps a readable line length. */
 .subpage .page-container {
-  max-width: 860px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+}
+@media (min-width: 1001px) {
+  .subpage .page-container {
+    max-width: 1334px;
+  }
+}
+.subpage .page-container > .sec-head,
+.subpage .legal-doc,
+.subpage .legal-placeholder {
+  max-width: 860px;
 }
 .small-note {
   font-size: 13px;
