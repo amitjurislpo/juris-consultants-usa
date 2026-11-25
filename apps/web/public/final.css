@@ -224,13 +224,6 @@ table.cmp td:not(:first-child),table.cmp th:not(:first-child){text-align:center}
 .magnet{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center;background:linear-gradient(135deg,var(--blue-50),var(--card-bg));border:1px solid var(--blue-100);border-radius:28px;padding:44px}
 .guide-mock{background:#fff;color:#0B1B3F;border-radius:16px;box-shadow:var(--shadow);padding:22px;transform:rotate(-2deg);border:1px solid #E5EAF3}
 .guide-mock .bar{height:10px;border-radius:6px;background:#E2E8F0;margin:8px 0}
-.faq{max-width:860px;margin:0 auto;border-top:1px solid var(--line)}
-.faq details{border-bottom:1px solid var(--line);padding:18px 4px}
-.faq summary{cursor:pointer;font-weight:600;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:16px}
-.faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-size:22px;color:var(--blue);line-height:1}
-.faq details[open] summary::after{content:"–"}
-.faq details p{margin-top:10px;color:var(--muted)}
 .final{background:var(--grad);color:#fff;border-radius:30px;padding:52px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
 .final h2{font-size:clamp(26px,3vw,38px)}
 .form{display:flex;flex-direction:column;gap:16px}
@@ -974,7 +967,7 @@ label.req::after{content:" *";color:#f87171;font-weight:700}
 body.dm .guarantee,.guarantee{background:linear-gradient(135deg,rgba(34,197,94,.2),var(--navy2,#0A0E1A) 70%);border:1px solid rgba(74,222,128,.55);box-shadow:0 0 44px rgba(34,197,94,.2)}
 .guarantee .g-icon{background:linear-gradient(135deg,#4ade80,#22c55e);color:#052e16;box-shadow:0 0 22px rgba(74,222,128,.5)}
 .guarantee h3{color:#fff}
-.faq details p a,.mbg-link{color:var(--blue);text-decoration:underline}
+.mbg-link{color:var(--blue);text-decoration:underline}
 footer .mbg{margin-top:0}
 .globe-wrap .tag.mbg{background:linear-gradient(135deg,rgba(34,197,94,.3),rgba(16,185,129,.16));border-color:rgba(74,222,128,.7);color:#86efac;font-size:14px;box-shadow:0 0 18px rgba(34,197,94,.32);z-index:3}
 
@@ -1063,3 +1056,7 @@ body.dm .st.next{border:1px solid rgba(255,255,255,.12)}
 /* Services dropdown floats a little below the menu bar (invisible bridge keeps hover working) */
 .mega{top:calc(100% + 30px)}
 .mega::before{content:"";position:absolute;left:0;right:0;top:-32px;height:32px}
+
+/* FAQ flip cards: match the site container width when the page is scaled to 90% */
+@media (min-width:1001px){.jfaq-wrap{max-width:1334px}.jfaq--embedded .jfaq-wrap{max-width:none}}
+.svc-faq{margin-top:8px}

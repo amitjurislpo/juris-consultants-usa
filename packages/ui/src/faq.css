@@ -1,0 +1,374 @@
+/* FAQ "Flip cards" (approved design: docs/design/final/faq). Class prefix: jfaq-.
+   Both faces share one grid cell, so a card is always as tall as its longer face (no JS measuring). */
+.jfaq {
+  --jf-line: rgba(255, 255, 255, 0.1);
+  --jf-line2: rgba(255, 255, 255, 0.16);
+  --jf-card: rgba(255, 255, 255, 0.04);
+  --jf-tx: #f1f5f9;
+  --jf-body: #cbd5e1;
+  --jf-mu: #94a3b8;
+  --jf-mu2: #64748b;
+  --jf-blue: #3b82f6;
+  --jf-acc: #7dd3fc;
+  --jf-ok: #34d399;
+  --jf-grad: linear-gradient(135deg, #3b82f6, #22d3ee);
+  --jf-btn: linear-gradient(135deg, #2563eb, #0891b2);
+  --jf-h: "Sora", Inter, system-ui, sans-serif;
+  --jf-f: "Inter", system-ui, sans-serif;
+  position: relative;
+  z-index: 1;
+  padding: 72px 0 90px;
+  color: var(--jf-body);
+  font: 15px/1.6 var(--jf-f);
+}
+.jfaq * {
+  box-sizing: border-box;
+}
+.jfaq--embedded {
+  padding: 8px 0 0;
+}
+.jfaq-wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.jfaq--embedded .jfaq-wrap {
+  max-width: none;
+  padding: 0;
+}
+.jfaq-hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 30px;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+}
+.jfaq-eyebrow {
+  font: 700 12.5px var(--jf-f);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--jf-blue);
+}
+.jfaq-ttl {
+  margin: 10px 0 0;
+  font: 800 clamp(34px, 4.6vw, 58px)/1.05 var(--jf-h);
+  color: var(--jf-tx);
+  letter-spacing: -0.035em;
+}
+.jfaq--compact .jfaq-ttl {
+  font-size: clamp(28px, 3.4vw, 40px);
+}
+.jfaq-ttl em {
+  font-style: normal;
+  background: var(--jf-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.jfaq-sub {
+  margin: 14px 0 0;
+  max-width: 560px;
+  color: var(--jf-mu);
+  font-size: 16px;
+}
+.jfaq-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: var(--jf-btn);
+  color: #fff;
+  font: 600 15px var(--jf-f);
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 10px 26px rgba(37, 99, 235, 0.3);
+  transition: 0.25s;
+}
+.jfaq-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 34px rgba(34, 211, 238, 0.35);
+}
+.jfaq-btn.jfaq-gh {
+  background: var(--jf-card);
+  border: 1px solid var(--jf-line2);
+  box-shadow: none;
+  color: var(--jf-tx);
+}
+.jfaq-btn svg {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+.jfaq-wa {
+  color: var(--jf-ok);
+}
+.jfaq-rv {
+  animation: jfaq-rv 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  animation-delay: calc(var(--i, 0) * 0.07s);
+}
+@keyframes jfaq-rv {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.97);
+  }
+}
+@keyframes jfaq-bob {
+  50% {
+    translate: 0 -2px;
+  }
+}
+@keyframes jfaq-shine {
+  to {
+    transform: translateX(260%) skewX(-18deg);
+  }
+}
+@keyframes jfaq-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+.jfaq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  align-items: stretch;
+}
+.jfaq--compact .jfaq-grid {
+  grid-template-columns: repeat(2, 1fr);
+}
+.jfaq-fc {
+  display: grid;
+  perspective: 1200px;
+  border-radius: 14px;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.jfaq-fc:not(.jfaq-open):hover {
+  transform: translateY(-4px);
+}
+.jfaq-hide {
+  display: none;
+}
+.jfaq-fi {
+  display: grid;
+  grid-template-rows: minmax(150px, auto);
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.jfaq-open .jfaq-fi {
+  transform: rotateY(180deg);
+}
+.jfaq-fa,
+.jfaq-fb {
+  grid-area: 1/1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid var(--jf-line);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.jfaq-fa {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.06),
+    rgba(255, 255, 255, 0.015)
+  );
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  visibility: visible;
+  position: relative;
+  overflow: hidden;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.3s,
+    visibility 0s 0s;
+}
+.jfaq-fa::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -60%;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(125, 211, 252, 0.14),
+    transparent
+  );
+  transform: translateX(0) skewX(-18deg);
+  pointer-events: none;
+}
+.jfaq-fa:hover::before {
+  animation: jfaq-shine 0.9s ease;
+}
+.jfaq-fa:hover {
+  border-color: rgba(59, 130, 246, 0.55);
+  box-shadow: 0 14px 34px rgba(34, 211, 238, 0.14);
+}
+.jfaq-open .jfaq-fa {
+  visibility: hidden;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.3s,
+    visibility 0s 0.4s;
+}
+.jfaq-qi {
+  width: 28px;
+  height: 28px;
+  border-radius: 9px;
+  display: grid;
+  place-items: center;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--jf-acc);
+  font: 800 13px var(--jf-h);
+  margin-bottom: auto;
+  transition: 0.35s;
+  animation: jfaq-bob 3.2s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * -0.5s);
+}
+.jfaq-fa:hover .jfaq-qi {
+  background: var(--jf-grad);
+  color: #fff;
+  transform: rotate(-8deg) scale(1.06);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.5);
+}
+.jfaq-fa b {
+  display: block;
+  margin-top: 12px;
+  font: 700 14.5px/1.35 var(--jf-h);
+  color: var(--jf-tx);
+}
+.jfaq-fa small {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: var(--jf-mu2);
+  font-size: 11.5px;
+}
+.jfaq-fb {
+  transform: rotateY(180deg);
+  background: linear-gradient(160deg, #1d4ed8, #0e7490);
+  border-color: transparent;
+  color: #e0f2fe;
+  box-shadow: 0 14px 34px rgba(34, 211, 238, 0.25);
+  cursor: pointer;
+  visibility: hidden;
+  transition: visibility 0s 0.4s;
+}
+.jfaq-open .jfaq-fb {
+  visibility: visible;
+  transition: visibility 0s 0s;
+}
+.jfaq-fb > b {
+  display: block;
+  margin-bottom: 6px;
+  font: 700 13.5px var(--jf-h);
+  color: #fff;
+}
+.jfaq-open .jfaq-fb > b {
+  animation: jfaq-in 0.45s 0.3s backwards;
+}
+.jfaq-open .jfaq-ans {
+  animation: jfaq-in 0.5s 0.4s backwards;
+}
+.jfaq-ans {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #e0f2fe;
+}
+.jfaq-ans a {
+  color: #fff;
+  text-decoration: underline;
+}
+.jfaq-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: auto;
+  padding: 8px 0 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+  opacity: 0.75;
+  cursor: pointer;
+  text-align: left;
+}
+.jfaq-fa:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.6);
+}
+.jfaq-fb:has(.jfaq-back:focus-visible) {
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.6);
+}
+.jfaq-back:focus-visible {
+  outline: none;
+}
+.jfaq-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+@media (max-width: 1100px) {
+  .jfaq-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 700px) {
+  .jfaq {
+    padding: 56px 0 70px;
+  }
+  .jfaq-wrap {
+    padding: 0 18px;
+  }
+  .jfaq--embedded .jfaq-wrap {
+    padding: 0;
+  }
+  .jfaq-grid,
+  .jfaq--compact .jfaq-grid {
+    grid-template-columns: 1fr;
+  }
+  .jfaq-fi {
+    grid-template-rows: minmax(120px, auto);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jfaq-fi,
+  .jfaq-fa,
+  .jfaq-fb,
+  .jfaq-open .jfaq-fa,
+  .jfaq-open .jfaq-fb {
+    transition: none;
+  }
+  .jfaq-open .jfaq-fi {
+    transform: none;
+  }
+  .jfaq-fb {
+    transform: none;
+  }
+  .jfaq-rv,
+  .jfaq-qi,
+  .jfaq-open .jfaq-fb > b,
+  .jfaq-open .jfaq-ans {
+    animation: none;
+  }
+  .jfaq-fa:hover::before {
+    animation: none;
+  }
+  .jfaq-fc:not(.jfaq-open):hover {
+    transform: none;
+  }
+}

@@ -119,3 +119,10 @@ For active public website progress and handoff details, see [WORK_MEMORY.md](./W
 - About page now has real sections (who we are, what we do, how we work) and a placeholder illustration at `apps/web/public/about/team.svg`; replace with a real team photo. Page text is in `components/marketing/final/generated.ts` (`about`).
 - Desktop (>1000px) content is scaled to 90% via CSS `zoom` at the end of `public/final.css`; containers widened to keep side gaps. Mobile/tablet unchanged.
 - Tightened the gap between the departures board and "What you receive".
+
+## 2026-11-27 — FAQ flip cards (branch feat/faq-flip-cards)
+- Done: every FAQ on the website now uses the shared `@juris/ui/faq` component (Home, /faq, pricing, services, all 12 service pages). Old accordion markup/CSS and the old `faqs` list in `components/marketing/content.ts` are removed. Unit tests (`apps/web/content/faq/faq.test.ts`) and Playwright (`e2e/faq.spec.ts`: mouse and keyboard flip, one valid FAQPage JSON-LD per page, Show all) pass.
+- Changes from the brief, on purpose: (1) no "Ask on WhatsApp" button (Amit's request); (2) cards about 40% smaller than the demo file, plus hover/flip animations; (3) the "[Draft: to confirm]" text is NOT shown on the site (rule: no bracket placeholders in the live UI); items needing wording sign-off carry `draft: true` in `content/faq/general.ts`; (4) answer-face links work, so the back face is a div with a "flip back" button instead of one big button.
+- To confirm with Vansh: the new short lines (every item in `general.ts` is marked draft), the money-back guarantee wording (terms), and the two extra /faq questions. All service pages still share the same 6 questions; per-service content can be added as `content/faq/<service>.ts`.
+- Not changed: the legacy demo templates inside `public/final-runtime.js` still contain old FAQ markup but are not rendered by the site.
+- Dev-only: the portal "help" pages have no FAQ today, nothing to replace there.

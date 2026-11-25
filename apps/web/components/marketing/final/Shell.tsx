@@ -2,6 +2,8 @@ import Image from "next/image";
 import Script from "next/script";
 import type { ReactNode } from "react";
 import { BLOG_URL } from "../../../src/lib/links";
+import { FaqFlipEnhancer } from "@juris/ui/faq";
+import { expandFaqMarker, FAQ_MARKER } from "../../../content/faq";
 import { AuthNav } from "./AuthNav";
 import { FINAL_MEGA } from "./generated";
 
@@ -215,13 +217,19 @@ export function FinalPage({
   page: string;
   arg?: string;
 }) {
+  const hasFaq = FAQ_MARKER.test(html);
   return (
-    <main
-      dangerouslySetInnerHTML={{ __html: html }}
-      data-arg={arg}
-      data-calendly={process.env.CALENDLY_EXPERT_URL || undefined}
-      data-page={page}
-      id="app"
-    />
+    <>
+      <main
+        dangerouslySetInnerHTML={{
+          __html: hasFaq ? expandFaqMarker(html) : html,
+        }}
+        data-arg={arg}
+        data-calendly={process.env.CALENDLY_EXPERT_URL || undefined}
+        data-page={page}
+        id="app"
+      />
+      {hasFaq ? <FaqFlipEnhancer /> : null}
+    </>
   );
 }
