@@ -216,10 +216,13 @@ export function FinalPage({
   html,
   page,
   arg,
+  account,
 }: {
   html: string;
   page: string;
   arg?: string;
+  /** Signed-in customer, read by the order flow to skip the details step. */
+  account?: { name: string; email: string };
 }) {
   const hasFaq = FAQ_MARKER.test(html);
   return (
@@ -228,6 +231,7 @@ export function FinalPage({
         dangerouslySetInnerHTML={{
           __html: hasFaq ? expandFaqMarker(html) : html,
         }}
+        data-account={account ? JSON.stringify(account) : undefined}
         data-arg={arg}
         data-calendly={process.env.CALENDLY_EXPERT_URL || undefined}
         data-page={page}
